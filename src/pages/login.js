@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "../css/App.css";
 
 function LoginForm() {
+  const [isEmailClicked, setisEmailClicked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [isPasswordClicked, setisPasswordClicked] = useState(false);
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -36,8 +37,17 @@ function LoginForm() {
         <div>
           <label htmlFor="email"></label>
           <input
+            //클릭이 됐을 때
+            onFocus={() => {
+              setisEmailClicked(true);
+            }}
+            // 다른데 클릭
+            onBlur={() => {
+              setisEmailClicked(false);
+            }}
             type="email"
-            placehoder="이메일"
+            placeholder={isEmailClicked === true ? "" : "이메일"}
+            placeholderTextColor="gray"
             id="email"
             value={email}
             onChange={handleEmailChange}
@@ -47,8 +57,15 @@ function LoginForm() {
         <div>
           <label htmlFor="password"></label>
           <input
+            onFocus={() => {
+              setisPasswordClicked(true);
+            }}
+            onBlur={() => {
+              setisPasswordClicked(false);
+            }}
             type="password"
             id="password"
+            placeholder={isPasswordClicked === true ? "" : "비밀번호"}
             value={password}
             onChange={handlePasswordChange}
             required
