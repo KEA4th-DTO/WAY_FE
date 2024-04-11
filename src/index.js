@@ -1,15 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
+import React, { Suspense } from "react";
+// import ReactDOM from "react-dom";
+import {createRoot} from 'react-dom/client';
+import "./assets/scss/style.scss";
 import App from "./App";
-import Login from "./pages/login";
 import reportWebVitals from "./reportWebVitals";
+import { HashRouter } from "react-router-dom";
+import Loader from "./layouts/loader/Loader";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
 root.render(
-  <React.StrictMode>
-    <Login />
-  </React.StrictMode>
+  <Suspense fallback={<Loader />}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </Suspense>,
+
+  // document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

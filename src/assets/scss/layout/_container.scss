@@ -1,0 +1,84 @@
+.nav-link {
+  color: #828282; // 기본 글꼴 색상 변경
+  font-weight: 800;
+  margin-left: 15px;
+  margin-right: 20px;
+font-size: 17px;
+  &:hover {
+    color: #404df2; // 마우스 오버 시 글꼴 색상 변경
+  }
+}
+.menu-divider {
+  height: 25px; /* 또는 원하는 높이 */
+  width: 1.5px; /* 구분선의 두께 */
+  background-color: #ddd; /* 구분선의 색상 */
+  margin: 6px 12px 0px; /* 좌우 마진, 구분선 주변의 공간 */
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 250px; /* 사이드바의 너비를 조정하세요 */
+  background-color: #fff; /* 사이드바 배경색을 원하는 색상으로 설정하세요 */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* 사이드바에 그림자 효과를 추가하세요 */
+  z-index: 1000; /* 다른 요소 위에 레이어를 배치하세요 */
+  transition: transform 0.3s ease; /* 사이드바의 이동 트랜지션을 부드럽게 만듭니다 */
+}
+
+.sidebar-container.show-sidebar {
+  transform: translateX(0); /* 보이는 경우에는 오른쪽으로 이동합니다 */
+}
+
+.sidebar-container.hide-sidebar {
+  transform: translateX(100%); /* 숨겨진 경우에는 오른쪽으로 이동합니다 */
+}
+
+.sidebar {
+  padding: 20px; /* 사이드바 내부 여백을 조정하세요 */
+}
+
+.nav-link.active {
+  color: blue !important;
+}
+
+
+.pageWrapper {
+  min-height: 100vh;
+}
+.contentArea {
+  flex-grow: 1;
+}
+.wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.card {
+  box-shadow: $card-box-shadow;
+  margin-bottom: 30px;
+}
+
+.circle-box {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 100%;
+  &.lg-box {
+    width: 60px;
+    height: 60px;
+    font-size: 21px;
+    line-height: 60px;
+  }
+}
+.button-group .btn {
+  margin: 3px;
+}
+
+.table>:not(:first-child) {
+  border-top: 2px solid;
+}
+.table-borderless>:not(:first-child) {
+  border-top-width: 0;
+}

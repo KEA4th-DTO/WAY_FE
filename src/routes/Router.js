@@ -1,0 +1,52 @@
+import { lazy } from "react";
+import { Navigate } from "react-router-dom";
+
+/****Layouts*****/
+const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
+
+/***** Pages ****/
+
+const Localmap = lazy(() => import("../views/Localmap.js"));
+const Mymap = lazy(() => import("../views/Mymap.js"));
+const Upload = lazy(() => import("../views/Upload.js"));
+const Chatting = lazy(() => import("../views/Chatting.js"));
+const Search = lazy(() => import("../views/Search.js"));
+
+const Modi_profile = lazy(() => import("../views/ui/Modi_profile"));
+const BlockList = lazy(() => import("../views/ui/BlockList"));
+const Notices = lazy(() => import("../views/ui/Notices"));
+const Questions = lazy(() => import("../views/ui/Questions"));
+const Withdrawal = lazy(() => import("../views/ui/Withdrawal"));
+
+const Tables = lazy(() => import("../views/ui/Tables"));
+const Forms = lazy(() => import("../views/ui/Forms"));
+const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
+
+/*****Routes******/
+
+const ThemeRoutes = [
+  {
+    path: "/",
+    element: <FullLayout />,
+    children: [
+      { path: "/", element: <Navigate to="/localmap" /> },
+      { path: "/localmap", exact: true, element: <Localmap /> },
+      { path: "/mymap", exact: true, element: <Mymap /> },
+      { path: "/upload", exact: true, element: <Upload /> },
+      { path: "/chatting", exact: true, element: <Chatting /> },
+      { path: "/search", exact: true, element: <Search /> },
+
+      { path: "/modify_profile", exact: true, element: <Modi_profile /> },
+      { path: "/blocklist", exact: true, element: <BlockList /> },
+      { path: "/notices", exact: true, element: <Notices /> },
+      { path: "/questions", exact: true, element: <Questions /> },
+      { path: "/withdrawal", exact: true, element: <Withdrawal /> },
+      
+      { path: "/table", exact: true, element: <Tables /> },
+      { path: "/forms", exact: true, element: <Forms /> },
+      { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
+    ],
+  },
+];
+
+export default ThemeRoutes;
