@@ -1,0 +1,359 @@
+.Modi-profile-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+  }
+  .Modi-profile {
+    width: 590.80126953125px;
+    height: 697px;
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .title-div {
+    border-bottom: 3px solid rgba(135, 36, 14, 1); 
+    border-left: none;
+    border-right: none;
+    width: 590.80126953125px;
+    height: 80px;
+  }
+  .title-text {
+    color: rgba(135, 36, 14, 1);
+    width: 253px;
+    height: auto;
+    position: absolute;
+    font-size: 50px;
+    font-style: Extra Bold;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .nickname-edit {
+    top: 175px;
+    left: 6px;
+    width: 489.43023681640625px;
+    height: 44.491092681884766px;  /* 고정 높이, 필요에 따라 'auto'로 조정 가능 */
+    display: flex;
+    align-items: center; /* 세로 방향의 가운데 정렬 */
+    position: absolute;
+    flex-shrink: 1;
+  }
+  .edit-value {
+    padding: 10px;
+    top: 0px;
+    left: 236px;
+    width: 253px;
+    height: 44px;
+    position: absolute;
+    border-color: rgba(0, 0, 0, 1);
+    border-style: solid;
+    border-width: 1.6895349025726318px;
+    border-radius: 10px;
+    text-align: left;
+    font-family: Inter;
+  }
+
+  .edit-element {
+    color: rgba(28, 27, 31, 1);
+    width: auto;
+    height: auto;
+    font-size: 26.32000160217285px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .one-line-edit {
+    top: 250px;
+    left: 6px;
+    width: 489.43023681640625px;
+    height: 44.491092681884766px;  /* 고정 높이, 필요에 따라 'auto'로 조정 가능 */
+    display: flex;
+    align-items: center; /* 세로 방향의 가운데 정렬 */
+    position: absolute;
+    flex-shrink: 1;
+  }
+
+  .password-edit {
+    top: 325px;
+    left: 6px;
+    width: 489.43023681640625px;
+    height: 44.491092681884766px;  /* 고정 높이, 필요에 따라 'auto'로 조정 가능 */
+    display: flex;
+    align-items: center; /* 세로 방향의 가운데 정렬 */
+    position: absolute;
+    flex-shrink: 1;
+  }
+
+  .passwordConfirmation {
+    top: 471px;
+    left: 3px;
+    width: 489.43023681640625px;
+    height: 44.491092681884766px;  /* 고정 높이, 필요에 따라 'auto'로 조정 가능 */
+    display: flex;
+    align-items: center; /* 세로 방향의 가운데 정렬 */
+    position: absolute;
+    flex-shrink: 1;
+  }
+
+  .agreement{
+    top: 552px;
+    left: 3px;
+    width: 183px;
+    height: 37px;
+    display: flex;
+    align-items: center; /* 세로 방향의 가운데 정렬 */
+    position: absolute;
+    flex-shrink: 1;
+  }
+
+  .agreement-check{
+    top: 0px;
+    left: 236px;
+    width: 253px;
+    height: 44px;
+    position: absolute;
+    text-align: left;
+    font-family: Inter;
+  }
+  .agreement-check .form-check-input {
+    width: calc(34px * 1.3);
+    height: calc(20px * 1.3);
+  }
+  
+  .agreement-check .form-check-input::before {
+    width: calc(50px * 1.3);
+    height: calc(20px * 1.3);
+    border-radius: 15px;
+  }
+  
+  .agreement-check .form-check-input::after {
+    width: calc(18px * 1.3);
+    height: calc(18px * 1.3);
+  }
+
+  .group95-frame5 {
+    top: 183px;
+    left: 517px;
+    width: 73.80126953125px;
+    height: 28.158916473388672px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(130, 130, 130, 1);
+  }
+  .group95-text20 {
+    top: 6px;
+    left: 14px;
+    color: rgba(255, 255, 255, 1);
+    width: 45px;
+    height: auto;
+    position: absolute;
+    font-size: 11.263566017150879px;
+    font-style: Extra Bold;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-frame6 {
+    top: 390px;
+    left: 4.998046875px;
+    width: 275.0014343261719px;
+    height: 59.69691467285156px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .group95-text22 {
+    left: 0.001220703125px;
+    color: rgba(130, 130, 130, 0.5);
+    width: 275px;
+    height: auto;
+    position: absolute;
+    font-size: 11.263566017150879px;
+    font-style: Extra Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-text24 {
+    top: 21.40077018737793px;
+    left: -0.0002180908777518198px;
+    color: rgba(130, 130, 130, 0.5);
+    width: 209px;
+    height: auto;
+    position: absolute;
+    font-size: 11.263566017150879px;
+    font-style: Extra Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-text26 {
+    top: 42.80156707763672px;
+    left: -0.0002180908777518198px;
+    color: rgba(130, 130, 130, 0.5);
+    width: 209px;
+    height: auto;
+    position: absolute;
+    font-size: 11.263566017150879px;
+    font-style: Extra Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-frame7 {
+    top: 657px;
+    left: 11px;
+    width: 188px;
+    height: 40px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(70, 108, 166, 1);
+  }
+  .group95-text28 {
+    top: 7px;
+    left: 26px;
+    color: rgba(255, 255, 255, 1);
+    width: 145px;
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Extra Bold;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-frame8 {
+    top: 657px;
+    left: 238px;
+    width: 188px;
+    height: 40px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(135, 36, 14, 1);
+  }
+  .group95-text30 {
+    top: 7px;
+    left: 26px;
+    color: rgba(255, 255, 255, 1);
+    width: 145px;
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Extra Bold;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-svg1 {
+    top: 90px;
+    left: 0px;
+    width: 550px;
+    height: 1px;
+    position: absolute;
+  }
+  .group95-text32 {
+    top: 562px;
+    left: 295px;
+    color: rgba(28, 27, 31, 1);
+    width: 36px;
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-text34 {
+    top: 562px;
+    left: 416px;
+    color: rgba(28, 27, 31, 1);
+    width: 50px;
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .group95-checked-circle {
+    top: 558px;
+    left: 243px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .group95-image3 {
+    top: 0px;
+    left: 0px;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    border-color: rgba(0, 0, 0, 0.20000000298023224);
+    border-style: solid;
+    border-width: 1px;
+  }
+  .group95-image4 {
+    top: 8px;
+    left: 8px;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+  }
+  .group95-unchecked-circle {
+    top: 558px;
+    left: 366px;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    border-color: rgba(0, 0, 0, 0.20000000298023224);
+    border-style: solid;
+    border-width: 1px;
+  }
+  
