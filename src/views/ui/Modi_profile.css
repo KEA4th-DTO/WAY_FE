@@ -2,9 +2,19 @@
     width: 100%;
     display: flex;
     overflow: auto;
-    min-height: 100vh;
+    min-height: 80vh;
     align-items: center;
-    flex-direction: column;
+  }
+  .left-side {
+    width: 40%; /* 왼쪽 부분 너비 */
+    height: 697px;
+    display: flex;
+    justify-content: center; /* 내용을 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+  
+  .right-side {
+    width: 60%; /* 오른쪽 부분 너비 */
   }
   .Modi-profile {
     width: 590.80126953125px;
@@ -18,6 +28,7 @@
     border-bottom: 3px solid rgba(135, 36, 14, 1); 
     border-left: none;
     border-right: none;
+    margin-top: 40px;
     width: 590.80126953125px;
     height: 80px;
   }
