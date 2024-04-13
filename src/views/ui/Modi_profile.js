@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Helmet } from "react-helmet";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 import "./Modi_profile.css";
 
@@ -10,6 +11,18 @@ const Modi_profile = (props) => {
   const [password, setPassword] = useState(""); // 초기값을 빈 문자열로 설정합니다.
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
+  const [profileImg, setProfileImg] = useState("기본 프로필 이미지 URL");
+  const fileInputRef = useRef();
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileImg(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -35,7 +48,20 @@ const Modi_profile = (props) => {
       <Helmet>
         <title>exported project</title>
       </Helmet>
-      <div className="left-side"></div>
+      <div className="left-side">
+        <div className="profile-card">
+          <img src={profileImg} alt="프로필 이미지" className="profile-image" />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
+        <div className="profile-text" onClick={triggerFileInput}>
+          프로필 이미지 수정
+        </div>
+      </div>
       <div className="right-side">
         <div className="Modi-profile">
           <div className="title-div">
@@ -58,6 +84,9 @@ const Modi_profile = (props) => {
               <span className="edit-element">
                 <span>닉네임 변경</span>
               </span>
+              <Button className="duplicate-btn" variant="outline-secondary">
+                중복 확인
+              </Button>{" "}
             </div>
             <div className="one-line-edit">
               <input
@@ -113,60 +142,34 @@ const Modi_profile = (props) => {
                 <span>마케팅 수신동의</span>
               </span>
             </div>
-            <div className="group95-frame5">
-              <span className="group95-text20">
-                <span>중복확인</span>
-              </span>
-            </div>
-            <div className="group95-frame6">
-              <span className="group95-text22">
+            <div className="password-conditions">
+              <span className="password-conditions1">
                 <span>
                   ・ 최소 8자 이상, 대문자, 소문자, 숫자 및 기호의 혼합 포함
                 </span>
               </span>
-              <span className="group95-text24">
+              <span className="password-conditions2">
                 <span>・ 기호(예: !”$%^*&amp;)</span>
               </span>
-              <span className="group95-text26">
+              <span className="password-conditions3">
                 <span>・ 대문자(A~Z), 소문자(a~z)</span>
               </span>
             </div>
-
-            {/* <span className="group95-text32">
-            <span>동의</span>
-          </span>
-          <span className="group95-text34">
-            <span>미동의</span>
-          </span> */}
           </form>
-          <div className="group95-frame7">
-            <span className="group95-text28">
-              <span>수정하기</span>
+          <div className="edit-div">
+            <span>
+              <Button size="lg" variant="primary">
+                수정하기
+              </Button>{" "}
             </span>
           </div>
-          <div className="group95-frame8">
-            <span className="group95-text30">
-              <span>닫기</span>
+          <div className="close-div">
+            <span>
+              <Button size="lg" variant="danger">
+                닫기
+              </Button>{" "}
             </span>
           </div>
-
-          {/* <div className="group95-checked-circle">
-          <img
-            src="/external/image9512-2mgi-200h.png"
-            alt="IMAGE9512"
-            className="group95-image3"
-          />
-          <img
-            src="/external/image9512-ozr-200h.png"
-            alt="IMAGE9512"
-            className="group95-image4"
-          />
-        </div>
-        <img
-          src="/external/uncheckedcircle9512-ds9c-200h.png"
-          alt="UncheckedCircle9512"
-          className="group95-unchecked-circle"
-        /> */}
         </div>
       </div>
     </div>
