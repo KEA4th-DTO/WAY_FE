@@ -1,0 +1,135 @@
+@import "reset.css";
+#signup
+
+.signup > h2{
+    display: flex;
+    justify-content: left;
+    margin-left: 10%;
+    margin-top: 10%;
+    font-size: 40px;
+}
+
+label{
+    display: flex;
+    width : 20%;
+    justify-content: left;
+    align-items: center;
+    margin-left: 10%;
+    margin-top: 10px;
+    font-size: 15px;
+    font-style: bold;
+}
+
+.horizontal-divider {
+    border-top: 3px solid #000;
+    margin: 0 10%;
+    opacity: 0.6;
+}
+
+.signup-info{
+    display: flex;
+    justify-content: right;
+    margin: 40px 12% 10px 10%;
+    font-size: 15px;
+    color: #828282;
+    opacity: 0.8;
+    font-style: bold;
+}
+.email,.password,.re-pwd,.phoneNum,.name,.birth,.nickName,.agree{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 10%;
+    margin-top: 8px;
+    font-size: 15px;
+    opacity: 0.8;
+    font-style: bold;
+}
+
+
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="text"]
+{
+    display: flex;
+    width: 40%;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+    height: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 20px;
+    margin-left: 30px;
+}
+.password-input,
+.email-input {
+    margin-top: 2px;
+    height: 20px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.re-pwd > input[type="password"] {
+    width: 40%;
+    margin-top: 5%;
+    justify-content: center;
+    height: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.passwordInput{
+    width: 30%;
+    margin-top: 5%;
+    justify-content: center;
+    height: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.btn-duplicate{
+    margin-top: 5%;
+    margin-left: 10%;
+    height: 30px;
+    width: 80px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background-color: #828282;
+    color: #fff;
+}
+
+.btn-signup{
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    width: 130px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background-color: #3D85EC;
+    color: #fff;
+}
+
+.signup-panel{
+    display:flex;
+    justify-content: center;
+}
+
+/* .parent-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+} */
