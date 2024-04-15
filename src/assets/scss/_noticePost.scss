@@ -1,0 +1,23 @@
+div.post__title {
+    display: flex;
+    margin-left: 10%;
+    align-items: center;
+}
+
+div.post__author {
+    margin-left: 10%;
+    align-items: center;
+}
+
+div.post__date {
+    margin-left: 30%;
+    display: flex;
+    float: right; /* div를 오른쪽으로 배치 */
+    align-items: center;
+}
+
+.posts::after {
+    content: "";
+    display: table;
+    clear: both;
+}
