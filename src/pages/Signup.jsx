@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 import "../assets/style/signup.css";
 
-const SignUpForm = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -170,4 +170,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default Signup;

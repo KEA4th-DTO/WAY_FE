@@ -1,122 +1,113 @@
-import { Col, Row } from "reactstrap";
-import SalesChart from "../components/dashboard/SalesChart";
-import Feeds from "../components/dashboard/Feeds";
-import ProjectTables from "../components/dashboard/ProjectTable";
-import TopCards from "../components/dashboard/TopCards";
-import Blog from "../components/dashboard/Blog";
-import bg1 from "../assets/images/bg/bg1.jpg";
-import bg2 from "../assets/images/bg/bg2.jpg";
-import bg3 from "../assets/images/bg/bg3.jpg";
-import bg4 from "../assets/images/bg/bg4.jpg";
+import React, { useState, useEffect } from "react";
+import MapInformation from "../components/map/Mapinformation";
+import allPin from "../assets/images/icons/allPin.png";
+import dailyPin from "../assets/images/icons/dailyPin.png";
+import historyPin from "../assets/images/icons/historyPin.png";
+import full_allPin from "../assets/images/icons/full_allPin.png";
+import full_dailyPin from "../assets/images/icons/full_dailyPin.png";
+import full_historyPin from "../assets/images/icons/full_historyPin.png";
+import refresh from "../assets/images/icons/refresh.png";
 
-const BlogData = [
-  {
-    image: bg1,
-    title: "This is simple blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg2,
-    title: "Lets be simple blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg3,
-    title: "Don't Lamp blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg4,
-    title: "Simple is beautiful",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-];
+import Post from "../components/map/Post";
+
+import {
+  Container as MapDiv,
+  NaverMap,
+  Marker,
+  useNavermaps,
+} from 'react-naver-maps';
+
 
 const Localmap = () => {
-  return (
-    <div>
-      {/***Top Cards***/}
-      <Row>
-        <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-success text-success"
-            title="Profit"
-            subtitle="Yearly Earning"
-            earning="$21k"
-            icon="bi bi-wallet"
-          />
-        </Col>
-        <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-danger text-danger"
-            title="Refunds"
-            subtitle="Refund given"
-            earning="$1k"
-            icon="bi bi-coin"
-          />
-        </Col>
-        <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-warning text-warning"
-            title="New Project"
-            subtitle="Yearly Project"
-            earning="456"
-            icon="bi bi-basket3"
-          />
-        </Col>
-        <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-info text-into"
-            title="Sales"
-            subtitle="Weekly Sales"
-            earning="210"
-            icon="bi bi-bag"
-          />
-        </Col>
-      </Row>
-      {/***Sales & Feed***/}
-      <Row>
-        <Col sm="6" lg="6" xl="7" xxl="8">
-          <SalesChart />
-        </Col>
-        <Col sm="6" lg="6" xl="5" xxl="4">
-          <Feeds />
-        </Col>
-      </Row>
-      {/***Table ***/}
-      <Row>
-        <Col lg="12">
-          <ProjectTables />
-        </Col>
-      </Row>
-      {/***Blog Cards***/}
-      <Row>
-        {BlogData.map((blg, index) => (
-          <Col sm="6" lg="6" xl="3" key={index}>
-            <Blog
-              image={blg.image}
-              title={blg.title}
-              subtitle={blg.subtitle}
-              text={blg.description}
-              color={blg.btnbg}
-            />
-          </Col>
-        ))}
-      </Row>
+   //데이터 가져오기
+   const [post, setPost] = useState([]);
+
+   useEffect(()=>{
+       fetch('http://localhost:3001/post') //API경로 적어주기
+       .then(res => {
+           return res.json() //json으로 변환됨
+       })
+       .then(data => {
+           setPost(data);
+       })
+   }, []);
+
+
+   
+
+
+  // allPin 을 누르면 allPin 이미지가 full_allPin으로 바뀌고 dailyPin, historyPin 이미지는 원래 이미지로 바뀌는 함수
+  const [allPinState, setAllPinState] = useState(true);
+  const [dailyPinState, setDailyPinState] = useState(false);
+  const [historyPinState, setHistoryPinState] = useState(false);
+  
+  const onClickAllPin = () => {
+    setAllPinState(true);
+    setDailyPinState(false);
+    setHistoryPinState(false);
+  };
+
+  const onClickDailyPin = () => {
+    setAllPinState(false);
+    setDailyPinState(true);
+    setHistoryPinState(false);
+  };
+
+  const onClickHistoryPin = () => {
+    setAllPinState(false);
+    setDailyPinState(false);
+    setHistoryPinState(true);
+  };
+
+    
+
+  return ( 
+    <div id="local-con" style={{border: "5px solid red", display: "flex"}}>
+      {/* 지도 & 핀*/}
+      <div id="map-con" style={{border: "3px solid blue"}}>
+        
+          <h3 style={{ display: 'inline-block', marginRight: '10px' }}>로컬맵</h3>
+          <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
+        
+        <div style={{ display: 'inline-block', marginLeft: '280px', border:"3px solid red" }}>
+          <span style={{ fontSize: '10px', margin:"3px" }}>all pin</span>
+          <span style={{ fontSize: '10px', margin:"3px" }}>daily pin</span>
+          <span style={{ fontSize: '10px', margin:"3px" }}>history pin</span>
+          <br />
+          <button onClick={onClickAllPin} style={{ border: "none" }}>
+            <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px' }} />
+          </button>
+          <button onClick={onClickDailyPin} style={{ border: "none"}}>
+            <img src={dailyPinState ? full_dailyPin : dailyPin} alt="dailyPin" style={{ width: '30px', height: '30px' }} />
+          </button>
+          <button onClick={onClickHistoryPin} style={{ border: "none" }}>
+            <img src={historyPinState ? full_historyPin : historyPin} alt="historyPin" style={{ width: '30px', height: '30px' }} />
+          </button> 
+        </div>
+
+        <div>
+          <MapInformation/>
+        </div>
+        
+        </div>
+        
+        {/* 게시글*/}
+        <div className="initial-main-page-frame" style={{border: "3px solid green"}}>
+          <span className="initial-main-page-text">
+            <span>게시글</span>
+          </span>
+          <ul>
+                {post.map(i => (
+              <li>{i.title}</li>
+            ))}
+            </ul>
+          <div className="initial-main-page-post1-history" style={{border: "3px solid yellow"}}>
+          <Post></Post>
+          </div>
+        </div>
     </div>
   );
 };
-
 export default Localmap;
+
+

@@ -14,7 +14,7 @@ const NoticePost = ({ profileImage, authorName, authorNickname, title, date }) =
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/posts')
+        fetch('http://localhost:3001/notices')
             .then(res => res.json())
             .then(data => setPosts(data))
             .catch(error => console.error("Error fetching posts:", error));

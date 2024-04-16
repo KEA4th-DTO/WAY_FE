@@ -63,56 +63,5 @@
         "lat": "37.7911524593073",
         "lng": "128.914664130458"
       }
-    ],
-    
-    "notices": [
-      {
-        "id": "1",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      },
-      {
-        "id": "2",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      },
-      {
-        "id": "3",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      },
-      {
-        "id": "4",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      },
-      {
-        "id": "5",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      },
-      {
-        "id": "6",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14"
-      }
     ]
   }

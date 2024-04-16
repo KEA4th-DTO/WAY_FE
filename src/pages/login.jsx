@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import "../assets/style/login.css";
 import kakaoImg from "../assets/img/kakao.png";
 import googleImg from "../assets/img/google_login.png";
 
-function LoginForm() {
+function Login() {
+  const navigate = useNavigate();
+
   const [isEmailClicked, setisEmailClicked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +24,12 @@ function LoginForm() {
 
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
     window.open(kakaoURL, "Kakao Login", "width=600,height=600");
+
+    // 카카오 로그인 후에도 로컬맵 페이지로 이동합니다.
+    navigate('/localmap');
   }
+
+  
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -55,6 +63,10 @@ function LoginForm() {
       if (response.ok) {
         const responseData = await response.json();
         console.log("서버 응답 데이터", responseData);
+
+        // 로그인이 성공하면 로컬맵 페이지로 리다이렉션합니다.
+        navigate('/localmap');
+
       } else {
         console.error("서버 응답 오류: ", response.status);
       }
@@ -179,4 +191,4 @@ function LoginForm() {
     </div>
   );
 }
-export default LoginForm;
+export default Login;

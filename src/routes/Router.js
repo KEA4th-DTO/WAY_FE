@@ -6,6 +6,11 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 /***** Pages ****/
 
+const Login = lazy(() => import("../pages/Login.jsx"));
+const Signup = lazy(() => import("../pages/Signup.jsx"));
+
+/***** Views ****/
+
 const Localmap = lazy(() => import("../views/Localmap.js"));
 const Mymap = lazy(() => import("../views/Mymap.js"));
 const Upload = lazy(() => import("../views/Upload.js"));
@@ -27,10 +32,21 @@ const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 const ThemeRoutes = [
   {
     path: "/",
+    element: <Navigate to="/login" />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/",
     element: <FullLayout />,
     children: [
-      { path: "/", element: <Navigate to="/localmap" /> },
-      { path: "/localmap", exact: true, element: <Localmap /> },
+      { path: "localmap", exact: true, element: <Localmap /> },
       { path: "/mymap", exact: true, element: <Mymap /> },
       { path: "/upload", exact: true, element: <Upload /> },
       { path: "/chatting", exact: true, element: <Chatting /> },

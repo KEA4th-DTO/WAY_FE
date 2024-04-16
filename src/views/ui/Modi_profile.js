@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import "./Modi_profile.css";
+// import "./Modi_profile.css";
 
 const Modi_profile = (props) => {
   const [nickname, setNickname] = useState(""); // 초기값을 빈 문자열로 설정합니다.
