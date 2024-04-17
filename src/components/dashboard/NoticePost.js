@@ -7,11 +7,7 @@ import post4 from "../../assets/images/users/user.png";
 import post5 from "../../assets/images/users/user.png";
 import post6 from "../../assets/images/users/user.png";
 
-<<<<<<< Updated upstream
-import "../../assets/scss/_noticePost.scss"
-=======
-import "../../assets/scss/layout/_noticePost.scss"
->>>>>>> Stashed changes
+import "../../assets/scss/layout/_noticePost.scss";
 
 const NoticePost = ({ profileImage, authorName, authorNickname, title, date }) => {
     
