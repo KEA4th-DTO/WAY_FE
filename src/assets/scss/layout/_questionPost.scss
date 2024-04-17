@@ -1,0 +1,23 @@
+div.question__title {
+    display: flex;
+    margin-left: 10%;
+    align-items: center;
+}
+
+div.question__author {
+    margin-left: 10%;
+    align-items: center;
+}
+
+div.question__date {
+    margin-left: 30%;
+    display: flex;
+    float: right; /* div를 오른쪽으로 배치 */
+    align-items: center;
+}
+
+.question::after {
+    content: "";
+    display: table;
+    clear: both;
+}
