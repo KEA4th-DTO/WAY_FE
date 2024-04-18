@@ -15,6 +15,8 @@ const MapInformation = () => {
     const mapRef = useRef(null);
     const [activePin, setActivePin] = useState("all"); // 현재 활성화된 핀 타입을 관리
     const [mapState, setMapState] = useState({ zoom: 16, center: null }); // 지도의 확대/축소 및 중심 좌표 상태 관리
+    const [activeMarker, setActiveMarker] = useState(null);
+    const clickedMarkers = {}; // 클릭된 마커를 저장할 객체
 
     // allPin 을 누르면 allPin 이미지가 full_allPin으로 바뀌고 dailyPin, historyPin 이미지는 원래 이미지로 바뀌는 함수
     const [allPinState, setAllPinState] = useState(true);
@@ -123,11 +125,12 @@ const MapInformation = () => {
                 zIndex: 999,
             });
 
-            // 게시글 마커 표시
-            post.filter(item => activePin === 'all' || item.postType === activePin).forEach((item, index) => {
+           
+            // 게시글 마커 생성 시 클릭 이벤트 핸들러를 설정합니다.
+            const createMarker = (item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
                 let iconUrl = item.postType === "daily" ? dailyPin : item.postType === "history" ? historyPin : allPin;
-                new naver.maps.Marker({
+                const marker = new naver.maps.Marker({
                     position: postLocation,
                     map,
                     icon: {
@@ -137,7 +140,76 @@ const MapInformation = () => {
                     },
                     zIndex: index,
                 });
+
+                // 마커에 클릭 이벤트를 추가합니다.
+                naver.maps.Event.addListener(marker, 'click', () => {
+                    handleMarkerClick(item.postId, marker);
+                });
+
+                return marker;
+            };
+
+            // postId에 따라 정상 아이콘을 반환합니다.
+            const getNormalPin = (postId) => {
+                const item = post.find(item => item.postId === postId);
+                // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
+                if (!item) return allPin;
+                return item.postType === 'daily' ? dailyPin : item.postType === 'history' ? historyPin : allPin;
+            };
+
+            // postId에 따라 full 아이콘을 반환합니다.
+            const getFullPin = (postId) => {
+                const item = post.find(item => item.postId === postId);
+                // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
+                if (!item) return allPin;
+                return item.postType === 'daily' ? full_dailyPin : full_historyPin;
+            };
+
+            // 마커 클릭 이벤트 핸들러
+            const handleMarkerClick = (postId, marker) => {
+                // postId에 해당하는 게시물을 찾습니다.
+                const item = post.find(item => item.postId === postId);
+                // postId에 해당하는 게시물이 없을 경우 처리하지 않습니다.
+                if (!item) return;
+
+                // 클릭된 마커가 이미 클릭된 상태인지 확인합니다.
+                if (activeMarker === postId) {
+                    // 클릭된 마커를 다시 클릭하면 원래 아이콘으로 변경하고 상태를 비활성화합니다.
+                    marker.setIcon({
+                        url: getNormalPin(postId),
+                        size: new naver.maps.Size(43, 43),
+                        scaledSize: new naver.maps.Size(43, 43),
+                    });
+                    setActiveMarker(null);
+                } else {
+                    // 현재 클릭된 마커의 상태를 변경합니다.
+                    setActiveMarker(postId);
+                    // 모든 클릭된 마커의 아이콘을 원래 아이콘으로 변경합니다.
+                    Object.values(clickedMarkers).forEach(clickedMarker => {
+                        clickedMarker.setIcon({
+                            url: getNormalPin(clickedMarker.get('postId')),
+                            size: new naver.maps.Size(43, 43),
+                            scaledSize: new naver.maps.Size(43, 43),
+                        });
+                    });
+                    // 클릭된 마커의 아이콘을 full 아이콘으로 변경합니다.
+                    marker.setIcon({
+                        url: getFullPin(postId),
+                        size: new naver.maps.Size(43, 43),
+                        scaledSize: new naver.maps.Size(43, 43),
+                    });
+                    // 클릭된 마커를 clickedMarkers에 저장합니다.
+                    clickedMarkers[postId] = marker;
+                }
+            };
+
+
+            // 게시글 마커 표시
+            post.filter(item => activePin === 'all' || item.postType === activePin).forEach((item, index) => {
+                createMarker(item, index);
             });
+
+
 
             // 지도의 확대/축소 및 중심 좌표 상태 변경
             naver.maps.Event.addListener(map, 'zoom_changed', () => {
@@ -153,6 +225,10 @@ const MapInformation = () => {
                     center: map.getCenter(),
                 });
             });
+
+            
+
+
         }
     }, [currentMyLocation, post, activePin, mapState]);  // `activePin` 및 `mapState`를 의존성 목록에 추가
 
@@ -169,10 +245,8 @@ const MapInformation = () => {
 
     return (
         <div>
-        
-            <h3 style={{ display: 'inline-block', marginRight: '10px' }}>로컬맵</h3>
-            <button onClick={onRefreshClick} >
-                    <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
+                <button onClick={onRefreshClick} >
+                <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
                 </button>
             
             <div style={{ display: 'inline-block', marginLeft: '280px', border:"3px solid red" }}>
