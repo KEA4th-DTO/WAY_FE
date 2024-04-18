@@ -2,10 +2,9 @@
 
 .initial-main-page-frame {
   
-    width: 393px;
+    width: 420px;
     height: 686px;
-    display: flex;
-    position: relative;
+    overflow: "auto"
   }
   .initial-main-page-text {
     color: rgba(64, 77, 242, 1);
@@ -198,7 +197,7 @@
     width: 100%;
     display: flex;
     overflow: auto;
-    min-height: 100vh;
+    margin: 0 0 10px;
     align-items: center;
     flex-direction: column;
   }
@@ -244,8 +243,18 @@
     position: absolute;
   }
   .frame4-frame1 {
-    top: 50px;
+    top: 60px;
     left: 8px;
+    width: 49.15132141113281px;
+    height: 22.820899963378906px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .frame4-frame2 {
+    top: 87px;
+    left: 9px;
     width: 49.15132141113281px;
     height: 22.820899963378906px;
     display: flex;
