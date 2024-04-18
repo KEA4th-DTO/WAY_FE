@@ -194,4 +194,179 @@
     flex-shrink: 1;
   }
   
-   
+  .frame4-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+  }
+  .frame4-frame4 {
+    width: 393px;
+    height: 139px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-color: rgba(0, 0, 0, 1);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10.800000190734863px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .frame4-post1full {
+    left: 13px;
+    bottom: 10px;
+    width: 363px;
+    height: 114px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .frame4-image {
+    top: 0px;
+    left: 230px;
+    width: 133px;
+    height: 110px;
+    position: absolute;
+    border-radius: 10.799999237060547px;
+    object-fit: cover;
+    object-position: center;
+  }
+  .frame4-frame {
+    bottom: 1px;
+    width: 296px;
+    height: 110.3359375px;
+    display: flex;
+    position: absolute;
+  }
+  .frame4-frame1 {
+    top: 50px;
+    left: 8px;
+    width: 49.15132141113281px;
+    height: 22.820899963378906px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .frame4-text {
+    left: 8px;
+    color: rgba(28, 27, 31, 1);
+    width: 41px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Regular;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame4-svg {
+    top: 3px;
+    left: 0px;
+    width: 16px;
+    height: 15px;
+    position: absolute;
+  }
+  .frame4-profileimage {
+    top: 0.3359375px;
+    left: 0px;
+    width: 47px;
+    height: 49px;
+    position: absolute;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: center;
+  }
+  .frame4-text02 {
+    top: 95px;
+    left: 58px;
+    color: rgba(68, 66, 74, 1);
+    width: 238px;
+    height: auto;
+    position: absolute;
+    font-size: 12px;
+    font-style: Semi Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame4-text04 {
+    top: 28px;
+    left: 58.095703125px;
+    color: rgba(89, 89, 89, 1);
+    width: 87px;
+    height: auto;
+    position: absolute;
+    font-size: 12px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Anek Kannada;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame4-text06 {
+    top: 55px;
+    left: 58px;
+    color: rgba(62, 62, 62, 1);
+    width: 160px;
+    height: auto;
+    position: absolute;
+    font-size: 13px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Anek Kannada;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame4-daily-pin-filled {
+    top: 0px;
+    left: 180px;
+    width: 30px;
+    height: 31px;
+    position: absolute;
+  }
+  .frame4-text08 {
+    top: 4.521484375px;
+    left: 57px;
+    color: rgba(28, 27, 31, 1);
+    width: 130px;
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    font-style: Extra Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .text-ellipsis1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .text-ellipsis2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // 두 줄까지 표시
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  
