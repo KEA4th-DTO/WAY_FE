@@ -1,0 +1,391 @@
+{
+    "post": [
+      {
+        "postId": "1",
+        "title": "놀러갔다옴요",
+        "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ (부산 해운대임) 부럽지 순두부 젤라또도 먹음.",
+        "memberId": "id_1234",
+        "likeNum": 20,
+        "commentNum": 10,
+        "createdAt": "2021-07-01",
+        "postType": "history",
+        "address": "부산 해운대구 우동",
+        "latitude": "35.1727271517264",
+        "longitude": "129.148399576019"
+      },
+      {
+        "postId": "2",
+        "title": "벚꽃이 예쁘네요",
+        "body": "벚꽃축제 구경하러 한강에 다녀왔네요. 남편이랑 아들램 딸램이랑 넷이 갔다 왔는데 참 좋은시간이었어요^^ 여러분들도 벚꽃구경 잘 하셨는지요^^",
+        "memberId": "id_222",
+        "likeNum": 4,
+        "commentNum": 40,
+        "createdAt": "2022-04-07",
+        "postType": "history",
+        "address": "서울 영등포구 여의동로 330 한강사업본부 여의도안내센터",
+        "latitude": "37.5263474738219",
+        "longitude": "126.933595431713"
+      },
+      {
+        "postId": "3",
+        "title": "같이 탁구치실분",
+        "body": "탁구 잘 치는 사람만 오셈. 기본실력 안되면 채팅하지마세요. 지금 가천대 학생회관인데 같이 하실분?",
+        "memberId": "id_tak9",
+        "likeNum": 4,
+        "createdAt": "2024-03-05",
+        "period": "12:00:00 - 13:00:00",
+        "postType": "daily",
+        "address": "경기 성남시 수정구 성남대로 1342",
+        "latitude": "37.45123486951",
+        "longitude": "127.12939432624"
+      },
+      {
+        "postId": "4",
+        "title": "밥 같이 먹을분,,",
+        "body": "새내기라 친구가 없네요 ㅜ 지금 에공관인데 같이 점심 드실분 있나요?! 제가 음료수 사드릴게요!",
+        "memberId": "id_sad",
+        "likeNum": 4,
+        "createdAt": "2024-03-05",
+        "period": "14:30:00 - 16:00:00",
+        "postType": "daily",
+        "address": "경기 성남시 수정구 복정동 495",
+        "latitude": "37.4552003863507",
+        "longitude": "127.13370255097"
+      },
+      {
+        "postId": "5",
+        "title": "놀러갔다옴",
+        "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ 부럽지 순두부 젤라또도 먹음.",
+        "memberId": "id_1234",
+        "likeNum": 4,
+        "commentNum": 40,
+        "createdAt": "2022-04-10",
+        "postType": "history", 
+        "address": "강원 강릉시 초당순두부길77번길 15 동화가든",
+        "latitude": "37.7911524593073",
+        "longitude": "128.914664130458"
+      }
+    ],
+    
+    
+    "notices": [
+      {
+        "id": "1",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "2",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "3",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "4",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "5",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "6",
+        "profileImage": "url",
+        "authorName": "신해철",
+        "authorNickname": "ADMIN",
+        "title": "테스트용 공지사항 입니다.",
+        "date": "2024.04.14"
+      }
+    ],
+    "questions": [
+      {
+        "id": "1",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "문의사항 테스트 페이지 입니다.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "2",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "차단한 사람을 풀고싶어요.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "3",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "게시물 삭제를 하고 싶어요.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "4",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "이메일을 바꿀 수 있을까요?.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "5",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "비밀번호를 찾기에 실패했어요.",
+        "date": "2024.04.14"
+      },
+      {
+        "id": "6",
+        "profileImage": "url",
+        "authorName": "질문하는사람이름",
+        "authorNickname": "질문하는사람닉네임",
+        "title": "로그인이 안될땐 어떻게 하나요?",
+        "date": "2024.04.14"
+      }
+    ],
+        "followers": [
+      {
+        "id": "1",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": false
+      },
+      {
+        "id": "2",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": false
+      },
+      {
+        "id": "3",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "4",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "5",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": false
+      },
+      {
+        "id": "6",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
+      },
+      {
+        "id": "7",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": false
+      },
+      {
+        "id": "8",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "../assets/images/users/user1.jpg",
+        "history": 77,
+        "daily": 77,
+        "isFollow": false
+      },
+      {
+        "id": "9",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": false
+      },
+      {
+        "id": "10",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "11",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "12",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": false
+      }
+    ],
+     "followings": [
+      {
+        "id": "1",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": true
+      },
+      {
+        "id": "2",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": true
+      },
+      {
+        "id": "3",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "4",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "5",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "6",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
+      },
+      {
+        "id": "7",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": true
+      },
+      {
+        "id": "8",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": true
+      },
+      {
+        "id": "9",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "10",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "11",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "12",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
+      }
+    ]
+  }
