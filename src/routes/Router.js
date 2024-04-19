@@ -6,8 +6,9 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 /***** Pages ****/
 
-const Login = lazy(() => import("../pages/Login.jsx"));
-const Signup = lazy(() => import("../pages/Signup.jsx"));
+const Login = lazy(() => import("../pages/login.jsx"));
+const Signup = lazy(() => import("../pages/singup.jsx"));
+
 
 /***** Views ****/
 
@@ -16,6 +17,7 @@ const Mymap = lazy(() => import("../views/Mymap.js"));
 const Upload = lazy(() => import("../views/Upload.js"));
 const Chatting = lazy(() => import("../views/Chatting.js"));
 const Search = lazy(() => import("../views/Search.js"));
+const MyPage = lazy(() => import("../views/MyPage"));
 
 const Modi_profile = lazy(() => import("../views/ui/Modi_profile"));
 const BlockList = lazy(() => import("../views/ui/BlockList"));
@@ -51,13 +53,14 @@ const ThemeRoutes = [
       { path: "/upload", exact: true, element: <Upload /> },
       { path: "/chatting", exact: true, element: <Chatting /> },
       { path: "/search", exact: true, element: <Search /> },
+      { path: "/mypage", exact: true, element: <MyPage /> },
 
       { path: "/modify_profile", exact: true, element: <Modi_profile /> },
       { path: "/blocklist", exact: true, element: <BlockList /> },
       { path: "/notices", exact: true, element: <Notices /> },
       { path: "/questions", exact: true, element: <Questions /> },
       { path: "/withdrawal", exact: true, element: <Withdrawal /> },
-      
+
       { path: "/table", exact: true, element: <Tables /> },
       { path: "/forms", exact: true, element: <Forms /> },
       { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },

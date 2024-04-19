@@ -45,12 +45,12 @@
         "required": "1"
       }
     ],
-
     "post": [
       {
         "postId": "1",
         "title": "놀러갔다옴요",
         "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ (부산 해운대임) 부럽지 순두부 젤라또도 먹음.",
+        "memberId": "id_1234",
         "memberId": "id_555",
         "likeNum": 20,
         "commentNum": 10,
@@ -265,6 +265,226 @@
         "authorNickname": "질문하는사람닉네임",
         "title": "로그인이 안될땐 어떻게 하나요?",
         "date": "2024.04.14"
+      }
+    ],
+        "followers": [
+      {
+        "id": "1",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": false
+      },
+      {
+        "id": "2",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": false
+      },
+      {
+        "id": "3",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "4",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "5",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": false
+      },
+      {
+        "id": "6",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
+      },
+      {
+        "id": "7",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": false
+      },
+      {
+        "id": "8",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "../assets/images/users/user1.jpg",
+        "history": 77,
+        "daily": 77,
+        "isFollow": false
+      },
+      {
+        "id": "9",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": false
+      },
+      {
+        "id": "10",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "11",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "12",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": false
+      }
+    ],
+     "followings": [
+      {
+        "id": "1",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": true
+      },
+      {
+        "id": "2",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": true
+      },
+      {
+        "id": "3",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "4",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "5",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "6",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
+      },
+      {
+        "id": "7",
+        "name": "이정균",
+        "nickName": "개미개미개",
+        "profileImage": "url",
+        "history": 12,
+        "daily": 34,
+        "isFollow": true
+      },
+      {
+        "id": "8",
+        "name": "이윤서",
+        "nickName": "난사왕커리",
+        "profileImage": "url",
+        "history": 77,
+        "daily": 77,
+        "isFollow": true
+      },
+      {
+        "id": "9",
+        "name": "김이영",
+        "nickName": "이영김",
+        "profileImage": "url",
+        "history": 0,
+        "daily": 200,
+        "isFollow": true
+      },
+      {
+        "id": "10",
+        "name": "장민성",
+        "nickName": "잔드민성",
+        "profileImage": "url",
+        "history": 280,
+        "daily": 2,
+        "isFollow": true
+      },
+      {
+        "id": "11",
+        "name": "김성호",
+        "nickName": "S6성호",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 26,
+        "isFollow": true
+      },
+      {
+        "id": "12",
+        "name": "신해철",
+        "nickName": "마왕",
+        "profileImage": "url",
+        "history": 15,
+        "daily": 54,
+        "isFollow": true
       }
     ]
   }
