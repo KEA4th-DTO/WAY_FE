@@ -9,13 +9,14 @@ import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import refresh from "../../assets/images/icons/refresh.png";
 
-const MapInformation = () => {
+const UserMapinfo = ({userId}) => {
+    const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
-    const [post, setPost] = useState([]);
-    const [bounds, setBounds] = useState({ ne: {lat: '', lng: ''}, sw: {lat: '', lng: ''} });
+    // const [bounds, setBounds] = useState({ ne: {lat: '', lng: ''}, sw: {lat: '', lng: ''} });
     const mapRef = useRef(null);
     const [activePin, setActivePin] = useState("all"); // 현재 활성화된 핀 타입을 관리
-    const [mapState, setMapState] = useState({ zoom: 16, center: null }); // 지도의 확대/축소 및 중심 좌표 상태 관리
+    const k_center = { lat: 36.358949, lng: 127.7646949 }; 
+    const [mapState, setMapState] = useState({ zoom: 7, center: k_center }); // 지도의 확대/축소 및 중심 좌표 상태 관리
     const [activeMarker, setActiveMarker] = useState(null);
     const clickedMarkers = {}; // 클릭된 마커를 저장할 객체
 
@@ -48,17 +49,21 @@ const MapInformation = () => {
     //지도 새로고침
     const onRefreshClick = () => {
         // Refresh 버튼 클릭 시 지도 상태를 초기화하여 처음 로드될 때와 동일하게 설정
-        setMapState({ zoom: 16, center: currentMyLocation });
+        setMapState({ zoom: 7, center: {lat: '36.358949', lng: '127.7646949'} });
     };
 
-    //더미데이터 가져오기
-    useEffect(() => {
-        fetch('http://localhost:3001/post')
-            .then(res => res.json())
-            .then(data => {
-                setPost(data);
-            })
-            .catch(error => console.error("Error fetching data:", error));
+    //데이터 가져오기
+    useEffect(()=>{
+        fetch('http://localhost:3001/post') //API경로 적어주기
+        .then(res => {
+            return res.json() //json으로 변환됨
+        })
+        .then(data => {
+            // memberId가 userId와 일치하는 경우에만 해당 게시물을 저장
+            const userPosts = data.filter(post => post.memberId === userId);
+            setUserPost(userPosts);
+        })
+        .catch(error => console.error("Error fetching data:", error));
     }, []);
 
     //현재 위치 가져오기
@@ -94,25 +99,25 @@ const MapInformation = () => {
                 }
             });
 
-            //지도 이동시 bounds 변경(좌표 받아오기)
-            function updateBounds() {
-                const bounds = map.getBounds();
-                setBounds({
-                    ne: {
-                        lat: bounds.getNE().lat(),
-                        lng: bounds.getNE().lng()
-                    },
-                    sw: {
-                        lat: bounds.getSW().lat(),
-                        lng: bounds.getSW().lng()
-                    }
-                });
-            }
+            // //지도 이동시 bounds 변경(좌표 받아오기)
+            // function updateBounds() {
+            //     const bounds = map.getBounds();
+            //     setBounds({
+            //         ne: {
+            //             lat: bounds.getNE().lat(),
+            //             lng: bounds.getNE().lng()
+            //         },
+            //         sw: {
+            //             lat: bounds.getSW().lat(),
+            //             lng: bounds.getSW().lng()
+            //         }
+            //     });
+            // }
 
-            // Immediately update bounds when map is initialized
-            updateBounds();
+            // // Immediately update bounds when map is initialized
+            // updateBounds();
 
-            naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
+            // naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
 
             //현재 위치 마커표시
             new naver.maps.Marker({
@@ -152,16 +157,15 @@ const MapInformation = () => {
 
             // postId에 따라 정상 아이콘을 반환합니다.
             const getNormalPin = (postId) => {
-                const item = post.find(item => item.postId === postId);
-                // 게시물이 없는 경우 기본 아이콘 반환
+                const item = userPost.find(item => item.postId === postId);
+                // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
                 if (!item) return allPin;
-                return item.postType === 'daily' ? dailyPin : historyPin;
-            }; 
-
+                return item.postType === 'daily' ? dailyPin : item.postType === 'history' ? historyPin : allPin;
+            };
 
             // postId에 따라 full 아이콘을 반환합니다.
             const getFullPin = (postId) => {
-                const item = post.find(item => item.postId === postId);
+                const item = userPost.find(item => item.postId === postId);
                 // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
                 if (!item) return allPin;
                 return item.postType === 'daily' ? full_dailyPin : full_historyPin;
@@ -169,6 +173,11 @@ const MapInformation = () => {
 
             // 마커 클릭 이벤트 핸들러
             const handleMarkerClick = (postId, marker) => {
+                // postId에 해당하는 게시물을 찾습니다.
+                const item = userPost.find(item => item.postId === postId);
+                // postId에 해당하는 게시물이 없을 경우 처리하지 않습니다.
+                if (!item) return;
+
                 // 클릭된 마커가 이미 클릭된 상태인지 확인합니다.
                 if (activeMarker === postId) {
                     // 클릭된 마커를 다시 클릭하면 원래 아이콘으로 변경하고 상태를 비활성화합니다.
@@ -178,12 +187,13 @@ const MapInformation = () => {
                         scaledSize: new naver.maps.Size(43, 43),
                     });
                     setActiveMarker(null);
-                    delete clickedMarkers[postId]; // 클릭된 마커 목록에서 제거합니다.
                 } else {
+                    // 현재 클릭된 마커의 상태를 변경합니다.
+                    setActiveMarker(postId);
                     // 모든 클릭된 마커의 아이콘을 원래 아이콘으로 변경합니다.
                     Object.values(clickedMarkers).forEach(clickedMarker => {
                         clickedMarker.setIcon({
-                            url: getNormalPin(clickedMarker.postId), // 클릭된 마커의 postId를 가져와서 정상 아이콘을 설정합니다.
+                            url: getNormalPin(clickedMarker.get('postId')),
                             size: new naver.maps.Size(43, 43),
                             scaledSize: new naver.maps.Size(43, 43),
                         });
@@ -191,19 +201,17 @@ const MapInformation = () => {
                     // 클릭된 마커의 아이콘을 full 아이콘으로 변경합니다.
                     marker.setIcon({
                         url: getFullPin(postId),
-                        size: new naver.maps.Size(50, 50),
-                        scaledSize: new naver.maps.Size(50, 50),
+                        size: new naver.maps.Size(43, 43),
+                        scaledSize: new naver.maps.Size(43, 43),
                     });
                     // 클릭된 마커를 clickedMarkers에 저장합니다.
                     clickedMarkers[postId] = marker;
-                    setActiveMarker(postId);
                 }
             };
 
 
-
             // 게시글 마커 표시
-            post.filter(item => activePin === 'all' || item.postType === activePin).forEach((item, index) => {
+            userPost.filter(item => activePin === 'all' || item.postType === activePin).forEach((item, index) => {
                 createMarker(item, index);
             });
 
@@ -228,19 +236,9 @@ const MapInformation = () => {
 
 
         }
-    }, [currentMyLocation, post, activePin, mapState]);  // `activePin` 및 `mapState`를 의존성 목록에 추가
+    }, [currentMyLocation, userPost, activePin, mapState]);  // `activePin` 및 `mapState`를 의존성 목록에 추가
 
-    useEffect(() => {
-        // 페이지가 처음 로드될 때만 현재 위치를 중심으로 지도를 표시
-        if (currentMyLocation && mapRef.current) {
-            setMapState({
-                ...mapState,
-                center: new window.naver.maps.LatLng(currentMyLocation.lat, currentMyLocation.lng),
-            });
-        }
-        
-    }, [currentMyLocation]); // currentMyLocation을 의존성 목록에 추가하여 처음 로드될 때만 실행
-
+   
     return (
         <div>
                 <button onClick={onRefreshClick} >
@@ -264,14 +262,14 @@ const MapInformation = () => {
             </div>
             
             <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
-            <div>
+            {/* <div>
                 <h4>Map Bounds:</h4>
                 <p>North-East Latitude: {bounds.ne.lat}, Longitude: {bounds.ne.lng}</p>
                 <p>South-West Latitude: {bounds.sw.lat}, Longitude: {bounds.sw.lng}</p>
-            </div>
+            </div> */}
 
         </div>
     );
 };
 
-export default MapInformation;
+export default UserMapinfo;
