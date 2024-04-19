@@ -1,3 +1,33 @@
+.other-user-text {
+  color: rgba(64, 77, 242, 1);
+  font-size: 27px;
+  font-weight: bold;
+  margin-left: 20px; /* 이미지 너비만큼 왼쪽으로 이동 */
+}
+
+.other-user-profileimage {
+  width: 50px;
+  height: 50px;
+  border-radius: 20%; /* 원형 이미지로 만들기 */
+  object-fit: cover;
+}
+
+.other-user-button {
+  background-color: rgb(173, 178, 255);
+  color: white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  margin: 20px 0 0 10px;
+  transform: translateY(-50%);
+}
+
+.info-button:hover {
+  background-color: rgba(64, 77, 242, 0.8); /* 호버 효과 */
+}
 
 
 .initial-main-page-frame {

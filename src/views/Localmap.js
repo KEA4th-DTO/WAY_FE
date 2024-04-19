@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import MapInformation from "../components/main/Mapinformation";
+import DailyList from "../components/main/DailyList";
+import HistoryList from "../components/main/HistoryList";
 import DailyPost from "../components/main/DailyPost";
 import HistoryPost from "../components/main/HistoryPost";
 
 const Localmap = () => {
   //데이터 가져오기
   const [post, setPost] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
+
   
   useEffect(()=>{
       fetch('http://localhost:3001/post') //API경로 적어주기
@@ -18,6 +22,10 @@ const Localmap = () => {
       .catch(error => console.error("Error fetching data:", error));
   }, []);
   
+  // 포스트 클릭 시 선택된 포스트 업데이트
+  const handlePostClick = (selectedItem) => {
+    setSelectedPost(selectedItem);
+  };
 
   return ( 
     <div id="local-con" style={{border: "5px solid red", display: "flex", width: "950px"}}>
@@ -37,18 +45,22 @@ const Localmap = () => {
             게시글
           </span>
       
-          <div style={{border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px"}}>
-        {/* postType에 따라 DailyPost 또는 HistoryPost 가져오기 */}
-            {post.map(item => {
-                if (item.postType === 'daily') { 
-                    return <DailyPost key={item.id} data={item} />;
-                } else if (item.postType === 'history') { 
-                    return <HistoryPost key={item.id} data={item} />;
-                }
-                return null;
-            })}
-          </div>
+          <div style={{ display: selectedPost && selectedPost.postType === 'daily' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+          {selectedPost && selectedPost.postType === 'daily' && <DailyPost data={selectedPost} />}
         </div>
+        <div id="list" style={{ display: selectedPost && selectedPost.postType === 'daily' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+          {post.map(item => (
+            <button key={item.id} onClick={() => handlePostClick(item)}>
+              {item.postType === 'daily' ? <DailyList data={item} /> : <HistoryList data={item} />}
+            </button>
+          ))}
+        </div>
+      </div>
+      {selectedPost && selectedPost.postType === 'history' && (
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "9999", backgroundColor: "white", width: "50%", height: "50%", padding: "20px", border: "3px solid blue" }}>
+          <HistoryPost data={selectedPost} />
+        </div>
+      )}
     </div>
   );
 };
