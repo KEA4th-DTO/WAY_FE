@@ -9,6 +9,7 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 const Login = lazy(() => import("../pages/login.jsx"));
 const Signup = lazy(() => import("../pages/singup.jsx"));
 
+
 /***** Views ****/
 
 const Localmap = lazy(() => import("../views/Localmap.js"));
