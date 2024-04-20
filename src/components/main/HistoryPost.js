@@ -1,140 +1,246 @@
-import React, { useState, useEffect } from 'react';
-import "../../assets/scss/layout/_dailypost.scss";
-import user7 from "../../assets/images/users/user7.png";
-import sky from "../../assets/images/bg/sky.png";
-import full_historyPin from "../../assets/images/icons/full_historyPin.png";
-import more from "../../assets/images/logos/more.png";
-import share from "../../assets/images/logos/share.png";
+import React from 'react'
+import "../../assets/scss/layout/_historypost.scss";
+import user3 from "../../assets/images/users/user3.jpg";
 import like from "../../assets/images/logos/like.png";
-import full_like from "../../assets/images/logos/full_like.png";
-import back from "../../assets/images/logos/back.png";
-
-import { shareKakao } from '../../utils/shareKakaoLink';
-import { formatDate } from '../../utils/changeFormat';
+import comment from "../../assets/images/logos/comment.png";
+import more from "../../assets/images/logos/more.png";
+import comment_more from "../../assets/images/logos/comment_more.png";
+import sky from "../../assets/images/bg/sky.png";
+import close from "../../assets/images/logos/close.png";
+import sul from "../../assets/images/bg/10sul.png";
 
 const HistoryPost = ({ data }) => {
-        // null 체크를 위해 미리 초기화
-        const [likeNum, setLikeNum] = useState(data ? data.likeNum : 0);
-        const [liked, setLiked] = useState(false);
-        const [followed, setFollowed] = useState(false);
+  return (
+      <div style={{border: "3px solid red"}}className="floating-history-comment-floating-history-comment">
+        <div style={{border: "3px solid yellow"}} className="floating-history-comment-history-floating-window-expanded-comment">
+        <img
+            src={close}
+            alt="닫기"
+            className="floating-history-comment-x11"
+        />
 
-        // 데이터가 없는 경우 null을 반환하므로 조건문을 사용하지 않음
-        useEffect(() => {
-            if (!data) {
-                return;
-            }
-            // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
-            setLiked(data.liked);
-        }, [data]);
+        {/* -------------게시글------------ */}
+          <span style={{border: "3px solid green"}} className="floating-history-comment-text065">
+            <span>History</span>
+          </span>
+          <span className="floating-history-comment-text067">
+            <span>복정동 10술집 후기</span>
+          </span>
+          <div style={{border: "3px solid red"}} id='작성자 정보' className="floating-history-comment-frame28">
+          <div className="floating-history-comment-frame29">
+            <img
+              src={user3}
+              alt="freeiconuser14907112248"
+              className="floating-history-comment-freeiconuser14907114"
+            />
+          </div>
+          <span className="floating-history-comment-text116">
+            <span>id_21212</span>
+          </span>
+        </div>
+          <span className="floating-history-comment-text112">
+             <span>2024년 3월 19일 12:39</span>
+         </span>
+        <span className="floating-history-comment-text114">
+          <span>팔로우</span>
+        </span>
+        <img
+          src={more}
+          alt="더보기"
+          className="floating-history-comment-freeiconmenu83733991"
+        />
 
-        const handleLikeClick = () => {
-            if (liked) {
-                setLikeNum(prevNum => prevNum - 1);
-            } else {
-                setLikeNum(prevNum => prevNum + 1);
-            }
-            setLiked(!liked);
-        };
+            {/* -------------게시글 내용------------ */}    
+        <div style={{border: "3px solid red", overflow:"auto"}}>
+          <span className="floating-history-comment-text069">
+            내용
+            </span>
+          <img
+            src={sul}
+            alt="IMAGEHistoryImage1351"
+            className="floating-history-comment-image-history-image"
+          />
+          <span className="floating-history-comment-text097">
+            <span>게시글 끝</span>
+          </span>
+          {/* -------------해시태그------------ */}
+        <div style={{border: "3px solid red"}} id='해시태그' className="floating-history-comment-frame">
+            <span className="floating-history-comment-text">
+            <span>#짱구</span>
+            </span>
+            <span className="floating-history-comment-text002">
+            <span>#가천대</span>
+            </span>
+            <span className="floating-history-comment-text004">
+            <span>#위례</span>
+            </span>
+        </div>
+    </div>
+        {/* -------------게시글 좋아요수, 댓글수------------ */}
+          <div className="floating-history-comment-frame26">
+            <img
+              src={like}
+              alt="게시글 좋아요"
+              className="floating-history-comment-svg"
+            />
+            <span id='좋아요 수' className="floating-history-comment-text107">
+              <span>95</span>
+            </span>
+          </div>
 
-        const handleFollowClick = () => {
-            if (followed) {
-                setFollowed(false);
-            } else {
-                setFollowed(true);
-            }
-        };
-    
+          <div className="floating-history-comment-frame27">
+            <div className="floating-history-comment-comment">
+              <img
+                src={comment}
+                alt="댓글"
+                className="floating-history-comment-vector"
+              />
+            </div>
+            <span id='댓글수' className="floating-history-comment-text109">
+                5
+            </span>
+          </div>
+        </div>
+     
 
-    return(
-      <div style={{border: "3px solid red"}} className="dailypost-frame">
-        <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
-        <div style={{border: "3px solid orange"}} className="dailypost-frame3">
-            <div className="dailypost-frame4">
-              <img alt="사용자 프로필 이미지" src={user7} className="dailypost-profileimage" />
-              <span className="dailypost-text10">
-                <span>{data.memberId}</span>
+        {/* ------------댓글------------- */}
+          <div style={{border: "3px solid red"}} id='댓글 컨테이너' className="floating-history-comment-frame01">
+            <div style={{border: "3px solid red"}} id='댓글 컨텐츠' className="floating-history-comment-frame02">
+                <div style={{border: "3px solid orange"}} id='좋아요' className="floating-history-comment-frame04">
+                    <img
+                        src={like}
+                        alt="좋아요"
+                        className="floating-history-comment-hearts1"
+                    />
+                    <span className="floating-history-comment-text012">
+                        <span>댓글 좋아요 수</span>
+                    </span>
+                </div>
+              <img
+                src={comment_more}
+                alt="댓글 더보기"
+                className="floating-history-comment-image"
+              />
+
+              <div style={{border: "3px solid orange"}} id='댓글 작성자' className="floating-history-comment-frame03">
+              <img
+                  src={user3}
+                  alt="댓글 작성자 프로필이미지"
+                  className="floating-history-comment-freeiconuser1490711"
+                />
+                <span style={{border: "3px solid orange"}} id='사용자 아이디' className="floating-history-comment-text006">
+                  <span>{data.memberId}</span>
+                </span>
+              </div>
+              <span style={{border: "3px solid orange"}}  className="floating-history-comment-text008">
+                <span>댓글 내용</span>
               </span>
+              <span className="floating-history-comment-text010">
+                <span>댓글단 날짜</span>
+              </span>
+            </div> 
+            <div className="floating-history-comment-frame08">
+              <div className="floating-history-comment-frame10">
+                <span className="floating-history-comment-text026">
+                  <span>댓글 달기</span>
+                </span>
+              </div>
+              <div className="floating-history-comment-frame09">
+                <span className="floating-history-comment-text024">
+                  <span>삭제하기</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+           {/* ------------답글------------- */}
+          
+          <div style={{border: "3px solid green"}} id='답글 컨테이너' className="floating-history-comment-frame19">
+            <div style={{border: "3px solid orange"}} className="floating-history-comment-frame14">
+                <img
+                    src={like}
+                    alt="좋아요"
+                    className="floating-history-comment-image3"
+                />
+                <span className="floating-history-comment-text034">0</span>
+                </div>
+            <div style={{border: "3px solid green"}} id='답글 컨텐츠' className="floating-history-comment-frame12">
+              <span className="floating-history-comment-text028">
+                <span>답글 내용입니다!</span>
+              </span>
+              <span className="floating-history-comment-text030">
+                <span>답글 작성 날짜</span>
+              </span>
+                <div className="floating-history-comment-frame13">
+                <img
+                  src={user3}
+                  alt="댓글 작성자 프로필이미지"
+                  className="floating-history-comment-freeiconuser1490711"
+                />
+                    <span className="floating-history-comment-text032">
+                    <span>아이디</span>
+                    </span>
+                </div>
+                <img
+                    src={comment_more}
+                    alt="더보기"
+                    className="floating-history-comment-image2"
+                />
+            </div>
+            <div className="floating-history-comment-frame08">
+              <div className="floating-history-comment-frame10">
+                <span className="floating-history-comment-text026">
+                  <span>댓글 달기</span>
+                </span>
+              </div>
+              <div className="floating-history-comment-frame09">
+                <span className="floating-history-comment-text024">
+                  <span>신고하기</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+         {/* ------------댓글 작성칸------------- */}
+   
+          <div style={{border: "3px solid green"}} className="floating-history-comment-group45">
+            <img
+              src="/external/rectangle391351-s4js.svg"
+              alt="Rectangle391351"
+              className="floating-history-comment-rectangle39"
+            />
+            <div style={{border: "3px solid green"}} className="floating-history-comment-group36">
+              <div className="floating-history-comment-group27">
+                <span className="floating-history-comment-text059">
+                  <span>10술집</span>
+                </span>
+              </div>
+              <img
+                src={user3}
+                alt="freeiconuser14907111351"
+                className="floating-history-comment-freeiconuser14907112"
+              />
             </div>
             <img
-              alt="postType, 핀 이미지"
-              src={full_historyPin}
-              className="dailypost-daily-pin-filled"
+            style={{border: "3px solid green"}}
+              src="/external/rectangle401351-jkhk-200h.png"
+              alt="Rectangle401351"
+              className="floating-history-comment-rectangle40"
             />
-            <button className="dailypost-text12" onClick={handleFollowClick} >
-                <span style={{ color: followed ? "#404DF2" : "#000" }}>팔로우</span>
-            </button>
-            <button style={{border: "none"}}>
-            <img
-              alt="더보가"
-              src={more}
-              className="dailypost-menubutton"
-            />
-            </button>
-          </div>
-        </div>
-          <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
-            <img alt="게시글 이미지" src={sky} className="dailypost-image" />
+            
+                <div style={{border: "3px solid green"}} className="floating-history-comment-frame25">
+                <span className="floating-history-comment-text061">
+                    <span>등록</span>
+                </span>
+                </div>
+                <span className="floating-history-comment-text063">
+                <span>댓글을 입력해주세요.</span>
+                </span>
           </div>
 
-          <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
-            <span style={{border: "3px solid yellow"}} className="dailypost-text08">
-              <span>{data.title}</span>
-            </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text02">
-              <span style={{ color: data.postType==='history' ? "#31B004" : "#ff0" }}>{data.postType}</span>
-            </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text04">
-              <span>
-                {data.body}
-              </span>
-            </span>
-            <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{formatDate(data.createdAt)} </span>
-            </span>
-          </div>
-         
-        <div style={{border: "3px solid green"}} className="dailypost-group99">
-          <button className="dailypost-frame6" onClick={() => shareKakao()}>
-            <img
-              alt="공유하기"
-              src={share}
-              className="dailypost-vector"
-            />
-          </button>
-          <div className="dailypost-frame7">
-            <button style={{ border: "none" }} onClick={handleLikeClick}>
-                <img
-                    alt="좋아요"
-                    src={liked ? full_like : like}
-                    className="dailypost-svg"
-                />
-            </button>
-           
-            <span className="dailypost-text16">
-              <span>{likeNum}</span>
-            </span>
-          </div>
-          <div className="dailypost-frame8">
-            <img
-              alt="뒤로가기"
-              src={back}
-              className="dailypost-vector3"
-            />
-          </div>
-          <button className="dailypost-frame5">
-            <span className="dailypost-text14">
-              실시간 채팅하기
-            </span>
-          </button>
-        </div>
-        
       </div>
     
-    );
-    
+  );
 };
 
 export default HistoryPost;
-
-
-

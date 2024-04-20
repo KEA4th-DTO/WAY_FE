@@ -4,6 +4,7 @@ import DailyList from "../components/main/DailyList";
 import HistoryList from "../components/main/HistoryList";
 import DailyPost from "../components/main/DailyPost";
 import HistoryPost from "../components/main/HistoryPost";
+import "../assets/scss/layout/_localmap.scss";
 
 const Localmap = () => {
   //데이터 가져오기
@@ -57,7 +58,7 @@ const Localmap = () => {
         </div>
       </div>
       {selectedPost && selectedPost.postType === 'history' && (
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "9999", backgroundColor: "white", width: "50%", height: "50%", padding: "20px", border: "3px solid blue" }}>
+        <div className="historyPost-con">
           <HistoryPost data={selectedPost} />
         </div>
       )}
