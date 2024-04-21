@@ -6,9 +6,8 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 /***** Pages ****/
 
-const Login = lazy(() => import("../pages/login.jsx"));
-const Signup = lazy(() => import("../pages/singup.jsx"));
-
+const Login = lazy(() => import("../pages/Login.jsx"));
+const Signup = lazy(() => import("../pages/Signup.jsx"));
 
 /***** Views ****/
 

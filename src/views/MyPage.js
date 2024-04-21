@@ -23,6 +23,8 @@ function ProfilePage() {
     setActiveTab(tab);
   };
 
+  const Posts = () => <div>게시글 목록</div>;
+
   return (
     <div className="mypage-container">
       {/* left panel */}

@@ -26,6 +26,15 @@ label{
     opacity: 0.6;
 }
 
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 수직 정렬 */
+    justify-content: center;
+    /* 수평 정렬 */
+}
+
 .signup-info{
     display: flex;
     justify-content: right;
@@ -47,49 +56,24 @@ label{
 }
 
 
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="text"]
-{
+.signup-email, .signup-password, .signup-repassword, .signup-name, .signup-nickname, .signup-phoneNum{
     display: flex;
     width: 40%;
     margin-top: 5%;
     justify-content: center;
     align-items: center;
-    height: 15px;
+    height: 30px;
     border-radius: 12px;
     border: 1px solid #ccc;
     padding: 10px;
     padding-left: 20px;
     margin-left: 30px;
 }
+
 .password-input,
 .email-input {
     margin-top: 2px;
     height: 20px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    padding-left: 20px;
-}
-
-.re-pwd > input[type="password"] {
-    width: 40%;
-    margin-top: 5%;
-    justify-content: center;
-    height: 15px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    padding-left: 20px;
-}
-
-.passwordInput{
-    width: 30%;
-    margin-top: 5%;
-    justify-content: center;
-    height: 15px;
     border-radius: 12px;
     border: 1px solid #ccc;
     padding: 10px;
