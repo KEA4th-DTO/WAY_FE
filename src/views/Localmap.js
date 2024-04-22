@@ -65,5 +65,3 @@ const Localmap = () => {
   );
 };
 export default Localmap;
-
-

@@ -1,12 +1,36 @@
-div.question__title {
+.question-title {
     display: flex;
-    margin-left: 10%;
+    width: 500px;
+    margin-left:10%;
+    justify-content: center;
     align-items: center;
+    color: #727272;
 }
 
-div.question__author {
-    margin-left: 10%;
+.question__author {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left : 30px;
+    width : 80px;
+}
+
+.question-name {
+    margin-left: 70%;
+    align-items: center;
+    font-weight : bold;
+    font-size : 20px;
+    width : 70px;
+}
+
+.question-nickname {
+    margin-left: 80%;
+    margin-top : 20%;
+    align-items: center;
+    color: #8F8F8F;
+    width: 100%;
+
 }
 
 div.question__date {

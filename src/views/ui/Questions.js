@@ -7,9 +7,9 @@ const Questions = () => {
     <div>
       <SectionTitle>
         <h2>문의사항</h2>
-        <hr/>
+        <hr className="horizontal-divider" />
       </SectionTitle>
-      <QuestionPost/>
+      <QuestionPost />
     </div>
   );
 };
