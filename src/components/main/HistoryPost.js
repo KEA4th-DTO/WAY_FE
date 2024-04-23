@@ -9,7 +9,11 @@ import sky from "../../assets/images/bg/sky.png";
 import close from "../../assets/images/logos/close.png";
 import sul from "../../assets/images/bg/10sul.png";
 
-const HistoryPost = ({ data }) => {
+const HistoryPost = ({ data, onClose  }) => {
+  const handleCloseClick = () => {
+    onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
+  };
+  
   return (
       <div style={{border: "3px solid red"}}className="floating-history-comment-floating-history-comment">
         <div style={{border: "3px solid yellow"}} className="floating-history-comment-history-floating-window-expanded-comment">
@@ -17,6 +21,7 @@ const HistoryPost = ({ data }) => {
             src={close}
             alt="닫기"
             className="floating-history-comment-x11"
+            onClick={handleCloseClick} // 닫기 버튼 클릭 시 handleCloseClick 함수 호출
         />
 
         {/* -------------게시글------------ */}
@@ -30,7 +35,7 @@ const HistoryPost = ({ data }) => {
           <div className="floating-history-comment-frame29">
             <img
               src={user3}
-              alt="freeiconuser14907112248"
+              alt="작성자 프로필이미지"
               className="floating-history-comment-freeiconuser14907114"
             />
           </div>
@@ -217,7 +222,7 @@ const HistoryPost = ({ data }) => {
               </div>
               <img
                 src={user3}
-                alt="freeiconuser14907111351"
+                alt="작성자 프로필이미지"
                 className="floating-history-comment-freeiconuser14907112"
               />
             </div>

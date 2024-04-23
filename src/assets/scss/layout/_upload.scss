@@ -1,0 +1,76 @@
+// _upload.scss
+
+#button {
+    border: none;
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+// 선택된 버튼의 스타일
+.selected {
+    font-weight: bold;
+}
+
+.save {
+    @extend #button;
+    background-color: #6972eb; /* 저장 버튼 배경색 */
+    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    &:hover {
+        background-color: #404df2; /* 저장 버튼 호버 배경색 */
+    }
+}
+
+.daily {
+    @extend #button;
+    width: 80px;
+    background-color: #f0ccc5; /* 데일리 버튼 배경색 */
+    &:hover, &.selected { /* 선택된 상태일 때도 호버 색상 유지 */
+        background-color: #FF5733; /* 데일리 버튼 호버 배경색 */
+    }
+}
+
+.history {
+    @extend #button;
+    width: 80px;
+    background-color: #cae3ca; /* 히스토리 버튼 배경색 */
+    &:hover, &.selected { /* 선택된 상태일 때도 호버 색상 유지 */
+        background-color: #4CAF50; /* 히스토리 버튼 호버 배경색 */
+    }
+}
+.today {
+    border: none;
+    color: white;
+    background-color: #7b83f1;
+    padding: 1px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-weight: bold;
+}
+.tomorrow {
+    border: none;
+    color:  #7b83f1;
+    background-color: #ffffff;
+    padding: 1px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
