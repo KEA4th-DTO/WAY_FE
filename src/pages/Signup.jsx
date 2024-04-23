@@ -80,85 +80,93 @@ const Signup = () => {
           <p>필수입력사항</p>
         </div>
         <div className="horizontal-divider"></div>
-        <div className="email">
-          <label>이메일</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="이메일을 입력하세요"
-            required
-          />
-          <button className="btn-duplicate" onClick={handleEmailCheck}>
-            중복확인
-          </button>
-          {emailCheck && <p>이메일을 사용할 수 있습니다.</p>}
-        </div>
-        <div id="signup-pwd" className="password">
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="passwordInput"
-            placeholder="비밀번호를 입력하세요"
-            required
-          />
-        </div>
-        <div className="re-pwd">
-          <label>비밀번호 재확인</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="비밀번호를 다시 입력하세요"
-            required
-          />
-        </div>
-        <div className="phoneNum">
-          <label>핸드폰 번호</label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="010-1234-5678"
-            required
-          />
-        </div>
-        <div className="name">
-          <label>이름</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="이름을 입력하세요"
-            required
-          />
-        </div>
-
-        <div className="nickName">
-          <label>닉네임</label>
-          <input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="닉네임을 입력하세요"
-            required
-          />
-          <button onClick={handleNicknameCheck} className="btn-duplicate">
-            중복확인
-          </button>
-          {nicknameCheck && <p>사용할 수 있는 닉네임입니다.</p>}
-        </div>
-        <div className="agree">
-          <label>
-            <span className="agree">개인정보 동의</span>
+        <div className="signup-contatiner">
+          <div className="email">
+            <label>이메일</label>
             <input
-              type="checkbox"
-              checked={agreement}
-              onChange={(e) => setAgreement(e.target.checked)}
+              type="email"
+              className="signup-email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="이메일을 입력하세요"
+              required
             />
-          </label>
+            <button className="btn-duplicate" onClick={handleEmailCheck}>
+              중복확인
+            </button>
+            {emailCheck && <p>이메일을 사용할 수 있습니다.</p>}
+          </div>
+          <div id="signup-pwd" className="password">
+            <label>비밀번호</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="signup-password"
+              placeholder="비밀번호를 입력하세요"
+              required
+            />
+          </div>
+          <div className="re-pwd">
+            <label>비밀번호 재확인</label>
+            <input
+              type="password"
+              className="signup-repassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="비밀번호를 다시 입력하세요"
+              required
+            />
+          </div>
+          <div className="phoneNum">
+            <label>핸드폰 번호</label>
+            <input
+              type="tel"
+              className="signup-phoneNum"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="010-1234-5678"
+              required
+            />
+          </div>
+          <div className="name">
+            <label>이름</label>
+            <input
+              type="text"
+              value={name}
+              className="signup-name"
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름을 입력하세요"
+              required
+            />
+          </div>
+
+          <div className="nickName">
+            <label>닉네임</label>
+            <input
+              type="text"
+              value={nickname}
+              className="signup-nickname"
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="닉네임을 입력하세요"
+              required
+            />
+            <button onClick={handleNicknameCheck} className="btn-duplicate">
+              중복확인
+            </button>
+
+            {nicknameCheck && <p>사용할 수 있는 닉네임입니다.</p>}
+          </div>
+          <div className="agree">
+            <label>
+              <span className="agree">개인정보 동의</span>
+              <input
+                type="checkbox"
+                checked={agreement}
+                onChange={(e) => setAgreement(e.target.checked)}
+              />
+            </label>
+          </div>
         </div>
         <div className="signup-panel">
           <button className="btn-signup" onClick={handleSignUp}>
