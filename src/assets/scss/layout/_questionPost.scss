@@ -45,3 +45,13 @@ div.question__date {
     display: table;
     clear: both;
 }
+
+.question-main{
+    display: flex;
+    width: 200px;
+    margin-left:10%;
+    justify-content: left;
+    align-items: center;
+    color: #727272;
+    margin-top : 10%;
+}

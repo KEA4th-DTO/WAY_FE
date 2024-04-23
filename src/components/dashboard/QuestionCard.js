@@ -1,8 +1,12 @@
-import React from 'react';
+import React from "react";
 import "../../assets/scss/layout/_questionCard.scss";
 
-const QuestionCard = ({ children }) => {
-    return <div className="card">{children}</div>;
+const QuestionCard = ({ children, onClickAction }) => {
+  return (
+    <div className="card" onClick={onClickAction}>
+      {children}
+    </div>
+  );
 };
 
 export default QuestionCard;

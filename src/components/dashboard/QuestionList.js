@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import QuestionCard from "./QuestionCard";
 import question1 from "../../assets/images/users/user.png";
 import question2 from "../../assets/images/users/user.png";
@@ -9,7 +11,7 @@ import question6 from "../../assets/images/users/user.png";
 
 import "../../assets/scss/layout/_questionPost.scss";
 
-const QuestionPost = ({
+const QuestionList = ({
   profileImage,
   authorName,
   authorNickname,
@@ -17,13 +19,20 @@ const QuestionPost = ({
   date,
 }) => {
   const [questions, setQuestions] = useState([]);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleQuestionClick = (questionId) => {
+    navigate(`/questions/${questionId}`);
+  };
 
   useEffect(() => {
     fetch("http://localhost:3001/questions")
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((error) => console.error("Error fetching questions:", error));
-  }, []);
+  }, [selectedQuestion]);
 
   const getImagePath = (id) => {
     const img = [
@@ -40,7 +49,13 @@ const QuestionPost = ({
   return (
     <div className="questions">
       {questions.map((question, key) => (
-        <QuestionCard>
+        <QuestionCard
+          key={key}
+          onClickAction={() => {
+            setSelectedQuestion(question.id);
+            handleQuestionClick(question.id);
+          }}
+        >
           <div className={`questions__item p${key + 1} d-flex`} key={key}>
             <div className="question__img">
               <img
@@ -68,4 +83,4 @@ const QuestionPost = ({
   );
 };
 
-export default QuestionPost;
+export default QuestionList;

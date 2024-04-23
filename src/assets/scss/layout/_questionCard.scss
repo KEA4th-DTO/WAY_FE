@@ -1,6 +1,16 @@
 .card {
   border-radius: 15px;
   background-color: #EDEEFF;
+  margin-left : 10%;
+  width : 80%;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.card:hover{
+  border-radius: 15px;
+    background-color: #c98e8e;
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
