@@ -1,60 +1,32 @@
-import React from 'react';
-import { Row, Col, CardTitle, Button, CardSubtitle, Card } from 'reactstrap';
-import ComponentCard from '../components/ComponentCard';
-
+import React, { useState } from 'react';
+import EditorBox from '../components/main/EditorBox';
+// import ChangeAddress from '../components/main/ChangeAddress';
+import "../assets/scss/layout/_upload.scss";
 
 const Upload= () => {
-  const features = [
-    {
-      title: 'Support',
-      desc: 'Premium customer support from the actual people who have created.',
-      icon: 'bi-person-check',
-    },
-  ];
+  const [postType, setPostType] = useState('daily'); // 포스트 타입 state
+  const [body, setBody] = useState(''); // 에디터 내용을 담는 state
+
+   // 포스트 타입이 변경될 때 호출되는 함수
+   const handlePostTypeChange = (type) => {
+    setPostType(type);
+  };
+
   return (
-    <Row>
-      <Col>
-       
-        <Card>
-          <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-            <i className="bi bi-bell me-2"> </i>
-            About Xtreme React
-          </CardTitle>
-
-          <Row className='d-flex'>
-            <Col lg="8">
-              <div className="mt-5">
-                <ComponentCard
-                  title="Xtreme React Admin Pro Version"
-                  subtitle={
-                    <h5>
-                      5 premium and highly customizable demo variations included in the package, with React
-                      Router 6, Redux Toolkit, Axios nd much more...
-                    </h5>
-                  }
-                >
-                  {/* <Image src='https://www.wrappixel.com/wp-content/uploads/edd/2020/04/xtreme-react-admin-template-y.jpg' alt='pro version image' className='mt-2'/> */}
-                  {/* <img src='https://www.wrappixel.com/wp-content/uploads/edd/2020/04/xtreme-react-admin-template-y.jpg' alt='pro version image' className='mt-2' /> */}
-
-                  <img src={`https://www.wrappixel.com/wp-content/uploads/edd/2020/04/xtreme-react-admin-template-y.jpg`} alt="pro version" className="w-100"/>
-
-                  <div className="mt-3">
-                    <Button
-                      color="primary"
-                      href="https://www.wrappixel.com/templates/xtreme-react-redux-admin/?ref=33"
-                      target="_blank"
-                    >
-                      Check Pro Version
-                    </Button>
-                  </div>
-                </ComponentCard>
-              </div>
-            </Col>
-          </Row>
-
-        </Card>
-      </Col>
-    </Row>
+    <div>
+      {/* 포스트 타입 선택 버튼 */}
+      <div>
+        <button className={postType === 'daily' ? 'daily selected' : 'daily'} onClick={() => handlePostTypeChange('daily')}>Daily</button>
+        <button className={postType === 'history' ? 'history selected' : 'history'} onClick={() => handlePostTypeChange('history')}>History</button>
+      </div>
+      <br />
+      {/* 선택된 포스트 타입에 따라 다른 에디터 박스를 렌더링 */}
+      {postType === 'daily' ? (
+        <EditorBox body={body} setBody={setBody} postType={postType} />
+      ) : (
+        <EditorBox body={body} setBody={setBody} postType={postType}/>
+      )}
+    </div>
   );
 };
 
