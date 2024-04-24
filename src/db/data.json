@@ -1,172 +1,185 @@
-{   "member": [
-      {
-        "memberId": "id_1234",
-        "name": "김뚱이",
-        "email": "ddung2@gmail.com",
-        "password": "1234",
-        "nickname": "뚱이",
-        "introduction": "안녕하세요 뚱이입니다. 잘 부탁드려요!",
-        "required": "1"
-      },
-      {
-        "memberId": "id_222",
-        "name": "김순자",
-        "email": "id_222@gmail.com",
-        "password": "222",
-        "nickname": "지현수현맘",
-        "introduction": "안녕하세요 딸램1 아들램1 두고있는 지현수현맘입니다^^~",
-        "required": "1"
-      },
-      {
-        "memberId": "id_tak9",
-        "name": "김탁구",
-        "email": "id_tak9@gmail.com",
-        "password": "tak9",
-        "nickname": "탁구왕",
-        "introduction": "탁구 잘 못쳐요. 제빵사가 직업입니다.",
-        "required": "1"
-      },
-      {
-        "memberId": "id_sad",
-        "name": "김슬픔",
-        "email": "id_sad@gmail.com",
-        "password": "sad",
-        "nickname": "슬픔이",
-        "introduction": "안녕하세요 인사이드아웃에 나오는 슬픔이입니다ㅠㅠㅠ",
-        "required": "0"
-      },
-      {
-        "memberId": "id_555",
-        "name": "신짱구",
-        "email": "id_555@gmail.com",
-        "password": "555",
-        "nickname": "Crayon",
-        "introduction": "신짱구 5살",
-        "required": "1"
-      }
-    ],
-    "post": [
-      {
-        "postId": "1",
-        "title": "놀러갔다옴요",
-        "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ (부산 해운대임) 부럽지 순두부 젤라또도 먹음.",
-        "memberId": "id_555",
-        "likeNum": 20,
-        "commentNum": 10,
-        "createdAt": "2021-07-01",
-        "postType": "history",
-        "address": "부산 해운대구 우동",
-        "latitude": "35.1727271517264",
-        "longitude": "129.148399576019"
-      },
-      {
-        "postId": "2",
-        "title": "벚꽃이 예쁘네요",
-        "body": "벚꽃축제 구경하러 한강에 다녀왔네요. 남편이랑 아들램 딸램이랑 넷이 갔다 왔는데 참 좋은시간이었어요^^ 여러분들도 벚꽃구경 잘 하셨는지요^^",
-        "memberId": "id_222",
-        "likeNum": 4,
-        "commentNum": 40,
-        "createdAt": "2022-04-07",
-        "postType": "history",
-        "address": "서울 영등포구 여의동로 330 한강사업본부 여의도안내센터",
-        "latitude": "37.5263474738219",
-        "longitude": "126.933595431713"
-      },
-      {
-        "postId": "3",
-        "title": "같이 탁구치실분",
-        "body": "탁구 잘 치는 사람만 오셈. 기본실력 안되면 채팅하지마세요. 지금 가천대 학생회관인데 같이 하실분?",
-        "memberId": "id_tak9",
-        "likeNum": 4,
-        "createdAt": "2024-03-05",
-        "period": "12:00:00 - 13:00:00",
-        "postType": "daily",
-        "address": "경기 성남시 수정구 성남대로 1342",
-        "latitude": "37.45123486951",
-        "longitude": "127.12939432624"
-      },
-      {
-        "postId": "4",
-        "title": "밥 같이 먹을분,,",
-        "body": "새내기라 친구가 없네요 ㅜ 지금 에공관인데 같이 점심 드실분 있나요?! 제가 음료수 사드릴게요!",
-        "memberId": "id_sad",
-        "likeNum": 4,
-        "createdAt": "2024-03-05",
-        "period": "14:30:00 - 16:00:00",
-        "postType": "daily",
-        "address": "경기 성남시 수정구 복정동 495",
-        "latitude": "37.4552003863507",
-        "longitude": "127.13370255097"
-      },
-      {
-        "postId": "5",
-        "title": "놀러갔다옴",
-        "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ 부럽지 순두부 젤라또도 먹음.",
-        "memberId": "id_555",
-        "likeNum": 4,
-        "commentNum": 40,
-        "createdAt": "2022-04-10",
-        "postType": "history", 
-        "address": "강원 강릉시 초당순두부길77번길 15 동화가든",
-        "latitude": "37.7911524593073",
-        "longitude": "128.914664130458"
-      },
-      {
-        "postId": "6",
-        "title": "서울숲 다녀온 후기",
-        "body": "서울숲 구경했어요 남편이랑 아들램 딸램이랑 넷이 갔다 왔는데 참 좋은시간이었어요^^ 여러분들도 서울숲 꼭 가보ㄱ세요",
-        "memberId": "id_222",
-        "likeNum": 84,
-        "commentNum": 42,
-        "createdAt": "2022-04-03",
-        "postType": "history",
-        "address": "서울 성동구 뚝섬로 273 서울숲공원",
-        "latitude": "37.5443878",
-        "longitude": "127.0374424"
-      },
-      {
-        "postId": "7",
-        "title": "잠실 롯데시네마에서 지금 영화 보실분?",
-        "body": "지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?",
-        "memberId": "id_222",
-        "likeNum": 3,
-        "createdAt": "2024-04-10",
-        "period": "14:30:00 - 15:00:00",
-        "postType": "daily",
-        "address": "대한민국 서울특별시 송파구 올림픽로 300",
-        "latitude": "37.5124641",
-        "longitude": "127.102543"
-      },
-      {
-        "postId": "8",
-        "title": "여수밤바다",
-        "body": "여수 밤바다 이 조명에 담긴 아름다운 얘기가 있어 네게 들려주고파 전활 걸어 뭐하고 있냐고 나는 지금 여수 밤바다 여수 밤바다 아 아 아 아 아 아 아",
-        "memberId": "id_555",
-        "likeNum": 17,
-        "commentNum": 10,
-        "createdAt": "2022-03-14",
-        "postType": "history", 
-        "address": "대한민국 전라남도 여수시 쌍봉동 시청서6길 19",
-        "latitude": "34.75656343858518",
-        "longitude": "127.65913724899292"
-      },
-      {
-        "postId": "9",
-        "title": "성심당인사람!!!",
-        "body": "성심당 가고싶은데 같이 가실분 있나요? 성심당 가서 빵이랑 커피 한잔 하고싶어요. 같이 가실분 있나요?",
-        "memberId": "id_555",
-        "likeNum": 7,
-        "createdAt": "2024-04-10",
-        "period": "14:00:00 - 15:40:00",
-        "postType": "daily",
-        "address": "대전광역시 유성구 엑스포로 107",
-        "latitude": "36.3750219",
-        "longitude": "127.3916916"
-      }
-    ],
-    
-    
-    "notices": [
+{
+  "member": [
+    {
+      "memberId": "id_1234",
+      "name": "김뚱이",
+      "email": "ddung2@gmail.com",
+      "password": "1234",
+      "nickname": "뚱이",
+      "introduction": "안녕하세요 뚱이입니다. 잘 부탁드려요!",
+      "required": "1",
+      "id": "fefa"
+    },
+    {
+      "memberId": "id_222",
+      "name": "김순자",
+      "email": "id_222@gmail.com",
+      "password": "222",
+      "nickname": "지현수현맘",
+      "introduction": "안녕하세요 딸램1 아들램1 두고있는 지현수현맘입니다^^~",
+      "required": "1",
+      "id": "be66"
+    },
+    {
+      "memberId": "id_tak9",
+      "name": "김탁구",
+      "email": "id_tak9@gmail.com",
+      "password": "tak9",
+      "nickname": "탁구왕",
+      "introduction": "탁구 잘 못쳐요. 제빵사가 직업입니다.",
+      "required": "1",
+      "id": "ab13"
+    },
+    {
+      "memberId": "id_sad",
+      "name": "김슬픔",
+      "email": "id_sad@gmail.com",
+      "password": "sad",
+      "nickname": "슬픔이",
+      "introduction": "안녕하세요 인사이드아웃에 나오는 슬픔이입니다ㅠㅠㅠ",
+      "required": "0",
+      "id": "e27a"
+    },
+    {
+      "memberId": "id_555",
+      "name": "신짱구",
+      "email": "id_555@gmail.com",
+      "password": "555",
+      "nickname": "Crayon",
+      "introduction": "신짱구 5살",
+      "required": "1",
+      "id": "45d5"
+    }
+  ],
+  "post": [
+    {
+      "postId": "1",
+      "title": "놀러갔다옴요",
+      "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ (부산 해운대임) 부럽지 순두부 젤라또도 먹음.",
+      "memberId": "id_555",
+      "likeNum": 20,
+      "commentNum": 10,
+      "createdAt": "2021-07-01",
+      "postType": "history",
+      "address": "부산 해운대구 우동",
+      "latitude": "35.1727271517264",
+      "longitude": "129.148399576019",
+      "id": "c4d9"
+    },
+    {
+      "postId": "2",
+      "title": "벚꽃이 예쁘네요",
+      "body": "벚꽃축제 구경하러 한강에 다녀왔네요. 남편이랑 아들램 딸램이랑 넷이 갔다 왔는데 참 좋은시간이었어요^^ 여러분들도 벚꽃구경 잘 하셨는지요^^",
+      "memberId": "id_222",
+      "likeNum": 4,
+      "commentNum": 40,
+      "createdAt": "2022-04-07",
+      "postType": "history",
+      "address": "서울 영등포구 여의동로 330 한강사업본부 여의도안내센터",
+      "latitude": "37.5263474738219",
+      "longitude": "126.933595431713",
+      "id": "196e"
+    },
+    {
+      "postId": "3",
+      "title": "같이 탁구치실분",
+      "body": "탁구 잘 치는 사람만 오셈. 기본실력 안되면 채팅하지마세요. 지금 가천대 학생회관인데 같이 하실분?",
+      "memberId": "id_tak9",
+      "likeNum": 4,
+      "createdAt": "2024-03-05",
+      "period": "12:00:00 - 13:00:00",
+      "postType": "daily",
+      "address": "경기 성남시 수정구 성남대로 1342",
+      "latitude": "37.45123486951",
+      "longitude": "127.12939432624",
+      "id": "85a4"
+    },
+    {
+      "postId": "4",
+      "title": "밥 같이 먹을분,,",
+      "body": "새내기라 친구가 없네요 ㅜ 지금 에공관인데 같이 점심 드실분 있나요?! 제가 음료수 사드릴게요!",
+      "memberId": "id_sad",
+      "likeNum": 4,
+      "createdAt": "2024-03-05",
+      "period": "14:30:00 - 16:00:00",
+      "postType": "daily",
+      "address": "경기 성남시 수정구 복정동 495",
+      "latitude": "37.4552003863507",
+      "longitude": "127.13370255097",
+      "id": "fd9f"
+    },
+    {
+      "postId": "5",
+      "title": "놀러갔다옴",
+      "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ 부럽지 순두부 젤라또도 먹음.",
+      "memberId": "id_555",
+      "likeNum": 4,
+      "commentNum": 40,
+      "createdAt": "2022-04-10",
+      "postType": "history",
+      "address": "강원 강릉시 초당순두부길77번길 15 동화가든",
+      "latitude": "37.7911524593073",
+      "longitude": "128.914664130458",
+      "id": "6a4e"
+    },
+    {
+      "postId": "6",
+      "title": "서울숲 다녀온 후기",
+      "body": "서울숲 구경했어요 남편이랑 아들램 딸램이랑 넷이 갔다 왔는데 참 좋은시간이었어요^^ 여러분들도 서울숲 꼭 가보ㄱ세요",
+      "memberId": "id_222",
+      "likeNum": 84,
+      "commentNum": 42,
+      "createdAt": "2022-04-03",
+      "postType": "history",
+      "address": "서울 성동구 뚝섬로 273 서울숲공원",
+      "latitude": "37.5443878",
+      "longitude": "127.0374424",
+      "id": "095d"
+    },
+    {
+      "postId": "7",
+      "title": "잠실 롯데시네마에서 지금 영화 보실분?",
+      "body": "지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?",
+      "memberId": "id_222",
+      "likeNum": 3,
+      "createdAt": "2024-04-10",
+      "period": "14:30:00 - 15:00:00",
+      "postType": "daily",
+      "address": "대한민국 서울특별시 송파구 올림픽로 300",
+      "latitude": "37.5124641",
+      "longitude": "127.102543",
+      "id": "dd58"
+    },
+    {
+      "postId": "8",
+      "title": "여수밤바다",
+      "body": "여수 밤바다 이 조명에 담긴 아름다운 얘기가 있어 네게 들려주고파 전활 걸어 뭐하고 있냐고 나는 지금 여수 밤바다 여수 밤바다 아 아 아 아 아 아 아",
+      "memberId": "id_555",
+      "likeNum": 17,
+      "commentNum": 10,
+      "createdAt": "2022-03-14",
+      "postType": "history",
+      "address": "대한민국 전라남도 여수시 쌍봉동 시청서6길 19",
+      "latitude": "34.75656343858518",
+      "longitude": "127.65913724899292",
+      "id": "fe7b"
+    },
+    {
+      "postId": "9",
+      "title": "성심당인사람!!!",
+      "body": "성심당 가고싶은데 같이 가실분 있나요? 성심당 가서 빵이랑 커피 한잔 하고싶어요. 같이 가실분 있나요?",
+      "memberId": "id_555",
+      "likeNum": 7,
+      "createdAt": "2024-04-10",
+      "period": "14:00:00 - 15:40:00",
+      "postType": "daily",
+      "address": "대전광역시 유성구 엑스포로 107",
+      "latitude": "36.3750219",
+      "longitude": "127.3916916",
+      "id": "65c4"
+    }
+  ],
+ "notices": [
       {
         "id": "1",
         "profileImage": "url",
@@ -278,224 +291,347 @@
         "body" : "문의사항 내용입니다"
       }
     ],
-        "followers": [
-      {
-        "id": "1",
-        "name": "이정균",
-        "nickName": "개미개미개",
-        "profileImage": "url",
-        "history": 12,
-        "daily": 34,
-        "isFollow": false
-      },
-      {
-        "id": "2",
-        "name": "이윤서",
-        "nickName": "난사왕커리",
-        "profileImage": "url",
-        "history": 77,
-        "daily": 77,
-        "isFollow": false
-      },
-      {
-        "id": "3",
-        "name": "김이영",
-        "nickName": "이영김",
-        "profileImage": "url",
-        "history": 0,
-        "daily": 200,
-        "isFollow": true
-      },
-      {
-        "id": "4",
-        "name": "장민성",
-        "nickName": "잔드민성",
-        "profileImage": "url",
-        "history": 280,
-        "daily": 2,
-        "isFollow": true
-      },
-      {
-        "id": "5",
-        "name": "김성호",
-        "nickName": "S6성호",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 26,
-        "isFollow": false
-      },
-      {
-        "id": "6",
-        "name": "신해철",
-        "nickName": "마왕",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 54,
-        "isFollow": true
-      },
-      {
-        "id": "7",
-        "name": "이정균",
-        "nickName": "개미개미개",
-        "profileImage": "url",
-        "history": 12,
-        "daily": 34,
-        "isFollow": false
-      },
-      {
-        "id": "8",
-        "name": "이윤서",
-        "nickName": "난사왕커리",
-        "profileImage": "../assets/images/users/user1.jpg",
-        "history": 77,
-        "daily": 77,
-        "isFollow": false
-      },
-      {
-        "id": "9",
-        "name": "김이영",
-        "nickName": "이영김",
-        "profileImage": "url",
-        "history": 0,
-        "daily": 200,
-        "isFollow": false
-      },
-      {
-        "id": "10",
-        "name": "장민성",
-        "nickName": "잔드민성",
-        "profileImage": "url",
-        "history": 280,
-        "daily": 2,
-        "isFollow": true
-      },
-      {
-        "id": "11",
-        "name": "김성호",
-        "nickName": "S6성호",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 26,
-        "isFollow": true
-      },
-      {
-        "id": "12",
-        "name": "신해철",
-        "nickName": "마왕",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 54,
-        "isFollow": false
-      }
-    ],
-     "followings": [
-      {
-        "id": "1",
-        "name": "이정균",
-        "nickName": "개미개미개",
-        "profileImage": "url",
-        "history": 12,
-        "daily": 34,
-        "isFollow": true
-      },
-      {
-        "id": "2",
-        "name": "이윤서",
-        "nickName": "난사왕커리",
-        "profileImage": "url",
-        "history": 77,
-        "daily": 77,
-        "isFollow": true
-      },
-      {
-        "id": "3",
-        "name": "김이영",
-        "nickName": "이영김",
-        "profileImage": "url",
-        "history": 0,
-        "daily": 200,
-        "isFollow": true
-      },
-      {
-        "id": "4",
-        "name": "장민성",
-        "nickName": "잔드민성",
-        "profileImage": "url",
-        "history": 280,
-        "daily": 2,
-        "isFollow": true
-      },
-      {
-        "id": "5",
-        "name": "김성호",
-        "nickName": "S6성호",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 26,
-        "isFollow": true
-      },
-      {
-        "id": "6",
-        "name": "신해철",
-        "nickName": "마왕",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 54,
-        "isFollow": true
-      },
-      {
-        "id": "7",
-        "name": "이정균",
-        "nickName": "개미개미개",
-        "profileImage": "url",
-        "history": 12,
-        "daily": 34,
-        "isFollow": true
-      },
-      {
-        "id": "8",
-        "name": "이윤서",
-        "nickName": "난사왕커리",
-        "profileImage": "url",
-        "history": 77,
-        "daily": 77,
-        "isFollow": true
-      },
-      {
-        "id": "9",
-        "name": "김이영",
-        "nickName": "이영김",
-        "profileImage": "url",
-        "history": 0,
-        "daily": 200,
-        "isFollow": true
-      },
-      {
-        "id": "10",
-        "name": "장민성",
-        "nickName": "잔드민성",
-        "profileImage": "url",
-        "history": 280,
-        "daily": 2,
-        "isFollow": true
-      },
-      {
-        "id": "11",
-        "name": "김성호",
-        "nickName": "S6성호",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 26,
-        "isFollow": true
-      },
-      {
-        "id": "12",
-        "name": "신해철",
-        "nickName": "마왕",
-        "profileImage": "url",
-        "history": 15,
-        "daily": 54,
-        "isFollow": true
-      }
-    ]
-  }
+
+  "followers": [
+    {
+      "id": "1",
+      "name": "이정균",
+      "nickName": "개미개미개",
+      "profileImage": "url",
+      "history": 12,
+      "daily": 34,
+      "isFollow": false
+    },
+    {
+      "id": "2",
+      "name": "이윤서",
+      "nickName": "난사왕커리",
+      "profileImage": "url",
+      "history": 77,
+      "daily": 77,
+      "isFollow": false
+    },
+    {
+      "id": "3",
+      "name": "김이영",
+      "nickName": "이영김",
+      "profileImage": "url",
+      "history": 0,
+      "daily": 200,
+      "isFollow": true
+    },
+    {
+      "id": "4",
+      "name": "장민성",
+      "nickName": "잔드민성",
+      "profileImage": "url",
+      "history": 280,
+      "daily": 2,
+      "isFollow": true
+    },
+    {
+      "id": "5",
+      "name": "김성호",
+      "nickName": "S6성호",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 26,
+      "isFollow": false
+    },
+    {
+      "id": "6",
+      "name": "신해철",
+      "nickName": "마왕",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 54,
+      "isFollow": true
+    },
+    {
+      "id": "7",
+      "name": "이정균",
+      "nickName": "개미개미개",
+      "profileImage": "url",
+      "history": 12,
+      "daily": 34,
+      "isFollow": false
+    },
+    {
+      "id": "8",
+      "name": "이윤서",
+      "nickName": "난사왕커리",
+      "profileImage": "../assets/images/users/user1.jpg",
+      "history": 77,
+      "daily": 77,
+      "isFollow": false
+    },
+    {
+      "id": "9",
+      "name": "김이영",
+      "nickName": "이영김",
+      "profileImage": "url",
+      "history": 0,
+      "daily": 200,
+      "isFollow": false
+    },
+    {
+      "id": "10",
+      "name": "장민성",
+      "nickName": "잔드민성",
+      "profileImage": "url",
+      "history": 280,
+      "daily": 2,
+      "isFollow": true
+    },
+    {
+      "id": "11",
+      "name": "김성호",
+      "nickName": "S6성호",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 26,
+      "isFollow": true
+    },
+    {
+      "id": "12",
+      "name": "신해철",
+      "nickName": "마왕",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 54,
+      "isFollow": false
+    }
+  ],
+  "followings": [
+    {
+      "id": "1",
+      "name": "이정균",
+      "nickName": "개미개미개",
+      "profileImage": "url",
+      "history": 12,
+      "daily": 34,
+      "isFollow": true
+    },
+    {
+      "id": "2",
+      "name": "이윤서",
+      "nickName": "난사왕커리",
+      "profileImage": "url",
+      "history": 77,
+      "daily": 77,
+      "isFollow": true
+    },
+    {
+      "id": "3",
+      "name": "김이영",
+      "nickName": "이영김",
+      "profileImage": "url",
+      "history": 0,
+      "daily": 200,
+      "isFollow": true
+    },
+    {
+      "id": "4",
+      "name": "장민성",
+      "nickName": "잔드민성",
+      "profileImage": "url",
+      "history": 280,
+      "daily": 2,
+      "isFollow": true
+    },
+    {
+      "id": "5",
+      "name": "김성호",
+      "nickName": "S6성호",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 26,
+      "isFollow": true
+    },
+    {
+      "id": "6",
+      "name": "신해철",
+      "nickName": "마왕",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 54,
+      "isFollow": true
+    },
+    {
+      "id": "7",
+      "name": "이정균",
+      "nickName": "개미개미개",
+      "profileImage": "url",
+      "history": 12,
+      "daily": 34,
+      "isFollow": true
+    },
+    {
+      "id": "8",
+      "name": "이윤서",
+      "nickName": "난사왕커리",
+      "profileImage": "url",
+      "history": 77,
+      "daily": 77,
+      "isFollow": true
+    },
+    {
+      "id": "9",
+      "name": "김이영",
+      "nickName": "이영김",
+      "profileImage": "url",
+      "history": 0,
+      "daily": 200,
+      "isFollow": true
+    },
+    {
+      "id": "10",
+      "name": "장민성",
+      "nickName": "잔드민성",
+      "profileImage": "url",
+      "history": 280,
+      "daily": 2,
+      "isFollow": true
+    },
+    {
+      "id": "11",
+      "name": "김성호",
+      "nickName": "S6성호",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 26,
+      "isFollow": true
+    },
+    {
+      "id": "12",
+      "name": "신해철",
+      "nickName": "마왕",
+      "profileImage": "url",
+      "history": 15,
+      "daily": 54,
+      "isFollow": true
+    }
+  ],
+  "chatroom":[
+    {
+      "id": "1",
+      "title": "같이 탁구치실분",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오전 11:30",
+      "memberNum": 4,
+      "alarmNum": 5,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "2",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "3",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 0,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "4",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "5",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "6",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "7",
+      "title": "밥 같이 먹을분,.",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    }
+  ],
+  "chatcontent": [
+    {
+      "id": "1",
+      "memberId": "id_222",
+      "nickname": "ShinHyungMan",
+      "content": "저 위례사는데 같이 봐요!!",
+      "time": "18:38"
+    },
+    {
+      "id": "2",
+      "memberId": "id_555",
+      "nickname": "Crayon",
+      "content": "그러면 제가 지금 위례로 출발 할게요!",
+      "time": "18:40"
+    },
+    {
+      "id": "3",
+      "memberId": "id_555",
+      "nickname": "Crayon",
+      "content": "도착하면 연락주세욬!",
+      "time": "18:41"
+    }
+  ],
+  "recomendPost": [
+    {
+      "id": "1",
+      "memberId": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    },
+    {
+      "id": "2",
+      "memberId": "id_8282",
+      "title": "속초 갔다왔는데 넘 좋았다",
+      "hashTag": "#동해바닷가 #속초 #바다",
+      "nickname": "루피",
+      "createdAt": "2024.03.24"
+    },
+    {
+      "id": "3",
+      "memberId": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    },
+    {
+      "id": "4",
+      "memberid": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    }
+  ]
+}
