@@ -1,23 +1,57 @@
-div.post__title {
+.notice-title {
     display: flex;
+    width: 500px;
     margin-left: 10%;
+    justify-content: center;
     align-items: center;
+    color: #727272;
 }
 
-div.post__author {
-    margin-left: 10%;
+.notice-author {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 30px;
+    width: 80px;
 }
 
-div.post__date {
+.notice-name {
+    margin-left: 70%;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    width: 70px;
+}
+
+.notice-nickname {
+    margin-left: 80%;
+    margin-top: 20%;
+    align-items: center;
+    color: #8F8F8F;
+    width: 100%;
+
+}
+
+div.notice-date {
     margin-left: 30%;
     display: flex;
-    float: right; /* div를 오른쪽으로 배치 */
+    float: right;
     align-items: center;
 }
 
-.posts::after {
+.notice::after {
     content: "";
     display: table;
     clear: both;
+}
+
+.notice-main {
+    display: flex;
+    width: 200px;
+    margin-left: 10%;
+    justify-content: left;
+    align-items: center;
+    color: #727272;
+    margin-top: 10%;
 }
