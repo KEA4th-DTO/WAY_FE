@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import profileImg from "../assets/img/profile_img.jpeg";
 import "../assets/style/myPage.css";
-import Posts from "../components/PostsList";
+// import Posts from "../components/PostsList";
 import Followers from "../components/Followers";
 import Followings from "../components/Followings";
 
@@ -72,7 +72,7 @@ function ProfilePage() {
       </div>
       {/* right panel */}
       <div className="myPage-rightpanel">
-        {activeTab === "posts" && <Posts />}
+        {/* {activeTab === "posts" && <Posts />} */}
         {activeTab === "followers" && <Followers />}
         {activeTab === "followings" && <Followings />}
       </div>

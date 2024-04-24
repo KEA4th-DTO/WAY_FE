@@ -7,7 +7,6 @@ import more from "../../assets/images/logos/more.png";
 import share from "../../assets/images/logos/share.png";
 import like from "../../assets/images/logos/like.png";
 import full_like from "../../assets/images/logos/full_like.png";
-import back from "../../assets/images/logos/back.png";
 
 import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate, formatPeriod } from '../../utils/changeFormat';
@@ -43,7 +42,15 @@ const DailyPost = ({ data }) => {
                 setFollowed(true);
             }
         };
-    
+        
+        // const onBackClick = () => { 
+        //     return(
+        //       <div>
+        //         <MainList />
+        //       </div>
+        //     );
+        // };
+
         // useEffect(() => {
         //     const script = document.createElement("script");
         //     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -101,13 +108,7 @@ const DailyPost = ({ data }) => {
           </div>
          
         <div style={{border: "3px solid green"}} className="dailypost-group99">
-          <button className="dailypost-frame6" onClick={() => shareKakao()}>
-            <img
-              alt="공유하기"
-              src={share}
-              className="dailypost-vector"
-            />
-          </button>
+          
           <div className="dailypost-frame7">
             <button style={{ border: "none" }} onClick={handleLikeClick}>
                 <img
@@ -121,13 +122,13 @@ const DailyPost = ({ data }) => {
               <span>{likeNum}</span>
             </span>
           </div>
-          <div className="dailypost-frame8">
+          <button className="dailypost-frame6" onClick={() => shareKakao()}>
             <img
-              alt="뒤로가기"
-              src={back}
-              className="dailypost-vector3"
+              alt="공유하기"
+              src={share}
+              className="dailypost-vector"
             />
-          </div>
+          </button>
           <button className="dailypost-frame5">
             <span className="dailypost-text14">
               실시간 채팅하기
@@ -142,6 +143,3 @@ const DailyPost = ({ data }) => {
 };
 
 export default DailyPost;
-
-
-
