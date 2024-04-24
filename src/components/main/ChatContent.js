@@ -25,7 +25,7 @@ const Frame = ({ data, onClose }) => {
       };
 
   return (
-      <div style={{border:"3px solid red"}}  className="frame-frame">
+      <div className="frame-frame">
         {/* 상단창 */}
          <div className="frame-frame8">
           <img

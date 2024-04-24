@@ -38,7 +38,7 @@ const Search= () => {
    
 
   return (
-      <div style={{border:"3px solid red"}} className="group98-group98">
+      <div className="group98-group98">
         <div className="group98-frame">
           <div
             className="group98-image"
@@ -75,7 +75,7 @@ const Search= () => {
           <span>추천 게시글</span>
         </span>
 
-        <div style={{border:"3px solid red", overflow: "auto"}} className="group98-frame-profile">
+        <div style={{overflow: "auto"}} className="group98-frame-profile">
           {rpost.map(item => (
             <button style={{border:"none"}} key={item.id} onClick={() => handlePostClick(item)}>
               <SearchList data={item} />
@@ -88,7 +88,7 @@ const Search= () => {
         </div>
       )}
         
-        <div style={{border:"3px solid red"}}className="group98-group77">
+        <div className="group98-group77">
            {/* 로컬맵 이동하기 */}
         <Link to="/localmap" style={{ textDecoration: "none", color: "inherit" }}>
           <button style={{border:"none"}}>

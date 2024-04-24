@@ -35,9 +35,9 @@ const Localmap = () => {
   };
 
   return ( 
-    <div id="local-con" style={{border: "5px solid red", display: "flex", width: "950px"}}>
+    <div id="local-con" style={{ display: "flex", width: "950px"}}>
       {/* 지도 & 핀*/}
-      <div id="map-con" style={{border: "3px solid blue"}}>
+      <div id="map-con">
         <div>
           <span className="initial-main-page-text">
             로컬맵
@@ -47,7 +47,7 @@ const Localmap = () => {
       </div>
         
       {/* 게시글*/}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px", position: "relative"}}>
+      <div className="initial-main-page-frame" style={{marginLeft: "20px", position: "relative"}}>
         <span className="initial-main-page-text">
           게시글
         </span>
@@ -59,10 +59,10 @@ const Localmap = () => {
             className="dailypost-vector3"
           />}
         </button>
-        <div style={{ display: selectedPost && selectedPost.postType === 'daily' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        <div style={{ display: selectedPost && selectedPost.postType === 'daily' ? "block" : "none", border: "3px solid #EEEEEE", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
           {selectedPost && selectedPost.postType === 'daily' && <DailyPost data={selectedPost} />}
         </div>
-        <div id="list" style={{ display: selectedPost && selectedPost.postType === 'daily' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        <div id="list" style={{ display: selectedPost && selectedPost.postType === 'daily' ? "none" : "block", border: "3px solid #EEEEEE", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
           {post.map(item => (
             <button style={{border:"none"}} key={item.id} onClick={() => handlePostClick(item)}>
               {item.postType === 'daily' ? <DailyList data={item} /> : <HistoryList data={item} />}

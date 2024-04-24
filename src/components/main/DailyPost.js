@@ -60,9 +60,9 @@ const DailyPost = ({ data }) => {
         //     }, []);
 
     return(
-      <div style={{border: "3px solid red"}} className="dailypost-frame">
-        <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
-        <div style={{border: "3px solid orange"}} className="dailypost-frame3">
+      <div className="dailypost-frame">
+        <div className="dailypost-frame1"> 
+        <div className="dailypost-frame3">
             <div className="dailypost-frame4">
               <img alt="사용자 프로필 이미지" src={user7} className="dailypost-profileimage" />
               <span className="dailypost-text10">
@@ -86,28 +86,28 @@ const DailyPost = ({ data }) => {
             </button>
           </div>
         </div>
-          <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
+          <div className="dailypost-post1-history">
             <img alt="게시글 이미지" src={sky} className="dailypost-image" />
           </div>
 
-          <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
-            <span style={{border: "3px solid yellow"}} className="dailypost-text08">
+          <div className="dailypost-frame2">
+            <span className="dailypost-text08">
               <span>{data.title}</span>
             </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text02">
+            <span className="dailypost-text02">
               <span>{data.postType}</span>
             </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text04">
+            <span className="dailypost-text04">
               <span>
                 {data.body}
               </span>
             </span>
-            <span style={{border: "3px solid green"}} className="dailypost-text">
+            <span className="dailypost-text">
               <span>{formatDate(data.createdAt)} {formatPeriod(data.period)}</span>
             </span>
           </div>
          
-        <div style={{border: "3px solid green"}} className="dailypost-group99">
+        <div className="dailypost-group99">
           
           <div className="dailypost-frame7">
             <button style={{ border: "none" }} onClick={handleLikeClick}>

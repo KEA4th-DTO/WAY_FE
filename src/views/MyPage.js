@@ -35,8 +35,8 @@ function ProfilePage() {
             alt="프로필 사진"
             className="profile-img"
             style={{
-              width: "70%",
-              height: "auto",
+              width: "300px",
+              height: "300px",
               borderRadius: "13px",
               top: "15",
               left: "15%",

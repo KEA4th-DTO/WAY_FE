@@ -98,7 +98,9 @@ const Header = () => {
 
           <DropdownMenu>
             <DropdownItem header>Info</DropdownItem>
+            <Link to="/mypage" style={{ textDecoration: "none", color: "inherit" }}>
             <DropdownItem>My Account</DropdownItem>
+            </Link>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>

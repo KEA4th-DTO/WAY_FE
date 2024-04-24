@@ -37,7 +37,7 @@ const Chatting= () => {
 
   return (
     <div style={{position:"relative"}}>
-    <div style={{border: "3px solid red"}} className="frame-container">
+    <div className="frame-container">
     {/* 채팅 상단 메뉴 */}
     <div className="frame1-frame">
       <button style={{border:"none"}}>
@@ -65,7 +65,7 @@ const Chatting= () => {
 
       {/* 대화방 */}
       
-      <div style={{border: "3px solid red", overflow: "auto"}} className="frame2-frame">
+      <div style={{ overflow: "auto"}} className="frame2-frame">
         {chatRoom.map((item, index) => (
         <div key={index}>
           <img

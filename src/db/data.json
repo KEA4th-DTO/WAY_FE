@@ -139,7 +139,7 @@
     {
       "postId": "7",
       "title": "잠실 롯데시네마에서 지금 영화 보실분?",
-      "body": "지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?지금 롯데타워에 있는 롯데시네마에 있는데요 영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?",
+      "body": "영화표가 하나남는데 급한 약속을 가봐야하네요.. 영화표 기간이 오늘까지라 혹시 지금 당장 공짜로 보실 분 있을까요^^?",
       "memberId": "id_222",
       "likeNum": 3,
       "createdAt": "2024-04-10",
@@ -177,121 +177,188 @@
       "latitude": "36.3750219",
       "longitude": "127.3916916",
       "id": "65c4"
+    },
+    {
+      "postId": "10",
+      "title": "성심당인사람!!!",
+      "body": "성심당 가고싶은데 같이 가실분 있나요? 성심당 가서 빵이랑 커피 한잔 하고싶어요. 같이 가실분 있나요?",
+      "memberId": "id_222",
+      "likeNum": 7,
+      "createdAt": "2024-04-10",
+      "period": "14:00:00 - 15:40:00",
+      "postType": "daily",
+      "address": "대전광역시 유성구 엑스포로 107",
+      "latitude": "36.3750219",
+      "longitude": "127.3916916",
+      "id": "65c4"
+    },
+    {
+      "postId": "8",
+      "title": "여수밤바다",
+      "body": "여수 밤바다 이 조명에 담긴 아름다운 얘기가 있어 네게 들려주고파 전활 걸어 뭐하고 있냐고 나는 지금 여수 밤바다 여수 밤바다 아 아 아 아 아 아 아",
+      "memberId": "id_222",
+      "likeNum": 17,
+      "commentNum": 10,
+      "createdAt": "2022-03-14",
+      "postType": "history",
+      "address": "대한민국 전라남도 여수시 쌍봉동 시청서6길 19",
+      "latitude": "34.75656343858518",
+      "longitude": "127.65913724899292",
+      "id": "fe7b"
+    },
+    {
+      "postId": "5",
+      "title": "놀러갔다옴",
+      "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ 부럽지 순두부 젤라또도 먹음.",
+      "memberId": "id_222",
+      "likeNum": 4,
+      "commentNum": 40,
+      "createdAt": "2022-04-10",
+      "postType": "history",
+      "address": "강원 강릉시 초당순두부길77번길 15 동화가든",
+      "latitude": "37.7911524593073",
+      "longitude": "128.914664130458",
+      "id": "6a4e"
+    },
+    {
+      "postId": "5",
+      "title": "놀러갔다옴",
+      "body": "우와 정말정말정말정말 재미성ㅅ다 ㅋ 바다 갔다옴 ㅋㅋ 부럽지 순두부 젤라또도 먹음.",
+      "memberId": "id_222",
+      "likeNum": 4,
+      "commentNum": 40,
+      "createdAt": "2022-04-10",
+      "postType": "history",
+      "address": "대한민국 대구광역시",
+      "latitude": "35.8294374",
+      "longitude": "128.5655119",
+      "id": "6a4e"
+    },
+    {
+      "id": "bb1d",
+      "title": "한강에 놀러갔다왔어요",
+      "body": "wysiwyg",
+      "memberId": "id_222",
+      "likeNum": 0,
+      "commentNum": 0,
+      "createdAt": "2024-04-24T09:38:16.263Z",
+      "expiredAt": "2024-04-25T03:00:00.445Z",
+      "postType": "history",
+      "address": "서울시 여의도공원"
     }
   ],
- "notices": [
-      {
-        "id": "1",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "2",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "WAY 런칭",
-        "date": "2024.04.14",
-        "body" : "WAY 서비스 런칭했습니다."
-      },
-      {
-        "id": "3",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "4",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "5",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "6",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      }
-    ],
-    "questions": [
-      {
-        "id": "1",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User1",
-        "title": "문의사항 테스트 페이지 입니다.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "2",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User2",
-        "title": "차단한 사람을 풀고싶어요.",
-        "date": "2024.04.14",
-        "body" : "차단한 사람을 풀고싶은데 어떻게 해야되는지를 모르겠어요.. 도와주세요."
-      },
-      {
-        "id": "3",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User3",
-        "title": "게시물 삭제를 하고 싶어요.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "4",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User4",
-        "title": "이메일을 바꿀 수 있을까요?.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "5",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User5",
-        "title": "비밀번호를 찾기에 실패했어요.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "6",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User6",
-        "title": "로그인이 안될땐 어떻게 하나요?",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      }
-    ],
-
+  "notices": [
+    {
+      "id": "1",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "2",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "WAY 런칭",
+      "date": "2024.04.14",
+      "body": "WAY 서비스 런칭했습니다."
+    },
+    {
+      "id": "3",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "4",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "5",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "6",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User1",
+      "title": "문의사항 테스트 페이지 입니다.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "2",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User2",
+      "title": "차단한 사람을 풀고싶어요.",
+      "date": "2024.04.14",
+      "body": "차단한 사람을 풀고싶은데 어떻게 해야되는지를 모르겠어요.. 도와주세요."
+    },
+    {
+      "id": "3",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User3",
+      "title": "게시물 삭제를 하고 싶어요.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "4",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User4",
+      "title": "이메일을 바꿀 수 있을까요?.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "5",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User5",
+      "title": "비밀번호를 찾기에 실패했어요.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "6",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User6",
+      "title": "로그인이 안될땐 어떻게 하나요?",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    }
+  ],
   "followers": [
     {
       "id": "1",
@@ -512,7 +579,7 @@
       "isFollow": true
     }
   ],
-  "chatroom":[
+  "chatroom": [
     {
       "id": "1",
       "title": "같이 탁구치실분",

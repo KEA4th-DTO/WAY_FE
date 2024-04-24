@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../assets/style/login.css";
 import kakaoImg from "../assets/img/kakao.png";
@@ -26,10 +26,8 @@ function Login() {
     window.open(kakaoURL, "Kakao Login", "width=600,height=600");
 
     // 카카오 로그인 후에도 로컬맵 페이지로 이동합니다.
-    navigate('/localmap');
+    navigate("/localmap");
   }
-
-  
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -65,8 +63,7 @@ function Login() {
         console.log("서버 응답 데이터", responseData);
 
         // 로그인이 성공하면 로컬맵 페이지로 리다이렉션합니다.
-        navigate('/localmap');
-
+        navigate("/localmap");
       } else {
         console.error("서버 응답 오류: ", response.status);
       }
@@ -180,7 +177,7 @@ function Login() {
               </button>
             </div>
           </div>
-          <div>
+          <div className="button-container">
             <button className="find-btn">E-mal/PW 찾기</button>
             <Link to="/signup">
               <button className="signUp-btn">회원가입</button>

@@ -247,7 +247,7 @@ const MapInformation = () => {
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
                 </button>
             
-            <div style={{ display: 'inline-block', marginLeft: '280px', border:"3px solid red" }}>
+            <div style={{ display: 'inline-block', marginLeft: '280px'}}>
                 <span style={{ fontSize: '10px', margin:"3px" }}>all pin</span>
                 <span style={{ fontSize: '10px', margin:"3px" }}>daily pin</span>
                 <span style={{ fontSize: '10px', margin:"3px" }}>history pin</span>

@@ -1,6 +1,7 @@
 import React from "react";
-
 import "../assets/style/follower.css";
+import user2 from "../assets/images/users/user2.jpg";
+
 function Following({ name, nickName, history, daily, image, isFollow }) {
   const handleFollowClick = () => {
     console.log(`Current follow state for ${name}: ${isFollow}`); // 현재 팔로우 상태 로그 출력
@@ -8,7 +9,7 @@ function Following({ name, nickName, history, daily, image, isFollow }) {
 
   return (
     <div className="follower-container">
-      <img src={image} alt={name} className="follower-image" />
+      <img src={user2} alt={name} className="follower-image" />
       <div className="follower-info">
         <h3 className="follower-name">{name}</h3>
         <p className="follower-nickname">{nickName}</p>

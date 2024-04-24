@@ -104,13 +104,14 @@ const EditorBox = ({ postType }) => {
     return (
         <div className="edit_wrap" style={{ position: "relative" }}>
             <div>
-                <h2>
+                <h2 style={{fontSize: "20px"}}>
                     제목: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} type="text" placeholder="제목을 입력하세요." value={title} onChange={onChangeTitle} />
                 </h2>
-                <span style={{ marginLeft: "25px" }}>
+                <br />
+                <span>
                     주소: 
-                    <input style={{ marginLeft: "10px", border: "none", width: "400px" }} type="text" placeholder="주소를 입력하세요." value={address} onChange={onChangeAddress} />
+                    <input style={{ marginLeft: "15px", border: "none", width: "400px" }} type="text" placeholder="주소를 입력하세요." value={address} onChange={onChangeAddress} />
                 </span>
                 <div style={{ marginTop: "5px" }}>
                     현재 시간: {formattedTime}
