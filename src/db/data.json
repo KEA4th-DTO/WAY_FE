@@ -498,5 +498,127 @@
       "daily": 54,
       "isFollow": true
     }
+  ],
+  "chatroom":[
+    {
+      "id": "1",
+      "title": "같이 탁구치실분",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오전 11:30",
+      "memberNum": 4,
+      "alarmNum": 5,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "2",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "3",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 0,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "4",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "5",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "6",
+      "title": "밥 같이 먹을분,,",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    },
+    {
+      "id": "7",
+      "title": "밥 같이 먹을분,.",
+      "last_chat": "대박이당 너 어디야?",
+      "last_chat_time": "오후 2:00 ",
+      "memberNum": 3,
+      "alarmNum": 6,
+      "period": "2024.03.21 am 09:32 ~ pm 03:32"
+    }
+  ],
+  "chatcontent": [
+    {
+      "id": "1",
+      "memberId": "id_222",
+      "nickname": "ShinHyungMan",
+      "content": "저 위례사는데 같이 봐요!!",
+      "time": "18:38"
+    },
+    {
+      "id": "2",
+      "memberId": "id_555",
+      "nickname": "Crayon",
+      "content": "그러면 제가 지금 위례로 출발 할게요!",
+      "time": "18:40"
+    },
+    {
+      "id": "3",
+      "memberId": "id_555",
+      "nickname": "Crayon",
+      "content": "도착하면 연락주세욬!",
+      "time": "18:41"
+    }
+  ],
+  "recomendPost": [
+    {
+      "id": "1",
+      "memberId": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    },
+    {
+      "id": "2",
+      "memberId": "id_8282",
+      "title": "속초 갔다왔는데 넘 좋았다",
+      "hashTag": "#동해바닷가 #속초 #바다",
+      "nickname": "루피",
+      "createdAt": "2024.03.24"
+    },
+    {
+      "id": "3",
+      "memberId": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    },
+    {
+      "id": "4",
+      "memberid": "id_8282",
+      "title": "산 갔다왔는데 엄청 좋았다",
+      "hashTag": "#산 #등산 #산책",
+      "nickname": "뽀로로",
+      "createdAt": "2024.03.19"
+    }
   ]
 }

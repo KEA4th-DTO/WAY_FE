@@ -17,7 +17,7 @@
   .group98-frame {
     top: 0px;
     left: 212px;
-    width: 456px;
+    width: 650px;
     height: 52px;
     display: flex;
     position: absolute;
@@ -53,7 +53,7 @@
   }
   .group98-frame1 {
     top: 11px;
-    left: 190px;
+    left: 210px;
     width: 28px;
     height: 32px;
     display: flex;
@@ -64,18 +64,8 @@
   .group98-ellipse2 {
     top: 0px;
     left: 0px;
-    width: 23px;
-    height: 25px;
-    position: absolute;
-    border-color: rgba(64, 77, 242, 1);
-    border-style: solid;
-    border-width: 5px;
-  }
-  .group98-line1 {
-    top: 20px;
-    left: 16.5830078125px;
-    width: 16px;
-    height: 1px;
+    width: 25px;
+    height: 27px;
     position: absolute;
   }
   .group98-frame2 {
@@ -94,12 +84,14 @@
     width: 142px;
     height: 35px;
     position: absolute;
+    background-color: #B6BBFF;
+    border-radius: 7px;
   }
   .group98-svg01 {
-    top: 31px;
-    left: 135.375px;
-    width: 25px;
-    height: 30px;
+    top: 6px;
+    right: 10px;
+    width: 20px;
+    height: 23px;
     position: absolute;
   }
   .group98-text02 {
@@ -186,12 +178,14 @@
     text-decoration: none;
   }
   .group98-image1 {
-    top: 19px;
-    left: 26px;
-    width: 129px;
-    height: 104px;
+    top: 17px;
+    left: 30px;
+    width: 135px;
+    height: 110px;
     position: absolute;
     border-radius: 3px;
+    object-fit: cover;
+    object-position: center;
   }
   .group98-post {
     top: 81px;
@@ -204,11 +198,20 @@
     flex-shrink: 0;
   }
   .group98-svg02 {
-    top: 26px;
-    left: 188px;
-    width: 19px;
-    height: 1px;
+    top: 7px;
+    left: 115px;
+    width: 1px;
+    height: 20px;
     position: absolute;
+    background-color: #B8B5B0;
+  }
+  .group98-svg03 {
+    top: -1px;
+    left: 55px;
+    width: 1px;
+    height: 20px;
+    position: absolute;
+    background-color: #B8B5B0;
   }
   .group98-text08 {
     top: 8px;
@@ -261,14 +264,7 @@
     width: 37px;
     height: 36px;
     position: absolute;
-    border-radius: 20px;
-  }
-  .group98-svg03 {
-    top: 26px;
-    left: 119px;
-    width: 19px;
-    height: 1px;
-    position: absolute;
+    border-radius: 10px;
   }
   .group98-frame-profile1 {
     top: 325px;
@@ -776,17 +772,6 @@
     align-items: flex-start;
     flex-shrink: 1;
   }
-  .group98-image1 {
-    top: 33px;
-    left: 9px;
-    width: 287px;
-    height: 233px;
-    position: absolute;
-    border-color: rgba(105, 105, 105, 0.5);
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 10px;
-  }
   .group98-text46 {
     left: 1px;
     color: rgba(64, 77, 242, 1);
@@ -802,11 +787,9 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .group98-text47 {
-    color: rgba(64, 77, 242, 1);
-  }
   .group98-text49 {
     top: 338px;
+    left: 1px;
     color: rgba(64, 77, 242, 1);
     width: 188px;
     height: auto;
@@ -820,18 +803,34 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .group98-text50 {
-    color: rgba(64, 77, 242, 1);
-  }
-  .group98-basemapimage {
-    top: 373px;
+  .group98-localmap {
+    top: 30px;
     left: 9px;
     width: 287px;
     height: 233px;
     position: absolute;
-    border-color: rgba(151, 148, 146, 1);
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 18px;
+    border-radius: 3px;
+    object-fit: cover;
+    object-position: center;
   }
-  
+  .group98-mymap {
+    top: 368px;
+    left: 9px;
+    width: 287px;
+    height: 233px;
+    position: absolute;
+  }
+  .historyPost-con {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: white;
+    width: 750px;
+    height: 500px;
+    padding: 20px; 
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: auto;
+}

@@ -7,7 +7,7 @@ import more from "../../assets/images/logos/more.png";
 import comment_more from "../../assets/images/logos/comment_more.png";
 import sky from "../../assets/images/bg/sky.png";
 import close from "../../assets/images/logos/close.png";
-import sul from "../../assets/images/bg/10sul.png";
+import img from "../../assets/images/bg/bg5.png";
 
 const HistoryPost = ({ data, onClose  }) => {
   const handleCloseClick = () => {
@@ -29,7 +29,7 @@ const HistoryPost = ({ data, onClose  }) => {
             <span>History</span>
           </span>
           <span className="floating-history-comment-text067">
-            <span>복정동 10술집 후기</span>
+            <span>{data.title}</span>
           </span>
           <div style={{border: "3px solid red"}} id='작성자 정보' className="floating-history-comment-frame28">
           <div className="floating-history-comment-frame29">
@@ -40,11 +40,11 @@ const HistoryPost = ({ data, onClose  }) => {
             />
           </div>
           <span className="floating-history-comment-text116">
-            <span>id_21212</span>
+            <span>{data.memberId}</span>
           </span>
         </div>
           <span className="floating-history-comment-text112">
-             <span>2024년 3월 19일 12:39</span>
+             <span>{data.createdAt}</span>
          </span>
         <span className="floating-history-comment-text114">
           <span>팔로우</span>
@@ -61,7 +61,7 @@ const HistoryPost = ({ data, onClose  }) => {
             내용
             </span>
           <img
-            src={sul}
+            src={img}
             alt="IMAGEHistoryImage1351"
             className="floating-history-comment-image-history-image"
           />

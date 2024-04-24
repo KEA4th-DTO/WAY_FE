@@ -16,6 +16,7 @@ import wayLogo from "../assets/images/logos/way_logo.png";
 import user from "../assets/images/users/user.png";
 import alarm from "../assets/images/logos/alarm.png";
 import hamburger from "../assets/images/logos/hamburger.png";
+import Logo from "./Logo";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);

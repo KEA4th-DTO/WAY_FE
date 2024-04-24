@@ -35,6 +35,7 @@ const Sidebar = () => {
   return (
     <div className="p-3">
       <div className="d-flex align-items-center">
+      <NavItem><Logo></Logo></NavItem>
         <span className="ms-auto d-lg-none">
         <Button
           close
