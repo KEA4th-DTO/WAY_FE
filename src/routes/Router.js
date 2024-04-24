@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import QuestionDetail from "../components/QuestionDetail.js";
+import NoticeDetail from "../components/NoticeDetail.js";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -24,7 +25,6 @@ const Modi_profile = lazy(() => import("../views/ui/Modi_profile"));
 const BlockList = lazy(() => import("../views/ui/BlockList"));
 const Notices = lazy(() => import("../views/ui/Notices"));
 const Questions = lazy(() => import("../views/ui/Questions"));
-const Question = lazy(() => import("../components/QuestionDetail.js"));
 const Withdrawal = lazy(() => import("../views/ui/Withdrawal"));
 
 const Tables = lazy(() => import("../views/ui/Tables"));
@@ -60,6 +60,7 @@ const ThemeRoutes = [
       { path: "/modify_profile", exact: true, element: <Modi_profile /> },
       { path: "/blocklist", exact: true, element: <BlockList /> },
       { path: "/notices", exact: true, element: <Notices /> },
+      { path: "/notices/:id", exact: true, element: <NoticeDetail /> },
       { path: "/questions", exact: true, element: <Questions /> },
       { path: "/questions/:id", exact: true, element: <QuestionDetail /> },
       { path: "/withdrawal", exact: true, element: <Withdrawal /> },

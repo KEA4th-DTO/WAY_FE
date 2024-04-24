@@ -1,8 +1,12 @@
-import React from 'react';
+import React from "react";
 import "../../assets/scss/layout/_noticeCard.scss";
 
-const NoticeCard = ({ children }) => {
-    return <div className="card">{children}</div>;
+const NoticeCard = ({ children, onClickAction }) => {
+  return (
+    <div className="card" onClick={onClickAction}>
+      {children}
+    </div>
+  );
 };
 
 export default NoticeCard;

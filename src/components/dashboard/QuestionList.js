@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import QuestionCard from "./QuestionCard";
 import question1 from "../../assets/images/users/user.png";
 import question2 from "../../assets/images/users/user.png";
