@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import QuestionDetail from "../components/QuestionDetail.js";
 import NoticeDetail from "../components/NoticeDetail.js";
+import FindIDPW from "../views/FindIDPW.js";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -10,7 +11,6 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 const Login = lazy(() => import("../pages/Login.jsx"));
 const Signup = lazy(() => import("../pages/Signup.jsx"));
-
 
 /***** Views ****/
 
@@ -45,6 +45,10 @@ const ThemeRoutes = [
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/findidpw",
+    element: <FindIDPW />,
   },
   {
     path: "/",
