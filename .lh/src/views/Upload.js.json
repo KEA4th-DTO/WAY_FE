@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/views/Upload.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1715834741741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1715834741741,
+            "name": "Commit-0",
+            "content": "import React, { useState } from 'react';\nimport EditorBox from '../components/main/EditorBox';\nimport \"../assets/scss/layout/_upload.scss\";\n\nconst Upload= () => {\n  const [postType, setPostType] = useState('daily'); // 포스트 타입 state\n  const [body, setBody] = useState(''); // 에디터 내용을 담는 state\n\n   // 포스트 타입이 변경될 때 호출되는 함수\n   const handlePostTypeChange = (type) => {\n    setPostType(type);\n  };\n\n  return (\n    <div>\n      {/* 포스트 타입 선택 버튼 */}\n      <div>\n        <button className={postType === 'daily' ? 'daily selected' : 'daily'} onClick={() => handlePostTypeChange('daily')}>Daily</button>\n        <button className={postType === 'history' ? 'history selected' : 'history'} onClick={() => handlePostTypeChange('history')}>History</button>\n      </div>\n      <br />\n      {/* 선택된 포스트 타입에 따라 다른 에디터 박스를 렌더링 */}\n      {postType === 'daily' ? (\n        <EditorBox body={body} setBody={setBody} postType={postType} />\n      ) : (\n        <EditorBox body={body} setBody={setBody} postType={postType}/>\n      )}\n    </div>\n  );\n};\n\nexport default Upload;\n"
+        }
+    ]
+}

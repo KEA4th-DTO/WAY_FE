@@ -88,7 +88,7 @@ const EditorBox = ({ postType }) => {
         setTodaySelected(true);
         setTomorrowSelected(false);
     };
-
+    
     const handleTomorrowClick = () => {
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
@@ -99,7 +99,7 @@ const EditorBox = ({ postType }) => {
         setTodaySelected(false);
         setTomorrowSelected(true);
     };
-
+    
 
     return (
         <div className="edit_wrap" style={{ position: "relative" }}>

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/main/ChatFromMe.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1715833337884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715833569600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,35 @@\n+import React, { useEffect, useRef, useState } from 'react';\n+import \"../../assets/scss/layout/_chatcontent.scss\";\n+\n+const ChatFromMe = ({ content }) => {\n+  const textRef = useRef(null);\n+  const [textWidth, setTextWidth] = useState(0);\n+\n+  useEffect(() => {\n+    if (textRef.current && textWidth === 0) {\n+      const width = textRef.current.offsetWidth;\n+      setTextWidth(width);\n+    }\n+  }, [textWidth]);\n+\n+  if (!content) {\n+    console.log(\"content is null\");\n+    return null;\n+  }\n+\n+  return (\n+    <div className=\"mychat-container\">\n+      <div className=\"mychat-rectangle\" style={{ width: textWidth + 30 + 'px'}} />\n+      <div className=\"mychat-frame\" style={{width: textWidth + 30 + 'px'}}>\n+        <span className=\"mychat-text\" ref={textRef}>\n+          <span>{content.content}</span>\n+        </span>\n+      </div>\n+      <div className=\"mychat-time\" style={{right: textWidth + 35 + 'px'}}>\n+        <span>{content.time}</span>\n+      </div>\n+    </div>\n+  );\n+};  \n+\n+export default ChatFromMe;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1715834010781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,42 +31,5 @@\n     </div>\n   );\n };  \n \n-export default ChatFromMe;\n-import React, { useEffect, useRef, useState } from 'react';\n-import \"../../assets/scss/layout/_chatcontent.scss\";\n-\n-const ChatFromMe = ({ content }) => {\n-  const textRef = useRef(null);\n-  const [textWidth, setTextWidth] = useState(0);\n-\n-  useEffect(() => {\n-    if (textRef.current) {\n-      const width = textRef.current.offsetWidth;\n-      setTextWidth(width);\n-    }\n-  }, [content]);\n-\n-  console.log(textWidth);\n-\n-  if (!content) {\n-    console.log(\"content is null\");\n-    return null;\n-  }\n-\n-  return (\n-    <div className=\"mychat-container\">\n-      <div className=\"mychat-rectangle\" style={{ width: textWidth + 30 + 'px'}} />\n-      <div className=\"mychat-frame\" style={{width: textWidth + 30 + 'px'}}>\n-        <span className=\"mychat-text\" ref={textRef}>\n-          <span>{content.content}</span>\n-        </span>\n-      </div>\n-      <div className=\"mychat-time\" style={{right: textWidth + 35 + 'px'}}>\n-        <span>{content.time}</span>\n-      </div>\n-    </div>\n-  );\n-};  \n-\n export default ChatFromMe;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1715833337884,
+            "name": "Commit-0",
+            "content": "import React, { useEffect, useRef, useState } from 'react';\nimport \"../../assets/scss/layout/_chatcontent.scss\";\n\nconst ChatFromMe = ({ content }) => {\n  const textRef = useRef(null);\n  const [textWidth, setTextWidth] = useState(0);\n\n  useEffect(() => {\n    if (textRef.current) {\n      const width = textRef.current.offsetWidth;\n      setTextWidth(width);\n    }\n  }, [content]);\n\n  console.log(textWidth);\n\n  if (!content) {\n    console.log(\"content is null\");\n    return null;\n  }\n\n  return (\n    <div className=\"mychat-container\">\n      <div className=\"mychat-rectangle\" style={{ width: textWidth + 30 + 'px'}} />\n      <div className=\"mychat-frame\" style={{width: textWidth + 30 + 'px'}}>\n        <span className=\"mychat-text\" ref={textRef}>\n          <span>{content.content}</span>\n        </span>\n      </div>\n      <div className=\"mychat-time\" style={{right: textWidth + 35 + 'px'}}>\n        <span>{content.time}</span>\n      </div>\n    </div>\n  );\n};  \n\nexport default ChatFromMe;"
+        }
+    ]
+}

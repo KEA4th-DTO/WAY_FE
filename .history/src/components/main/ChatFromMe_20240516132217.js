@@ -6,11 +6,13 @@ const ChatFromMe = ({ content }) => {
   const [textWidth, setTextWidth] = useState(0);
 
   useEffect(() => {
-    if (textRef.current && textWidth === 0) {
+    if (textRef.current) {
       const width = textRef.current.offsetWidth;
       setTextWidth(width);
     }
-  }, [textWidth]);
+  }, [content]);
+
+  console.log(textWidth);
 
   if (!content) {
     console.log("content is null");

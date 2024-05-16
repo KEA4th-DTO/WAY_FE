@@ -1,0 +1,266 @@
+.frame {
+  width: 500px;
+  height: 787px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(255, 255, 255, 1);
+}
+.top-window {
+  top: 31px;
+  left: 20px;
+  width: 458.7217102050781px;
+  height: 67px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.close-button {
+  top: 4px;
+  left: 428px;
+  width: 31px;
+  height: 31px;
+  position: absolute;
+}
+.frame-line {
+  top: 67px;
+  left: 3px;
+  width: 452px;
+  height: 1px;
+  position: absolute;
+  background-color: #404df2;
+}
+.top-period {
+  top: 32px;
+  left: 3px;
+  color: rgba(156, 142, 245, 1);
+  height: auto;
+  position: absolute;
+  font-size: 15px;
+  font-style: Bold;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.top-title {
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  position: absolute;
+  font-size: 22px;
+  font-style: Extra Bold;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.members-icon {
+  top: 24px;
+  left: 330px;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+}
+.top-member-num {
+  top: 32px;
+  left: 373px;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  font-size: 22px;
+  font-style: Extra Bold;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 500;
+  color: #828282;
+}
+
+.chat-container {
+  top: 60px;
+  left: 20px;
+  width: 460px;
+  height: 75%;
+  align-items: center;
+  position: relative;
+}
+  .mychat-container {
+    margin-left: 55%;
+    width: 200px;
+    height: 66px;
+    display: flex;
+    position: relative;
+    align-items: flex-end;
+    margin-top: 10px;
+
+  }
+  .mychat-rectangle {
+    right: 3px;
+    height: 50px;
+    position: absolute;
+    border-radius: 20px;
+    background-color: #8D95FF;
+  }
+  .mychat-frame {
+    top: 5px;
+    right: 15px;
+    width: 233px;
+    height: 49px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    }
+  .mychat-text {
+    top: 31px;
+    right: 3px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 15px;
+    font-style: Regular;
+    text-align: right;
+    font-family: Inter;
+    font-weight: 500;
+    word-break: break-word; /* 텍스트가 넘칠 경우 줄 바꿈 */
+
+  }
+  .mychat-text02 {
+    top: 51px;
+    color: rgba(0, 0, 0, 1);
+    width: 59px;
+    position: absolute;
+    font-size: 15px;
+    font-style: Regular;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+  }
+
+
+  .otherchat {
+    width: 200px;
+    height: 66px;
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+  .otherchat-rectangle {
+    top: 18px;
+    left: 3px;
+    height: 50px;
+    position: absolute;
+    border-radius: 20px;
+    background-color: #C4C8FC;
+  }
+  .otherchat-frame {
+    top: 12px;
+    left: 17px;
+    width: 233px;
+    height: 42px;
+    position: absolute;
+  }
+  .otherchat-text {
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 18px;
+    font-style: Semi Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+  }
+  .otherchat-text02 {
+    top: 24px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 15px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  .otherchat-text03 {
+    top: 49px;
+    left: 241px;
+    color: rgba(0, 0, 0, 1);
+    width: 59px;
+    height: auto;
+    position: absolute;
+    font-size: 15px;
+    font-style: Regular;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  
+  .send-window {
+    top: 708px;
+    left: 0px;
+    width: 500px;
+    height: 79px;
+    position: absolute;
+    background-color: #EEEEEE;
+    border-color: rgba(64, 77, 242, 1);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0 0 20px 20px;
+  }
+  .send-text {
+    top: 741px;
+    left: 32px;
+    color: rgba(152, 152, 152, 1);
+    height: auto;
+    position: absolute;
+    font-size: 13px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .send-frame1 {
+    top: 728px;
+    left: 373px;
+    width: 103.32177734375px;
+    height: 39.422481536865234px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .send-group {
+    top: 0px;
+    left: 0px;
+    width: 103.32177734375px;
+    height: 39.422481536865234px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(64, 77, 242, 1);
+  }
+  .send-text02 {
+    top: 8.982421875px;
+    left: 22.033111572265625px;
+    color: rgba(255, 255, 255, 1);
+    width: 59px;
+    height: auto;
+    position: absolute;
+    font-size: 15.76899242401123px;
+    font-style: Extra Bold;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
