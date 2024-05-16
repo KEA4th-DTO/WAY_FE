@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -9,9 +9,29 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import '../../assets/scss/layout/_upload.scss';
 
 const EditorBox = ({ postType }) => {
+    const editorRef = useRef();
+
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
+    const [createdAt, setTimer] = useState("00:00:00");
+
+    const currentTimer = () => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = String(date.getSeconds()).padStart(2, "0");
+        setTimer(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
+    }
+    
+    const startTimer = () => {
+        setInterval(currentTimer, 1000);
+    }
+    
+    startTimer();
+    
     const [expiredAt, setExpiredAt] = useState(''); // 만료 시간
     const [memberId] = useState('id_222');
     const [address, setAddress] = useState('');
@@ -21,17 +41,6 @@ const EditorBox = ({ postType }) => {
     const [todaySelected, setTodaySelected] = useState(false);
     const [tomorrowSelected, setTomorrowSelected] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        // 컴포넌트가 처음 마운트될 때 한 번 실행
-        const interval = setInterval(() => {
-            // 매 초마다 현재 시간을 업데이트
-            setCreatedAt(new Date().toISOString());
-        }, 1000);
-
-        // 컴포넌트가 언마운트될 때 clearInterval을 호출하여 메모리 누수를 방지
-        return () => clearInterval(interval);
-    }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 실행
 
     const onSave = async () => {
         try {
@@ -64,10 +73,15 @@ const EditorBox = ({ postType }) => {
         }
     };
 
-    const onUploadImage = async (blob, callback) => {
-        console.log(blob);
-        // Handle image upload logic
-    };
+    const onChange = () => {
+        const data = editorRef.current.getInstance().getHTML();
+        setBody(data);
+      };
+
+    // const onUploadImage = async (blob, callback) => {
+    //     console.log(blob);
+    //     // Handle image upload logic
+    // };
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -76,8 +90,6 @@ const EditorBox = ({ postType }) => {
     const onChangeAddress = (e) => {
         setAddress(e.target.value);
     };
-
-    const formattedTime = new Date(createdAt).toLocaleString('ko-KR');
 
     const handleTodayClick = () => {
         const today = new Date();
@@ -103,17 +115,18 @@ const EditorBox = ({ postType }) => {
 
     return (
         <div className="edit_wrap" style={{ position: "relative" }}>
-            <div>
-                <h2>
+             <div>
+                <span style={{fontSize: "30px"}}>
                     제목: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} type="text" placeholder="제목을 입력하세요." value={title} onChange={onChangeTitle} />
-                </h2>
-                <span style={{ marginLeft: "25px" }}>
+                </span>
+                <br />
+                <span style={{ marginLeft: "30px" }}>
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} type="text" placeholder="주소를 입력하세요." value={address} onChange={onChangeAddress} />
                 </span>
                 <div style={{ marginTop: "5px" }}>
-                    현재 시간: {formattedTime}
+                    현재 시간: {createdAt}
                 </div>
                 <div style={{ marginTop: "5px", position: "relative" }}>
                     만료 시간:
@@ -138,7 +151,7 @@ const EditorBox = ({ postType }) => {
                     </select>
                     분
                 </div>
-            </div>
+            </div> 
             <br />
             <button className='save' onClick={onSave}>저장</button>
             <Editor
@@ -150,10 +163,12 @@ const EditorBox = ({ postType }) => {
                 hideModeSwitch={true} //하단 타입 선택탭 숨기기
                 plugins={[colorSyntax]}
                 language="ko-KR"
-                onChange={setBody} // onChange event directly sets the body state
-                hooks={{
-                    addImageBlobHook: onUploadImage
-                }}
+                ref={editorRef}
+                onChange={onChange} // onChange event directly sets the body state
+                
+                // hooks={{
+                //     addImageBlobHook: onUploadImage
+                // }}
             />
         </div>
     );

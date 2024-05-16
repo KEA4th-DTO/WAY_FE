@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import EditorBox from '../components/main/EditorBox';
 // import ChangeAddress from '../components/main/ChangeAddress';
 import "../assets/scss/layout/_upload.scss";
+import HistoryUpload from '../components/main/HistoryUpload';
+import DailyUpload from '../components/main/DailyUpload';
 
 const Upload= () => {
   const [postType, setPostType] = useState('daily'); // 포스트 타입 state
@@ -22,9 +23,9 @@ const Upload= () => {
       <br />
       {/* 선택된 포스트 타입에 따라 다른 에디터 박스를 렌더링 */}
       {postType === 'daily' ? (
-        <EditorBox body={body} setBody={setBody} postType={postType} />
+        <DailyUpload body={body} setBody={setBody} postType={postType} />
       ) : (
-        <EditorBox body={body} setBody={setBody} postType={postType}/>
+        <HistoryUpload body={body} setBody={setBody} postType={postType}/>
       )}
     </div>
   );

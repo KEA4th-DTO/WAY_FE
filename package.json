@@ -11,6 +11,7 @@
     "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "@toast-ui/react-editor": "^3.2.3",
     "apexcharts": "3.41.0",
+    "aws-sdk": "^2.1608.0",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "1.10.5",
     "crypto-js": "^4.2.0",

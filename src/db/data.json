@@ -177,121 +177,162 @@
       "latitude": "36.3750219",
       "longitude": "127.3916916",
       "id": "65c4"
+    },
+    {
+      "id": "4b34",
+      "likeNum": 0,
+      "commentNum": 0
+    },
+    {
+      "id": "5af4",
+      "likeNum": 0,
+      "commentNum": 0
+    },
+    {
+      "id": "6103",
+      "body": "<p>믿고있다구!</p>",
+      "likeNum": 0,
+      "commentNum": 0
+    },
+    {
+      "id": "902d",
+      "title": "놀러갔다왓",
+      "body": "<p>hello react editor world!ㄴㄹㅇ나라어라@</p>",
+      "memberId": "id_222",
+      "likeNum": 0,
+      "commentNum": 0,
+      "createdAt": "2024-04-27 14:26:07",
+      "expiredAt": "2024-04-27T03:00:00.720Z",
+      "postType": "daily",
+      "address": "쥬소"
+    },
+    {
+      "id": "6a58",
+      "title": "ㅎㅎ",
+      "body": "<p>hello react editor world!ㅎㅎㅎㅎㅎ</p>",
+      "memberId": "id_222",
+      "likeNum": 0,
+      "commentNum": 0,
+      "createdAt": "2024-04-27 15:07:00",
+      "postType": "history",
+      "address": "ㅎㅎ",
+      "hashtag": [
+        "바꿀수있음에 놀라곤해"
+      ]
     }
   ],
- "notices": [
-      {
-        "id": "1",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "2",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "WAY 런칭",
-        "date": "2024.04.14",
-        "body" : "WAY 서비스 런칭했습니다."
-      },
-      {
-        "id": "3",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "4",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "5",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      },
-      {
-        "id": "6",
-        "profileImage": "url",
-        "authorName": "신해철",
-        "authorNickname": "ADMIN",
-        "title": "테스트용 공지사항 입니다.",
-        "date": "2024.04.14",
-        "body" : "공지사항 내용입니다."
-      }
-    ],
-    "questions": [
-      {
-        "id": "1",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User1",
-        "title": "문의사항 테스트 페이지 입니다.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "2",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User2",
-        "title": "차단한 사람을 풀고싶어요.",
-        "date": "2024.04.14",
-        "body" : "차단한 사람을 풀고싶은데 어떻게 해야되는지를 모르겠어요.. 도와주세요."
-      },
-      {
-        "id": "3",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User3",
-        "title": "게시물 삭제를 하고 싶어요.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "4",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User4",
-        "title": "이메일을 바꿀 수 있을까요?.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "5",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User5",
-        "title": "비밀번호를 찾기에 실패했어요.",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      },
-      {
-        "id": "6",
-        "profileImage": "url",
-        "authorName": "질문자",
-        "authorNickname": "User6",
-        "title": "로그인이 안될땐 어떻게 하나요?",
-        "date": "2024.04.14",
-        "body" : "문의사항 내용입니다"
-      }
-    ],
-
+  "notices": [
+    {
+      "id": "1",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "2",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "WAY 런칭",
+      "date": "2024.04.14",
+      "body": "WAY 서비스 런칭했습니다."
+    },
+    {
+      "id": "3",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "4",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "5",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    },
+    {
+      "id": "6",
+      "profileImage": "url",
+      "authorName": "신해철",
+      "authorNickname": "ADMIN",
+      "title": "테스트용 공지사항 입니다.",
+      "date": "2024.04.14",
+      "body": "공지사항 내용입니다."
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User1",
+      "title": "문의사항 테스트 페이지 입니다.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "2",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User2",
+      "title": "차단한 사람을 풀고싶어요.",
+      "date": "2024.04.14",
+      "body": "차단한 사람을 풀고싶은데 어떻게 해야되는지를 모르겠어요.. 도와주세요."
+    },
+    {
+      "id": "3",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User3",
+      "title": "게시물 삭제를 하고 싶어요.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "4",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User4",
+      "title": "이메일을 바꿀 수 있을까요?.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "5",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User5",
+      "title": "비밀번호를 찾기에 실패했어요.",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    },
+    {
+      "id": "6",
+      "profileImage": "url",
+      "authorName": "질문자",
+      "authorNickname": "User6",
+      "title": "로그인이 안될땐 어떻게 하나요?",
+      "date": "2024.04.14",
+      "body": "문의사항 내용입니다"
+    }
+  ],
   "followers": [
     {
       "id": "1",
@@ -512,7 +553,7 @@
       "isFollow": true
     }
   ],
-  "chatroom":[
+  "chatroom": [
     {
       "id": "1",
       "title": "같이 탁구치실분",
