@@ -111,9 +111,8 @@ const Search = () => {
             </span>
           </button>
         </Link>
-        <FollowingList />
       </div>
-     
+      <FollowingList />
     </div>
   );
 };

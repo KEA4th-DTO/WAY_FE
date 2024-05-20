@@ -9,8 +9,6 @@ import mymap_img from "../assets/images/bg/mymap_img.png";
 import HistoryPost from "../components/main/HistoryPost";
 import FollowingList from './FollowingsList';
 
-
-
 const Search = () => {
   const [rpost, setRPost] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
@@ -111,9 +109,8 @@ const Search = () => {
             </span>
           </button>
         </Link>
-        <FollowingList />
       </div>
-     
+      <FollowingList />
     </div>
   );
 };

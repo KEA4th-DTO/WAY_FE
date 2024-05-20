@@ -8,7 +8,7 @@ import localmap_img from "../assets/images/bg/localmap_img.png";
 import mymap_img from "../assets/images/bg/mymap_img.png";
 import HistoryPost from "../components/main/HistoryPost";
 import FollowingList from './FollowingsList';
-
+import axios from 'axios';
 
 
 const Search = () => {
@@ -111,9 +111,8 @@ const Search = () => {
             </span>
           </button>
         </Link>
-        <FollowingList />
       </div>
-     
+      <FollowingList />
     </div>
   );
 };

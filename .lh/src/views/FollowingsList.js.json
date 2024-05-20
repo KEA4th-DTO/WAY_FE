@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/views/FollowingsList.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1715924285548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715924501006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n import React, { useState, useEffect } from 'react';\n import axios from 'axios';\n \n function FollowingList() {\n-  const nickname = 'id_222'; // 임시 사용자 닉네임\n+  const userId = 'id_222'; // 임시 사용자 아이디\n+  const nickname = 'hihi'; // 임시 사용자 닉네임\n+  const name = 'ShinHy';\n   const [followingList, setFollowingList] = useState([]);\n  \n   useEffect(() => {\n     const fetchData = async () => {\n"
+                }
+            ],
+            "date": 1715924285548,
+            "name": "Commit-0",
+            "content": "import React, { useState, useEffect } from 'react';\nimport axios from 'axios';\n\nfunction FollowingList() {\n  const nickname = 'id_222'; // 임시 사용자 닉네임\n  const [followingList, setFollowingList] = useState([]);\n \n  useEffect(() => {\n    const fetchData = async () => {\n      try {\n        const response = await axios.get(`http://172.16.210.22/member-service/follow/haecheol/following-list`, {\n          headers: {\n            Authorization: 'Bearer accesstoken' // 인증 토큰\n          }\n        });\n        setFollowingList(response.data.result);\n      } catch (error) {\n        console.error('Error fetching following list:', error);\n      }\n    };\n\n    fetchData();\n  }, [nickname]); // nickname이 변경될 때마다 다시 불러옴\n\n  return (\n    <div>\n      <h2>Following List</h2>\n      <ul>\n        {followingList.map(user => (\n          <li key={user.nickname}>\n            <span>Nickname: {user.nickname}</span>\n            <span>Name: {user.name}</span>\n            {/* 추가 필드 표시 */}\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nexport default FollowingList;\n"
+        }
+    ]
+}
