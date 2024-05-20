@@ -80,7 +80,7 @@ function Login() {
           const responseData = response.data;
           if (responseData.isSuccess) {
             const { grantType, accessToken } = responseData.result.jwtToken;
-            const { name, email, nickname } = responseData.result.loginMember;
+            const { name, email, nickname } = responseData.result;
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("userName", name);
             localStorage.setItem("userEmail", email);
@@ -88,7 +88,6 @@ function Login() {
             axios.defaults.headers.common[
               "Authorization"
             ] = `${grantType} ${accessToken}`;
-            // setUser(userData);
             navigate("/localmap");
           } else {
             console.error("로그인 실패:", responseData.message);

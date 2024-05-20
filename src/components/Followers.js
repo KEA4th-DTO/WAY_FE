@@ -9,7 +9,6 @@ function Followers({ nickName }) {
   useEffect(() => {
     const fetchFollowers = async () => {
       const token = localStorage.getItem("accessToken");
-
       try {
         const response = await axios.get(
           `http://61.109.239.63:50001/member-service/follow/${nickName}/follower-list`,

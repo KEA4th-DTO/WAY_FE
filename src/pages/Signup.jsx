@@ -15,6 +15,14 @@ const Signup = () => {
   const [agreement, setAgreement] = useState(false);
   const [encryptedData, setEncryptedData] = useState("");
 
+  const handlePhoneChange = (e) => {
+    const formattedPhoneNumber = e.target.value
+      .replace(/[^\d]/g, "") // Remove any non-digit characters
+      .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"); // Apply the desired format (010-0000-0000)
+
+    setPhone(formattedPhoneNumber);
+  };
+
   const handleSignUp = () => {
     // 회원가입 정보 객체 생성
     const signUpData = {
@@ -24,6 +32,7 @@ const Signup = () => {
       passwordCheck: confirmPassword,
       // phone: phone,
       nickname: nickname,
+      phoneNumber: phone,
       // agreement: agreement,
     };
     const secretKey = CryptoJS.lib.WordArray.random(32).toString();
@@ -122,7 +131,7 @@ const Signup = () => {
               type="tel"
               className="signup-phoneNum"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
               placeholder="010-1234-5678"
               required
             />
