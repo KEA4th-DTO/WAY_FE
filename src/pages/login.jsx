@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "../assets/style/login.css";
 import kakaoImg from "../assets/img/kakao.png";
 import googleImg from "../assets/img/google_login.png";
+import axios from "axios";
+import { useUserContext } from "../contexts/UserContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function Login() {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
+  // const { setUser } = useUserContext();
 
   function kakaoLoginHandler() {
     const Rest_api_key = "	a636a1c4c0b845384ca75dd034081a1b";
@@ -58,41 +61,49 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const url = "서버url";
-
+    const url = "http://61.109.239.63:50001/member-service/login";
     const data = {
       email: email,
       password: password,
-      rememberMe: rememberMe,
+      // rememberMe: rememberMe,
     };
 
-    // TODO: 서버로 데이터 전송
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
+    axios
+      .post(url, data, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const responseData = response.data;
+          if (responseData.isSuccess) {
+            const { grantType, accessToken } = responseData.result.jwtToken;
+            const { name, email, nickname } = responseData.result.loginMember;
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userNickname", nickname);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `${grantType} ${accessToken}`;
+            // setUser(userData);
+            navigate("/localmap");
+          } else {
+            console.error("로그인 실패:", responseData.message);
+          }
+        } else {
+          console.error("서버 응답 오류: ", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("서버 통신 오류: ", error);
       });
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("서버 응답 데이터", responseData);
-
-        // 로그인이 성공하면 로컬맵 페이지로 리다이렉션합니다.
-        navigate("/localmap");
-      } else {
-        console.error("서버 응답 오류: ", response.status);
-      }
-    } catch (error) {
-      console.error("서버 통신 오류: ", error);
-    }
 
     console.log("Email:", email);
     console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
+    // console.log("Remember Me:", rememberMe); // 만약 사용한다면
   };
 
   return (

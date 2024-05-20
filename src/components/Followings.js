@@ -1,35 +1,57 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Follower from "./Follower";
 import "../assets/style/follower.css";
 
-function Followers() {
-  const [followers, setFollowers] = useState([]);
+function Followings({ nickname }) {
+  const [followings, setFollowings] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/followings")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network Error!");
+    const fetchFollowings = async () => {
+      const token = localStorage.getItem("accessToken");
+
+      try {
+        const response = await axios.get(
+          `http://61.109.239.63:50001/member-service/follow/${nickname}/following-list`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          const data = response.data;
+          if (data.isSuccess && Array.isArray(data.result)) {
+            setFollowings(data.result); // result 배열을 상태에 저장
+          } else {
+            console.log(response.status);
+            throw new Error("Unexpected response structure");
+          }
+        } else {
+          console.log(response.status);
+          throw new Error(`Unexpected response status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => setFollowers(data))
-      .catch((error) => console.error("Error fetching posts:", error));
-  }, []);
+      } catch (error) {
+        console.error("Error fetching followings:", error);
+      }
+    };
+    fetchFollowings();
+  }, [nickname]);
 
   return (
     <div className="post-title">
-      <p className="follower-label">팔로잉 목록</p>
+      <p className="following-label">팔로잉 목록</p>
       <div className="post-list">
-        {followers.map((follower) => (
+        {followings.map((following) => (
           <Follower
-            key={follower.id}
-            name={follower.name}
-            history={follower.history}
-            daily={follower.daily}
-            nickName={follower.nickName}
-            image={follower.image}
-            isFollow={follower.isFollow}
+            key={following.id}
+            name={following.name}
+            history={following.history}
+            daily={following.daily}
+            nickName={following.nickName}
+            image={following.image}
+            isFollow={following.isFollow}
           />
         ))}
       </div>
@@ -37,4 +59,4 @@ function Followers() {
   );
 }
 
-export default Followers;
+export default Followings;
