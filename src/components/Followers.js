@@ -1,21 +1,44 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Follower from "./Follower";
 import "../assets/style/follower.css";
 
-function Followers() {
+function Followers({ nickName }) {
   const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/followers")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network Error!");
+    const fetchFollowers = async () => {
+      const token = localStorage.getItem("accessToken");
+
+      try {
+        const response = await axios.get(
+          `http://61.109.239.63:50001/member-service/follow/${nickName}/follower-list`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+
+        if (response.status === 200) {
+          const data = response.data;
+          if (data.isSuccess && Array.isArray(data.result)) {
+            setFollowers(data.result); // result 배열을 상태에 저장
+          } else {
+            console.log(response.status);
+            throw new Error("Unexpected response structure");
+          }
+        } else {
+          throw new Error(`Unexpected response status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => setFollowers(data))
-      .catch((error) => console.error("Error fetching posts:", error));
-  }, []);
+      } catch (error) {
+        console.error("Error fetching followers:", error);
+      }
+    };
+
+    fetchFollowers();
+  }, [nickName]);
 
   return (
     <div className="post-title">

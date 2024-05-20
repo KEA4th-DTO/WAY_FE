@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 import "../assets/style/signup.css";
-
+import axios from "axios";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,39 +18,37 @@ const Signup = () => {
   const handleSignUp = () => {
     // 회원가입 정보 객체 생성
     const signUpData = {
+      name: name,
       email: email,
       password: password,
-      phone: phone,
-      name: name,
-      birthdate: birthdate,
+      passwordCheck: confirmPassword,
+      // phone: phone,
       nickname: nickname,
-      agreement: agreement,
+      // agreement: agreement,
     };
-
-    const secretKey = "mySecretKey";
-
+    const secretKey = CryptoJS.lib.WordArray.random(32).toString();
     const encryptedData = CryptoJS.AES.encrypt(
       JSON.stringify(signUpData),
       secretKey
     ).toString();
 
-    // fetch를 사용하여 서버로 POST 요청을 보냅니다.
-    fetch("http://example.com/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signUpData),
-    })
+    console.log(signUpData);
+    axios
+      .post("http://61.109.239.63:50001/member-service/signup", signUpData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((response) => {
-        if (!response.ok) {
+        if (response.status !== 200) {
+          console.log(response.status);
           throw new Error("Network response was not ok");
         }
-        return response.json();
       })
       .then((data) => {
         console.log("회원가입이 완료되었습니다.", data);
-        // 회원가입 성공 후 추가적인 처리를 할 수 있습니다.
+        window.location.href = "http://localhost:3000/#/login";
       })
       .catch((error) => {
         console.error("Error during signup:", error);
@@ -140,7 +138,6 @@ const Signup = () => {
               required
             />
           </div>
-
           <div className="nickName">
             <label>닉네임</label>
             <input
@@ -159,7 +156,7 @@ const Signup = () => {
           </div>
           <div className="agree">
             <label>
-              <span className="agree">개인정보 동의</span>
+              <span>개인정보 동의</span>
               <input
                 type="checkbox"
                 checked={agreement}

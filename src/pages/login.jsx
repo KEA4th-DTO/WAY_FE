@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "../assets/style/login.css";
 import kakaoImg from "../assets/img/kakao.png";
 import googleImg from "../assets/img/google_login.png";
+import axios from "axios";
+import { useUserContext } from "../contexts/UserContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -16,17 +18,37 @@ function Login() {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
+  // const { setUser } = useUserContext();
 
   function kakaoLoginHandler() {
-    console.log("카카오 로그인");
     const Rest_api_key = "	a636a1c4c0b845384ca75dd034081a1b";
     const redirect_uri = "http://localhost:3000/auth";
 
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-    window.open(kakaoURL, "Kakao Login", "width=600,height=600");
 
-    // 카카오 로그인 후에도 로컬맵 페이지로 이동합니다.
-    navigate("/localmap");
+    const popup = window.open(kakaoURL, "Kakao Login", "width=600,height=600");
+
+    const checkPopupClosed = setInterval(() => {
+      if (popup.closed) {
+        clearInterval(checkPopupClosed);
+        // window.location.href = "/localmap";
+      }
+    });
+
+    window.addEventListener("message", (event) => {
+      if (event.origin !== window.origin) {
+        console.log("asdf");
+        return;
+      }
+
+      const { type, data } = event.data;
+
+      if (type === "kakaoLogin") {
+        clearInterval(checkPopupClosed);
+        popup.close();
+        window.location.href = "/localmap";
+      }
+    });
   }
 
   const handlePasswordChange = (event) => {
@@ -39,41 +61,49 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const url = "서버url";
-
+    const url = "http://61.109.239.63:50001/member-service/login";
     const data = {
       email: email,
       password: password,
-      rememberMe: rememberMe,
+      // rememberMe: rememberMe,
     };
 
-    // TODO: 서버로 데이터 전송
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
+    axios
+      .post(url, data, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const responseData = response.data;
+          if (responseData.isSuccess) {
+            const { grantType, accessToken } = responseData.result.jwtToken;
+            const { name, email, nickname } = responseData.result.loginMember;
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userNickname", nickname);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `${grantType} ${accessToken}`;
+            // setUser(userData);
+            navigate("/localmap");
+          } else {
+            console.error("로그인 실패:", responseData.message);
+          }
+        } else {
+          console.error("서버 응답 오류: ", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("서버 통신 오류: ", error);
       });
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("서버 응답 데이터", responseData);
-
-        // 로그인이 성공하면 로컬맵 페이지로 리다이렉션합니다.
-        navigate("/localmap");
-      } else {
-        console.error("서버 응답 오류: ", response.status);
-      }
-    } catch (error) {
-      console.error("서버 통신 오류: ", error);
-    }
 
     console.log("Email:", email);
     console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
+    // console.log("Remember Me:", rememberMe); // 만약 사용한다면
   };
 
   return (
@@ -178,7 +208,9 @@ function Login() {
             </div>
           </div>
           <div className="button-container">
-            <button className="find-btn">E-mal/PW 찾기</button>
+            <Link to="/findidpw">
+              <button className="find-btn">E-mail/PW 찾기</button>
+            </Link>
             <Link to="/signup">
               <button className="signUp-btn">회원가입</button>
             </Link>

@@ -15,8 +15,8 @@ label{
     justify-content: left;
     align-items: center;
     margin-left: 10%;
-    margin-top: 10px;
-    font-size: 15px;
+    margin-top: 40px;
+    font-size: 17px;
     font-style: bold;
 }
 
@@ -62,7 +62,7 @@ label{
     margin-top: 5%;
     justify-content: center;
     align-items: center;
-    height: 30px;
+    height: 40px;
     border-radius: 12px;
     border: 1px solid #ccc;
     padding: 10px;
@@ -78,6 +78,17 @@ label{
     border-radius: 12px;
     border: 1px solid #ccc;
     background-color: #828282;
+    color: #fff;
+}
+
+.btn-duplicate:hover {
+    margin-top: 5%;
+    margin-left: 10%;
+    height: 30px;
+    width: 80px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background-color: #5a5a5a;
     color: #fff;
 }
 
@@ -97,13 +108,23 @@ label{
     color: #fff;
 }
 
+.btn-signup:hover {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    width: 130px;
+    border-radius: 12px;
+    border: 1px solid #828282;
+    background-color: #2b63b2;
+    color: #fff;
+}
+
 .signup-panel{
     display:flex;
     justify-content: center;
 }
-
-/* .parent-container{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-} */
