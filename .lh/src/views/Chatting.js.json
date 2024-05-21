@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1715833824927,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1716193029167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n import React, { useState, useEffect } from 'react';\n import \"../assets/scss/layout/_chatting.scss\";  \n-import sky from \"../assets/images/bg/sky.png\";\n-import user6 from \"../assets/images/users/user6.png\";\n import full_checkbox from \"../assets/images/icons/full_checkbox.png\";\n import checkbox from \"../assets/images/icons/checkbox.png\";\n import ChatRoom from '../components/main/ChatRoom';\n import ChatContent from '../components/main/ChatContent';\n"
                 }
             ],
             "date": 1715833824927,
