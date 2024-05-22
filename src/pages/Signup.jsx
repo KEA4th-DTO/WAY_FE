@@ -43,7 +43,7 @@ const Signup = () => {
 
     console.log(signUpData);
     axios
-      .post("http://210.109.55.193:50004/member-service/signup", signUpData, {
+      .post("http://61.109.238.160:50004/member-service/signup", signUpData, {
         headers: {
           "Content-Type": "application/json",
         },

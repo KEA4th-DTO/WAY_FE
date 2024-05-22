@@ -25,6 +25,7 @@ const DailyEditor = ({ postType }) => {
     const navigate = useNavigate();
     const { naver } = window;
 
+    const token = localStorage.getItem("accessToken");
 
     useEffect(() => {
         // 컴포넌트가 처음 마운트될 때 한 번 실행
@@ -58,7 +59,7 @@ const DailyEditor = ({ postType }) => {
             const response = await fetch(`http://210.109.54.52:50005/post-service/daily`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZWUyMGtpbUBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9DTElFTlQiLCJleHAiOjE3MjQ5MTM0NDB9.0e3vrqbuDTeqEch_VdMfDpnAJZ7v2n5UoStcbaxMXC8',
+                     Authorization: `Bearer ${token}`,
                     // 'Content-Type': 'multipart/form-data' // REMOVE this line
                 },
                 body: formData,
@@ -69,7 +70,7 @@ const DailyEditor = ({ postType }) => {
             if (response.ok) {
                 alert('저장되었습니다.');
                 // 페이지 이동
-                // navigate('/mymap');
+                navigate('/mymap');
                 console.log('Success:', data);
             } else {
                 console.error('Error:', data);
@@ -144,7 +145,7 @@ const DailyEditor = ({ postType }) => {
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
-                        placeholder="주소를 입력하세요." 
+                        placeholder="지도로 주소를 설정해주세요." 
                         value={address} 
                         readOnly />
                     <br />
