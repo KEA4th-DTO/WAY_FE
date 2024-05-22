@@ -41,7 +41,7 @@ const UploadMap = ({ setPostPosition }) => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 10,
+                minZoom: 12,
                 maxZoom: 16,
                 zoomControl: true,
                 zoomControlOptions: {
@@ -49,26 +49,19 @@ const UploadMap = ({ setPostPosition }) => {
                     position: naver.maps.Position.TOP_RIGHT
                 }
             });
+            console.log(location);
 
-            //지도 이동시 bounds 변경(좌표 받아오기)
-            function updateBounds() {
-                const bounds = map.getBounds();
-                setBounds({
-                    ne: {
-                        lat: bounds.getNE().lat(),
-                        lng: bounds.getNE().lng()
-                    },
-                    sw: {
-                        lat: bounds.getSW().lat(),
-                        lng: bounds.getSW().lng()
-                    }
-                });
-            }
-
-            // Immediately update bounds when map is initialized
-            updateBounds();
-
-            naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
+            // Define the bounds
+            const minBound = new naver.maps.LatLngBounds(
+                new naver.maps.LatLng((currentMyLocation.lat - 0.0408696), (currentMyLocation.lng - 0.0514984)), // SW bound
+                new naver.maps.LatLng((currentMyLocation.lat + 0.0408919), (currentMyLocation.lng + 0.0514984))  // NE bound
+            );
+           
+            // Set the min/max bounds for the map
+            map.setOptions({
+                minBounds: minBound,
+                maxBounds: minBound
+            });
             
             //현재 위치 dailyPin 마커 표시
             var marker = new naver.maps.Marker({
@@ -108,11 +101,6 @@ const UploadMap = ({ setPostPosition }) => {
             </button>
             
             <div ref={mapRef} style={{ width: "300px", height: "300px" }}></div>
-            <div>
-                <h4>Map Bounds:</h4>
-                <p>North-East Latitude: {bounds.ne.lat}, Longitude: {bounds.ne.lng}</p>
-                <p>South-West Latitude: {bounds.sw.lat}, Longitude: {bounds.sw.lng}</p>
-            </div>
         </div>
     );
 };
