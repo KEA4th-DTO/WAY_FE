@@ -52,7 +52,7 @@ const Localmap = () => {
       </div>
         
       {/* 게시글*/}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px", position: "relative"}}>
+      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
         <span className="initial-main-page-text">
           게시글
         </span>

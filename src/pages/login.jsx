@@ -61,7 +61,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = "http://210.109.55.193:50004/member-service/login";
+    const url = "http://210.109.54.80:50004/member-service/login";
     const data = {
       email: email,
       password: password,

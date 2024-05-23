@@ -11,20 +11,57 @@ import full_like from "../../assets/images/logos/full_like.png";
 import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate, formatPeriod } from '../../utils/changeFormat';
 
-const DailyPost = ({ data }) => {
+const DailyPost = ({ postId }) => {
         // null 체크를 위해 미리 초기화
-        const [likeNum, setLikeNum] = useState(data ? data.likeNum : 0);
+        const [post, setPost] = useState([]);
+        const [likeNum, setLikeNum] = useState(0);
         const [liked, setLiked] = useState(false);
         const [followed, setFollowed] = useState(false);
+        const token = localStorage.getItem("accessToken");
+        const userEmail = localStorage.getItem("userEmail");
 
-        // 데이터가 없는 경우 null을 반환하므로 조건문을 사용하지 않음
+    // "postId": 1,
+    // "writerEmail": "lee20kim@gmail.com",
+    // "title": "하이",
+    // "body": "헬로우",
+    // "imageUrl": "https://way-post-images.s3.ap-northeast-2.amazonaws.com/daily_image/b86bbdff-cd16-4c61-bcf6-6dc1ca4a2a27",
+    // "isOwned": null,
+    // "expiredAt": "2024-05-22T07:20:30.035",
+    // "createdAt": "2024-05-22T06:20:44.154215"
+    //라이크 추가좀..
+
         useEffect(() => {
-            if (!data) {
-                return;
-            }
-            // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
-            setLiked(data.liked);
-        }, [data]);
+          if (postId) {
+            
+            fetch(`http://61.109.239.42:50005/post-service/daily/${postId}`, {
+              method: "GET",
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+            })
+            .then(data => {
+              if (data.isSuccess) {
+                setPost(data.result);
+              } else {
+                console.error("Error in API response:", data.message);
+              }
+            })
+            .catch(error => console.error("Error fetching data:", error));
+          }
+        }, [userEmail, token]);
+      
+        console.log(post);
+
+        // useEffect(() => {
+        //     // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
+        //     setLiked(post.likesCount);
+        // }, [data]);
 
         const handleLikeClick = () => {
             if (liked) {
@@ -42,14 +79,6 @@ const DailyPost = ({ data }) => {
                 setFollowed(true);
             }
         };
-        
-        // const onBackClick = () => { 
-        //     return(
-        //       <div>
-        //         <MainList />
-        //       </div>
-        //     );
-        // };
 
         // useEffect(() => {
         //     const script = document.createElement("script");
@@ -66,7 +95,7 @@ const DailyPost = ({ data }) => {
             <div className="dailypost-frame4">
               <img alt="사용자 프로필 이미지" src={user7} className="dailypost-profileimage" />
               <span className="dailypost-text10">
-                <span>{data.memberId}</span>
+                <span>{post.writerEmail}</span>
               </span>
             </div>
             <img
@@ -87,23 +116,23 @@ const DailyPost = ({ data }) => {
           </div>
         </div>
           <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
-            <img alt="게시글 이미지" src={sky} className="dailypost-image" />
+            <img alt="게시글 이미지" src={post.imageUrl} className="dailypost-image" />
           </div>
 
           <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
             <span style={{border: "3px solid yellow"}} className="dailypost-text08">
-              <span>{data.title}</span>
+              <span>{post.title}</span>
             </span>
             <span style={{border: "3px solid yellow"}} className="dailypost-text02">
-              <span>{data.postType}</span>
+              <span>{post.postType}</span>
             </span>
             <span style={{border: "3px solid yellow"}} className="dailypost-text04">
               <span>
-                {data.body}
+                {post.body}
               </span>
             </span>
             <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{formatDate(data.createdAt)} {formatPeriod(data.period)}</span>
+              <span>{formatDate(post.createdAt)} {formatPeriod(post.expiredAt)}</span>
             </span>
           </div>
          

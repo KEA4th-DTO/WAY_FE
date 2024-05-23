@@ -14,6 +14,7 @@ import axios from 'axios';
 const EditorBox = ({ postType }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [bodypreview, setBodyPreview] = useState(''); // 본문 미리보기
     const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
     const [address, setAddress] = useState('');
 
@@ -52,15 +53,14 @@ const EditorBox = ({ postType }) => {
             formData.append('image', image); // Add the image file
             formData.append('createHistoryDto', new Blob([JSON.stringify({ 
                 title,
+                bodypreview,
                 address,
                 latitude,
                 longitude,
             })], { type: 'application/json' }));
             formData.append('html', new Blob([body], { type: 'text/html' })); // 본문 추가
 
-            console.log(formData);
-
-            const response = await fetch(`http://210.109.54.52:50005/post-service/history`, {
+            const response = await fetch(`http://61.109.239.42:50005//post-service/history`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -97,7 +97,6 @@ const EditorBox = ({ postType }) => {
         if (file) {
             reader.readAsDataURL(file);
         }
-        console.log(file);
     };
     const onUploadImage = async (blob, callback) => {
         const formData = new FormData();
@@ -146,6 +145,13 @@ const EditorBox = ({ postType }) => {
     const onChange = () => {
         const data = editorRef.current.getInstance().getHTML();
         setBody(data);
+        console.log(data);
+
+        const markdown = editorRef.current.getInstance().getMarkdown();;
+        const textContent = markdown.replace(/[#>*_~`[\]]+/g, ''); // 마크다운 문법 제거
+        setBodyPreview(textContent);
+        // 저장할 textContent를 사용합니다.
+        console.log('텍스트 내용:', textContent);
       };
 
 
@@ -196,7 +202,7 @@ const EditorBox = ({ postType }) => {
                 height="600px"
                 initialEditType="wysiwyg"
                 useCommandShortcut={false}
-                hideModeSwitch={true} //하단 타입 선택탭 숨기기
+                hideModeSwitch={false} //하단 타입 선택탭 숨기기
                 plugins={[colorSyntax]}
                 language="ko-KR"
                 ref={editorRef}

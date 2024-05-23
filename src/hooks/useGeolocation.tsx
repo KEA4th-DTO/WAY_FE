@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-interface locationType {
+interface locationType { 
   loaded: boolean;
   coordinates?: { lat: number; lng: number };
   error?: { code: number; message: string };
@@ -32,8 +32,6 @@ const useGeolocation = () => {
   }
 
   useEffect(() => {
-    // navigator 객체 안에 geolocation이 없다면
-    // 위치 정보가 없는 것.
     if (!("geolocation" in navigator)) {
       onError({
         code: 0,
