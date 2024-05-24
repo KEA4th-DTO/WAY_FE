@@ -16,7 +16,7 @@ const Mymap = () => {
   useEffect(() => {
     if (userEmail) {
       
-      fetch(`http://61.109.239.42:50005/post-service/posts/list/${userEmail}`, {
+      fetch(`http://210.109.55.124/post-service/posts/list/${userEmail}`, {
         method: "GET",
         headers: {
           // "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const Mymap = () => {
       </div>
       {selectedPost && selectedPost.postType === 'HISTORY' && (
         <div className="historyPost-con">
-          <HistoryPost data={selectedPost} onClose={handleBackClick} />
+          <HistoryPost postId={selectedPost.postId} onClose={handleBackClick} />
         </div>
       )}
     </div>

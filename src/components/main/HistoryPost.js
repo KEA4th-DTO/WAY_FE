@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_historypost.scss";
 import user3 from "../../assets/images/users/user3.jpg";
 import like from "../../assets/images/logos/like.png";
@@ -9,7 +9,57 @@ import sky from "../../assets/images/bg/sky.png";
 import close from "../../assets/images/logos/close.png";
 import img from "../../assets/images/bg/bg5.png";
 
-const HistoryPost = ({ data, onClose  }) => {
+const HistoryPost = ({ postId, onClose  }) => {
+     // null 체크를 위해 미리 초기화
+     const [post, setPost] = useState([]);
+     const [likeNum, setLikeNum] = useState(0);
+     const [liked, setLiked] = useState(false);
+     const [followed, setFollowed] = useState(false);
+     const token = localStorage.getItem("accessToken");
+     const userEmail = localStorage.getItem("userEmail");
+
+  //    "isSuccess": true,
+  //    "code": "string",
+  //    "message": "string",
+  //    "result": {
+  //      "postId": 0,
+  //      "memberEmail": "string",
+  //      "title": "string",
+  //      "bodyHtmlUrl": "string",
+  //      "bodyPreview": "string",
+  //      "likesCount": 0,
+  //      "commentsCount": 0,
+  //      "isOwned": true,
+  //      "createdAt": "2024-05-23T12:28:56.089Z"
+  //    }
+  //  }
+
+  useEffect(() => {
+    if (postId) {
+      fetch(`http://210.109.55.124/post-service/history/${postId}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok ' + res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.isSuccess) {
+          setPost(data.result);
+        } else {
+          console.error("Error in API response:", data.message);
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+    }
+  }, [userEmail, token]);
+
+  console.log(post);
   const handleCloseClick = () => {
     onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
   };
@@ -29,22 +79,22 @@ const HistoryPost = ({ data, onClose  }) => {
             <span>History</span>
           </span>
           <span className="floating-history-comment-text067">
-            <span>{data.title}</span>
+            <span>{post.title}</span>
           </span>
           <div style={{border: "3px solid red"}} id='작성자 정보' className="floating-history-comment-frame28">
           <div className="floating-history-comment-frame29">
             <img
-              src={user3}
+              src={post.userImage || user3}
               alt="작성자 프로필이미지"
               className="floating-history-comment-freeiconuser14907114"
             />
           </div>
           <span className="floating-history-comment-text116">
-            <span>{data.memberId}</span>
+            <span>{post.memberEmail}</span>
           </span>
         </div>
           <span className="floating-history-comment-text112">
-             <span>{data.createdAt}</span>
+             <span>{post.createdAt}</span>
          </span>
         <span className="floating-history-comment-text114">
           <span>팔로우</span>
@@ -59,12 +109,8 @@ const HistoryPost = ({ data, onClose  }) => {
         <div style={{border: "3px solid red", overflow:"auto"}}>
           <span className="floating-history-comment-text069">
             내용
+            {post.bodyHtmlUrl}
             </span>
-          <img
-            src={img}
-            alt="IMAGEHistoryImage1351"
-            className="floating-history-comment-image-history-image"
-          />
           <span className="floating-history-comment-text097">
             <span>게시글 끝</span>
           </span>
@@ -89,7 +135,7 @@ const HistoryPost = ({ data, onClose  }) => {
               className="floating-history-comment-svg"
             />
             <span id='좋아요 수' className="floating-history-comment-text107">
-              <span>95</span>
+              <span>95{post.likesCount}</span>
             </span>
           </div>
 
@@ -102,7 +148,7 @@ const HistoryPost = ({ data, onClose  }) => {
               />
             </div>
             <span id='댓글수' className="floating-history-comment-text109">
-                5
+                0{post.commentsCount}
             </span>
           </div>
         </div>
@@ -134,7 +180,7 @@ const HistoryPost = ({ data, onClose  }) => {
                   className="floating-history-comment-freeiconuser1490711"
                 />
                 <span style={{border: "3px solid orange"}} id='사용자 아이디' className="floating-history-comment-text006">
-                  <span>{data.memberId}</span>
+                  <span>{post.memberEmail}</span>
                 </span>
               </div>
               <span style={{border: "3px solid orange"}}  className="floating-history-comment-text008">

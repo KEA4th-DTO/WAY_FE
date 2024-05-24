@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_dailypost.scss";
 import user7 from "../../assets/images/users/user7.png";
-import sky from "../../assets/images/bg/sky.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import more from "../../assets/images/logos/more.png";
 import share from "../../assets/images/logos/share.png";
@@ -20,20 +19,10 @@ const DailyPost = ({ postId }) => {
         const token = localStorage.getItem("accessToken");
         const userEmail = localStorage.getItem("userEmail");
 
-    // "postId": 1,
-    // "writerEmail": "lee20kim@gmail.com",
-    // "title": "하이",
-    // "body": "헬로우",
-    // "imageUrl": "https://way-post-images.s3.ap-northeast-2.amazonaws.com/daily_image/b86bbdff-cd16-4c61-bcf6-6dc1ca4a2a27",
-    // "isOwned": null,
-    // "expiredAt": "2024-05-22T07:20:30.035",
-    // "createdAt": "2024-05-22T06:20:44.154215"
-    //라이크 추가좀..
-
         useEffect(() => {
           if (postId) {
             
-            fetch(`http://61.109.239.42:50005/post-service/daily/${postId}`, {
+            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
               method: "GET",
               headers: {
                 "Authorization": `Bearer ${token}`
@@ -64,13 +53,30 @@ const DailyPost = ({ postId }) => {
         // }, [data]);
 
         const handleLikeClick = () => {
-            if (liked) {
-                setLikeNum(prevNum => prevNum - 1);
-            } else {
-                setLikeNum(prevNum => prevNum + 1);
-            }
-            setLiked(!liked);
-        };
+          // 좋아요 취소 로직 추가
+          fetch(`http://210.109.55.124/post-service/posts/like/${postId}`, {
+              method: "POST",
+              headers: {
+                  "Authorization": `Bearer ${token}`
+              }
+          })
+          .then(res => {
+              if (!res.ok) {
+                  throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+          })
+          .then(data => {
+              if (data.isSuccess) {
+                  setLikeNum(data.result.likesCount);
+                  setLiked(!liked);
+                  console.log("Successfully liked post:", data);
+              } else {
+                  console.error("Error unliking post:", data.message);
+              }
+          })
+          .catch(error => console.error("Error unliking post:", error));
+          };
 
         const handleFollowClick = () => {
             if (followed) {
@@ -93,7 +99,10 @@ const DailyPost = ({ postId }) => {
         <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
         <div style={{border: "3px solid orange"}} className="dailypost-frame3">
             <div className="dailypost-frame4">
-              <img alt="사용자 프로필 이미지" src={user7} className="dailypost-profileimage" />
+              <img 
+                alt="사용자 프로필 이미지" 
+                src={post.userImage || user7} 
+                className="dailypost-profileimage" />
               <span className="dailypost-text10">
                 <span>{post.writerEmail}</span>
               </span>
@@ -132,7 +141,7 @@ const DailyPost = ({ postId }) => {
               </span>
             </span>
             <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{formatDate(post.createdAt)} {formatPeriod(post.expiredAt)}</span>
+              <span>{post.createdAt} ~ {post.expiredAt}</span>
             </span>
           </div>
          
@@ -148,7 +157,7 @@ const DailyPost = ({ postId }) => {
             </button>
            
             <span className="dailypost-text16">
-              <span>{likeNum}</span>
+              <span>{post.likesCount}</span>
             </span>
           </div>
           <button className="dailypost-frame6" onClick={() => shareKakao()}>

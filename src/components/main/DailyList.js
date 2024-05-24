@@ -15,6 +15,7 @@ const DailyList = ({ data }) => {
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }
+
   return (
     <div
       className="frame4-container"
@@ -45,16 +46,18 @@ const DailyList = ({ data }) => {
               <span>{data.memberEmail}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
-              {/* <span>{data.body}</span> */}
+              <span>{data.bodyPreview}</span>
             </span>
             <span className="frame4-text02">
-              <span>{data.expiredOrCreatedDate}</span>
+              <span>{data.createdAt}
+              <br />
+              {data.expiredAt}</span>
               {/* <span>{formatPeriod(data.period)}</span> */}
             </span>
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />
               <span className="frame4-text">
-                <span>{data.likesCount}</span>
+                <span>{data.likesCount || 0}</span>
               </span>
             </div>
           </div>

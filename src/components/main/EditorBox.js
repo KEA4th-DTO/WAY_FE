@@ -14,7 +14,7 @@ import axios from 'axios';
 const EditorBox = ({ postType }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [bodypreview, setBodyPreview] = useState(''); // 본문 미리보기
+    const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기
     const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
     const [address, setAddress] = useState('');
 
@@ -53,14 +53,14 @@ const EditorBox = ({ postType }) => {
             formData.append('image', image); // Add the image file
             formData.append('createHistoryDto', new Blob([JSON.stringify({ 
                 title,
-                bodypreview,
-                address,
                 latitude,
                 longitude,
+                address,
+                bodyPreview,
             })], { type: 'application/json' }));
             formData.append('html', new Blob([body], { type: 'text/html' })); // 본문 추가
 
-            const response = await fetch(`http://61.109.239.42:50005//post-service/history`, {
+            const response = await fetch(`http://210.109.55.124/post-service/history`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -100,14 +100,30 @@ const EditorBox = ({ postType }) => {
     };
     const onUploadImage = async (blob, callback) => {
         const formData = new FormData();
-        formData.append("file", blob);
-        const img = await axios.post(
-          "통신 url",
-          formData
-        );
-        const url = img.data[0].boardImageUrl;
+        formData.append("historyImage", blob);
 
+        try {
+        const response = await axios.post(
+        "http://210.109.55.124/post-service/history/upload-image",
+        formData,
+        {
+            headers: {
+            "Authorization": `Bearer ${token}`,
+            }
+        }
+        );
+
+        if (response.data.isSuccess) {
+        const url = response.data.result;
         callback(url, "");
+        } else {
+        console.error("Error uploading image:", response.data.message);
+        callback(null, response.data.message);
+        }
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        callback(null, error.message);
+    }
         return false;
       };
 
@@ -146,13 +162,21 @@ const EditorBox = ({ postType }) => {
         const data = editorRef.current.getInstance().getHTML();
         setBody(data);
         console.log(data);
-
-        const markdown = editorRef.current.getInstance().getMarkdown();;
-        const textContent = markdown.replace(/[#>*_~`[\]]+/g, ''); // 마크다운 문법 제거
+      
+        const markdown = editorRef.current.getInstance().getMarkdown();
+        
+        // 마크다운에서 이미지 구문 제거
+        const textWithoutImages = markdown.replace(/!\[.*?\]\(.*?\)/g, '');
+      
+        // 마크다운 문법 제거
+        const textContent = textWithoutImages.replace(/[#>*_~`[\]]+/g, '');
+        
         setBodyPreview(textContent);
+        
         // 저장할 textContent를 사용합니다.
         console.log('텍스트 내용:', textContent);
       };
+      
 
 
     return (
@@ -207,9 +231,9 @@ const EditorBox = ({ postType }) => {
                 language="ko-KR"
                 ref={editorRef}
                 onChange={onChange} // Update body state
-                // hooks={{
-                //     addImageBlobHook: onUploadImage
-                //   }}
+                hooks={{
+                    addImageBlobHook: onUploadImage
+                  }}
             />
         </div>
     );

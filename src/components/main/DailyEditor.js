@@ -56,7 +56,7 @@ const DailyEditor = ({ postType }) => {
                 longitude,
             })], { type: 'application/json' }));
     
-            const response = await fetch(`http://61.109.239.42:50005//post-service/daily`, {
+            const response = await fetch(`http://210.109.55.124/post-service/daily`, {
                 method: 'POST',
                 headers: {
                      Authorization: `Bearer ${token}`,
