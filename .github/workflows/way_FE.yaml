@@ -34,3 +34,30 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev/${{ secrets.REPOSITORY_NAME }}/way-member:${{ github.sha }}
+
+  update-deployment-file:
+    runs-on: ubuntu-latest
+    needs: build
+      
+    steps:
+      - name: Checkout argo-manifest repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ secrets.USERNAME }}/argo-manifest
+          token: ${{ secrets.PAT }}
+      
+      - name: Install yq
+        run: sudo snap install yq
+      
+      - name: Update image in rollout file
+        run: |
+          yq e '.spec.template.spec.containers[0].image = "${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev/${{ secrets.REPOSITORY_NAME }}/way-fe:${{ github.sha }}"' ./FE/FE-deployment.yaml -i 
+    
+      - name: Commit and Push changes 
+        run: |
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "${{ secrets.USERNAME }}"
+          git add .
+          git commit -m "[CI/CD] Update FE-deployment.yaml"
+          git remote set-url origin https://${{ secrets.PAT }}@github.com/${{ secrets.USERNAME }}/argo-manifest
+          git push --set-upstream origin HEAD
