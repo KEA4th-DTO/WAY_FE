@@ -1,0 +1,36 @@
+name: WAY-FE
+run-name: WAY FE
+on:
+    push:
+      branches:
+        - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Qemu
+      uses: docker/setup-qemu-action@v2
+
+    - name: Login KakaoCloud
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev
+        username: ${{ secrets.ACCESS_KEY }}
+        password: ${{ secrets.ACCESS_SECRET_KEY }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with: 
+        node-version: '21.7.2'
+
+    - name: Build and Push
+      uses: docker/build-push-action@v4
+      with:
+        file: Dockerfile
+        context: .
+        push: true
+        tags: ${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev/${{ secrets.REPOSITORY_NAME }}/way-member:${{ github.sha }}
