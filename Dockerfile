@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install --force
 
 COPY . .
-RUN npm run build --force
+RUN npm run build
 
 # Step 2: Serve the app with Nginx
 FROM nginx:alpine
