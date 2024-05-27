@@ -11,12 +11,12 @@ const Mymap = () => {
   const [userPost, setUserPost] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");
-  const userEmail = localStorage.getItem("userEmail");
+  const userNickname = localStorage.getItem("userNickname");
 
   useEffect(() => {
-    if (userEmail) {
+    if (userNickname) {
       
-      fetch(`http://210.109.55.124/post-service/posts/list/${userEmail}`, {
+      fetch(`http://210.109.55.124/post-service/posts/list/${userNickname}`, {
         method: "GET",
         headers: {
           // "Content-Type": "application/json",
@@ -38,9 +38,9 @@ const Mymap = () => {
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [userEmail, token]);
+  }, [userNickname, token]);
 
-  console.log(userPost);
+  console.log('userPost: ', userPost);
 
    // 포스트 클릭 시 선택된 포스트 업데이트
    const handlePostClick = (selectedItem) => {
@@ -60,7 +60,7 @@ const Mymap = () => {
           <span className="initial-main-page-text">
             마이맵
           </span>
-          <UserMapinfo userEmail={userEmail} />
+          <UserMapinfo userNickname={userNickname} />
         </div>
       </div>
         
@@ -79,7 +79,7 @@ const Mymap = () => {
           />}
         </button>
         <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-          {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} />}
+          {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} />}
         </div>
         <div id="list" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
           {userPost.map(item => (
@@ -91,7 +91,7 @@ const Mymap = () => {
       </div>
       {selectedPost && selectedPost.postType === 'HISTORY' && (
         <div className="historyPost-con">
-          <HistoryPost postId={selectedPost.postId} onClose={handleBackClick} />
+          <HistoryPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onClose={handleBackClick} />
         </div>
       )}
     </div>

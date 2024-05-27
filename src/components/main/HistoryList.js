@@ -34,7 +34,7 @@ const HistoryList = ({ data }) => {
           />
           <div className="frame4-frame">
             <img
-              src={data.useImage || user2} // 사용자 프로필 이미지, 순환 사용
+              src={data.writerProfileImageUrl || user2} // 사용자 프로필 이미지, 순환 사용
               alt="사용자 프로필 이미지"
               className="frame4-profileimage"
             />
@@ -47,14 +47,14 @@ const HistoryList = ({ data }) => {
               className="frame4-daily-pin-filled"
             />
             <span className="frame4-text04">
-              <span>{data.memberEmail}</span>
+              <span>{data.writerNickname}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
               <span>{data.bodyPreview}</span>
             </span>
             <span className="frame4-text02">
-              <span>{data.createdAt}</span>
-              {/* <span>{formatDate(data.createdAt)}</span> */}
+              {/* <span>{data.createdAt}</span> */}
+              <span>{formatDate(data.createdAt)}</span>
             </span>
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />

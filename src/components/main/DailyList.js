@@ -4,14 +4,21 @@ import "../../assets/scss/layout/_localmap.scss";
 import sky from "../../assets/images/bg/sky.png";
 import like from "../../assets/images/logos/like.png";
 import dailyPin from "../../assets/images/icons/dailyPin.png";
-import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
-
 import user1 from "../../assets/images/users/user1.jpg";
 
-import { formatDate, formatPeriod } from "../../utils/changeFormat";
+import { formatDate2, formatPeriod } from "../../utils/changeFormat";
 
 const DailyList = ({ data }) => {
-  console.log(data);  
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const current = new Date();
+    current.setHours(current.getHours() + 9); // 현재 시간에서 3시간을 빼기
+    setCurrentTime(current.toISOString());
+  }, []);
+
+  // console.log('time: ', currentTime);
+  console.log('data: ', data);  
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }
@@ -30,7 +37,7 @@ const DailyList = ({ data }) => {
           />
           <div className="frame4-frame">
             <img
-              src={data.userImage || user1} // 사용자 프로필 이미지, 순환 사용
+              src={data.writerProfileImageUrl || user1} // 사용자 프로필 이미지, 순환 사용
               alt="사용자 프로필 이미지"
               className="frame4-profileimage"
             />
@@ -43,17 +50,21 @@ const DailyList = ({ data }) => {
               className="frame4-daily-pin-filled"
             />
             <span className="frame4-text04">
-              <span>{data.memberEmail}</span>
+              <span>{data.writerNickname}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
               <span>{data.bodyPreview}</span>
             </span>
             <span className="frame4-text02">
-              <span>{data.createdAt}
-              <br />
-              {data.expiredAt}</span>
-              {/* <span>{formatPeriod(data.period)}</span> */}
+              {data.inOwned ? (
+                <span>
+                  {formatDate2(data.createdAt, data.expiredAt)}
+                </span>
+              ) : (
+                <span>{formatPeriod(currentTime, data.expiredAt)}</span>
+              )}
             </span>
+
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />
               <span className="frame4-text">

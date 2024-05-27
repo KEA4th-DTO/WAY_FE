@@ -8,17 +8,22 @@ import like from "../../assets/images/logos/like.png";
 import full_like from "../../assets/images/logos/full_like.png";
 
 import { shareKakao } from '../../utils/shareKakaoLink';
-import { formatDate, formatPeriod } from '../../utils/changeFormat';
+import { formatDate2, formatPeriod } from '../../utils/changeFormat';
 
-const DailyPost = ({ postId }) => {
+const DailyPost = ({ postId, writerNickname, writerProfileImageUrl }) => {
         // null 체크를 위해 미리 초기화
         const [post, setPost] = useState([]);
         const [likeNum, setLikeNum] = useState(0);
         const [liked, setLiked] = useState(false);
         const [followed, setFollowed] = useState(false);
         const token = localStorage.getItem("accessToken");
-        const userEmail = localStorage.getItem("userEmail");
+        const userNickname = localStorage.getItem("userNickname");
+        
+        const currentTime = new Date();
+        currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
 
+        console.log('시간: ', currentTime);
+        
         useEffect(() => {
           if (postId) {
             
@@ -43,9 +48,10 @@ const DailyPost = ({ postId }) => {
             })
             .catch(error => console.error("Error fetching data:", error));
           }
-        }, [userEmail, token]);
+        }, [userNickname, token]);
       
         console.log(post);
+        console.log('만료: ',post.expiredAt);
 
         // useEffect(() => {
         //     // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
@@ -101,10 +107,10 @@ const DailyPost = ({ postId }) => {
             <div className="dailypost-frame4">
               <img 
                 alt="사용자 프로필 이미지" 
-                src={post.userImage || user7} 
+                src={writerProfileImageUrl || user7} 
                 className="dailypost-profileimage" />
               <span className="dailypost-text10">
-                <span>{post.writerEmail}</span>
+                <span>{writerNickname}</span>
               </span>
             </div>
             <img
@@ -141,8 +147,10 @@ const DailyPost = ({ postId }) => {
               </span>
             </span>
             <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{post.createdAt} ~ {post.expiredAt}</span>
-            </span>
+              <span>
+                {formatDate2(post.createdAt, post.expiredAt)} {formatPeriod(currentTime, post.expiredAt)}남았습니다.
+              </span>
+              </span>
           </div>
          
         <div style={{border: "3px solid green"}} className="dailypost-group99">

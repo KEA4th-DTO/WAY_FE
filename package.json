@@ -22,7 +22,6 @@
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-apexcharts": "1.4.0",
-    "react-app-rewired": "^2.2.1",
     "react-bootstrap": "^2.10.2",
     "react-bootstrap-validation": "^0.1.11",
     "react-dom": "18.2.0",
@@ -36,9 +35,9 @@
     "web-vitals": "3.3.2"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,6 +60,8 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "7.22.5",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1"
   },
   "overrides": {

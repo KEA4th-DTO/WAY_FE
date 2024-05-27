@@ -7,32 +7,43 @@ export const formatDate = (dateString) => {
     return `${year}년 ${month}월 ${day}일`;
 };
 
-export function formatPeriod(timeRange) {
-    const [startTime, endTime] = timeRange.split(' - ');
-    const [startHour, startMinute] = startTime.split(':').map(Number);
-    const [endHour, endMinute] = endTime.split(':').map(Number);
+export const formatDate2 = (createdAt, expiredAt) => {
+    const createdDate = new Date(createdAt);
+    const expiredDate = new Date(expiredAt);
 
-    // 시작 시간 변환
-    let startPeriod = '오전';
-    let startConvertedHour = startHour;
-    if (startHour >= 12) {
-        startPeriod = '오후';
-        startConvertedHour = startHour === 12 ? 12 : startHour - 12;
+    const createdYear = createdDate.getFullYear();
+    const createdMonth = (createdDate.getMonth() + 1).toString().padStart(2, '0');
+    const createdDay = createdDate.getDate().toString().padStart(2, '0');
+    const createdHour = createdDate.getHours().toString().padStart(2, '0');
+    const createdMinute = createdDate.getMinutes().toString().padStart(2, '0');
+
+    const expiredYear = expiredDate.getFullYear();
+    const expiredMonth = (expiredDate.getMonth() + 1).toString().padStart(2, '0');
+    const expiredDay = expiredDate.getDate().toString().padStart(2, '0');
+    const expiredHour = expiredDate.getHours().toString().padStart(2, '0');
+    const expiredMinute = expiredDate.getMinutes().toString().padStart(2, '0');
+
+    if (createdYear === expiredYear && createdMonth === expiredMonth && createdDay === expiredDay) {
+        return `${createdMonth}월 ${createdDay}일 ${createdHour}시 ${createdMinute}분 ~ ${expiredHour}시 ${expiredMinute}분`;
+    } else {
+        return `${createdMonth}월 ${createdDay}일 ${createdHour}시 ${createdMinute}분 ~ ${expiredDay}일 ${expiredHour}시 ${expiredMinute}분`;
     }
-    let startConvertedMinute = startMinute === 0 ? '' : `${startMinute}분`;
+};
 
-    // 종료 시간 변환
-    let endPeriod = '오전';
-    let endConvertedHour = endHour;
-    if (endHour >= 12) {
-        endPeriod = '오후';
-        endConvertedHour = endHour === 12 ? 12 : endHour - 12;
-    }
-    let endConvertedMinute = endMinute === 0 ? '' : `${endMinute}분`;
 
-    // 출력 형식 조합
-    const startFormatted = `${startPeriod} ${startConvertedHour}시 ${startConvertedMinute}`;
-    const endFormatted = `${endPeriod} ${endConvertedHour}시 ${endConvertedMinute}`;
 
-    return `${startFormatted} ~ ${endFormatted}`;
+export function formatPeriod(currentTime, expiredAt) {
+    // 주어진 문자열을 Date 객체로 변환
+    const currentTimeObj = new Date(currentTime);
+    const expiredAtObj = new Date(expiredAt);
+
+    // 만료 시간에서 현재 시간을 빼서 남은 시간 계산
+    const timeDifference = expiredAtObj - currentTimeObj;
+
+    // 시간과 분 계산
+    const hoursRemaining = Math.floor(timeDifference / (1000 * 60 * 60));
+    const minutesRemaining = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    // 결과 반환
+    return `{${hoursRemaining}시간 ${minutesRemaining}분}`;
 }

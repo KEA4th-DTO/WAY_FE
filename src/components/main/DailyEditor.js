@@ -9,7 +9,12 @@ const DailyEditor = ({ postType }) => {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
+    const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours());
+    
+    // 로컬 시간으로 생성 시간 설정
+    const [createdAt, setCreatedAt] = useState(currentTime.toISOString());
+   
     const [expiredAt, setExpiredAt] = useState(''); // 만료 시간   //포맷: 2024-05-20T08:58:40.848Z
     const [address, setAddress] = useState('');
     const [hour, setHour] = useState('1'); // 시간
@@ -80,8 +85,12 @@ const DailyEditor = ({ postType }) => {
             console.error('Error:', error);
             alert('저장 중 오류가 발생했습니다.');
         }
-    };
-    
+    };    
+
+    console.log('현재: ', currentTime);
+    console.log('생성: ', createdAt);
+
+    // console.log('만료: ', expiredAt);
     
     const handleImageUpload = (event) => {
         const file = event.target.files[0];

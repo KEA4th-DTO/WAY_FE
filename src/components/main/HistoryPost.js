@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_historypost.scss";
+
+import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+
 import user3 from "../../assets/images/users/user3.jpg";
 import like from "../../assets/images/logos/like.png";
 import comment from "../../assets/images/logos/comment.png";
@@ -9,14 +13,14 @@ import sky from "../../assets/images/bg/sky.png";
 import close from "../../assets/images/logos/close.png";
 import img from "../../assets/images/bg/bg5.png";
 
-const HistoryPost = ({ postId, onClose  }) => {
+const HistoryPost = ({ postId, writerNickname, writerProfileImageUrl, onClose  }) => {
      // null 체크를 위해 미리 초기화
      const [post, setPost] = useState([]);
      const [likeNum, setLikeNum] = useState(0);
      const [liked, setLiked] = useState(false);
      const [followed, setFollowed] = useState(false);
      const token = localStorage.getItem("accessToken");
-     const userEmail = localStorage.getItem("userEmail");
+     const userNickname = localStorage.getItem("userNickname");
 
   //    "isSuccess": true,
   //    "code": "string",
@@ -57,12 +61,14 @@ const HistoryPost = ({ postId, onClose  }) => {
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [userEmail, token]);
+  }, [userNickname, token]);
 
   console.log(post);
   const handleCloseClick = () => {
     onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
   };
+
+  console.log(post.bodyHtmlUrl)
   
   return (
       <div style={{border: "3px solid red"}}className="floating-history-comment-floating-history-comment">
@@ -84,13 +90,13 @@ const HistoryPost = ({ postId, onClose  }) => {
           <div style={{border: "3px solid red"}} id='작성자 정보' className="floating-history-comment-frame28">
           <div className="floating-history-comment-frame29">
             <img
-              src={post.userImage || user3}
+              src={writerProfileImageUrl || user3}
               alt="작성자 프로필이미지"
               className="floating-history-comment-freeiconuser14907114"
             />
           </div>
           <span className="floating-history-comment-text116">
-            <span>{post.memberEmail}</span>
+            <span>{writerNickname}</span>
           </span>
         </div>
           <span className="floating-history-comment-text112">
@@ -109,11 +115,11 @@ const HistoryPost = ({ postId, onClose  }) => {
         <div style={{border: "3px solid red", overflow:"auto"}}>
           <span className="floating-history-comment-text069">
             내용
-            {post.bodyHtmlUrl}
             </span>
+            <Viewer initialValue={post.bodyHtmlUrl} />
           <span className="floating-history-comment-text097">
             <span>게시글 끝</span>
-          </span>
+          </span> 
           {/* -------------해시태그------------ */}
         <div style={{border: "3px solid red"}} id='해시태그' className="floating-history-comment-frame">
             <span className="floating-history-comment-text">
@@ -180,7 +186,7 @@ const HistoryPost = ({ postId, onClose  }) => {
                   className="floating-history-comment-freeiconuser1490711"
                 />
                 <span style={{border: "3px solid orange"}} id='사용자 아이디' className="floating-history-comment-text006">
-                  <span>{post.memberEmail}</span>
+                  <span>{post.memberNickname}</span>
                 </span>
               </div>
               <span style={{border: "3px solid orange"}}  className="floating-history-comment-text008">

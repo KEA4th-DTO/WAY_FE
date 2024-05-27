@@ -15,8 +15,10 @@ const EditorBox = ({ postType }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기
-    const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
-    const [address, setAddress] = useState('');
+    const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() - 3); // 현재 시간에서 3시간을 빼기
+    
+    const [createdAt, setCreatedAt] = useState(currentTime.toISOString());    const [address, setAddress] = useState('');
 
     const [image, setImage] = useState(null);   
     const [imagePreview, setImagePreview] = useState(null);
@@ -134,7 +136,7 @@ const EditorBox = ({ postType }) => {
     const onChangeAddress = (e) => {
         setAddress(e.target.value);
     };
-
+  
     const formattedTime = new Date(createdAt).toLocaleString('ko-KR');
 
     const clickMap = () => {
@@ -168,9 +170,12 @@ const EditorBox = ({ postType }) => {
         // 마크다운에서 이미지 구문 제거
         const textWithoutImages = markdown.replace(/!\[.*?\]\(.*?\)/g, '');
       
+        // HTML 태그 제거
+        const textWithoutHTML = textWithoutImages.replace(/(<([^>]+)>)/ig, '');
+
         // 마크다운 문법 제거
-        const textContent = textWithoutImages.replace(/[#>*_~`[\]]+/g, '');
-        
+        const textContent = textWithoutHTML.replace(/[#>*_~`[\]]+/g, '');
+    
         setBodyPreview(textContent);
         
         // 저장할 textContent를 사용합니다.
