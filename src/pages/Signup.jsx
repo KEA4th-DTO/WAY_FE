@@ -14,27 +14,31 @@ const Signup = () => {
   const [nicknameCheck, setNicknameCheck] = useState(false);
   const [agreement, setAgreement] = useState(false);
   const [encryptedData, setEncryptedData] = useState("");
+  const Server_IP = process.env.REACT_APP_Server_IP;
 
   const handleSignUp = () => {
+    const url = `${Server_IP}/auth-service/signup`;
+    const secretKey = CryptoJS.lib.WordArray.random(32).toString();
+    const encryptedPassword = CryptoJS.AES.encrypt(
+      password,
+      secretKey
+    ).toString();
     // 회원가입 정보 객체 생성
     const signUpData = {
       name: name,
       email: email,
+      // password: encryptedPassword,
+      // passwordCheck: encryptedPassword,
       password: password,
       passwordCheck: confirmPassword,
-      // phone: phone,
       nickname: nickname,
       // agreement: agreement,
+      phoneNumber: phone,
     };
-    const secretKey = CryptoJS.lib.WordArray.random(32).toString();
-    const encryptedData = CryptoJS.AES.encrypt(
-      JSON.stringify(signUpData),
-      secretKey
-    ).toString();
 
     console.log(signUpData);
     axios
-      .post("http://61.109.239.63:50001/member-service/signup", signUpData, {
+      .post(url, signUpData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -56,18 +60,43 @@ const Signup = () => {
       });
   };
 
-  const handleEmailCheck = () => {
+  const handleNicknameCheck = () => {
     // 이메일 중복 확인 처리 로직을 추가합니다.
     console.log("Email checked!");
     setEmailCheck(true); // 예시에서는 무조건 true로 설정합니다.
   };
 
-  const handleNicknameCheck = () => {
-    // 닉네임 중복 확인 처리 로직을 추가합니다.
-    console.log("Nickname checked!");
-    setNicknameCheck(true); // 예시에서는 무조건 true로 설정합니다.
-  };
+  const handleEmailCheck = () => {
+    const url = `${Server_IP}/auth-service/check-nickname`;
+    const data = {
+      nickname: nickname,
+    };
 
+    axios
+      .post(url, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.status !== 200) {
+          console.log(response.status);
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((response) => {
+        if (response.isSuccess === true) {
+          alert("사용가능한 닉네입입니다");
+        } else {
+          alert("사용불가능한 닉네임입니다", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during signup:", error);
+        // 에러 발생 시 처리
+      });
+  };
   return (
     <div id="signup">
       <div className="parent-container">
@@ -92,7 +121,6 @@ const Signup = () => {
             <button className="btn-duplicate" onClick={handleEmailCheck}>
               중복확인
             </button>
-            {emailCheck && <p>이메일을 사용할 수 있습니다.</p>}
           </div>
           <div id="signup-pwd" className="password">
             <label>비밀번호</label>

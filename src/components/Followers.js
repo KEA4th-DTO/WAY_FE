@@ -3,23 +3,23 @@ import axios from "axios";
 import Follower from "./Follower";
 import "../assets/style/follower.css";
 
-function Followers({ nickName }) {
+function Followers() {
   const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    const nickName = localStorage.getItem("userNickname");
+    const url = `${Server_IP}/member-service/follow/${nickName}/follower-list`;
     const fetchFollowers = async () => {
       const token = localStorage.getItem("accessToken");
 
       try {
-        const response = await axios.get(
-          `http://61.109.239.63:50001/member-service/follow/${nickName}/follower-list`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
 
         if (response.status === 200) {
           const data = response.data;
@@ -38,7 +38,7 @@ function Followers({ nickName }) {
     };
 
     fetchFollowers();
-  }, [nickName]);
+  });
 
   return (
     <div className="post-title">
