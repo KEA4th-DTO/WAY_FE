@@ -69,33 +69,30 @@ const Signup = () => {
   };
 
   const handleNicknameCheck = () => {
-    // 이메일 중복 확인 처리 로직을 추가합니다.
-    console.log("Email checked!");
-    setEmailCheck(true); // 예시에서는 무조건 true로 설정합니다.
-  };
-
-  const handleEmailCheck = () => {
     const url = `${Server_IP}/auth-service/check-nickname`;
     const data = {
       nickname: nickname,
     };
 
-    axios
-      .post(url, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    })
       .then((response) => {
+        console.log(response.status);
         if (response.status !== 200) {
-          console.log(response.status);
           throw new Error("Network response was not ok");
         }
+        return response.json(); // 응답 데이터를 JSON 형식으로 파싱
       })
-      .then((response) => {
-        if (response.isSuccess === true) {
-          alert("사용가능한 닉네입입니다");
+      .then((data) => {
+        console.log(data);
+        if (data.isSuccess === true) {
+          alert("사용가능한 닉네임입니다");
         } else {
           alert("사용불가능한 닉네임입니다", data);
         }
@@ -104,6 +101,43 @@ const Signup = () => {
         console.error("Error during signup:", error);
         // 에러 발생 시 처리
       });
+    console.log("Email checked!");
+    setEmailCheck(true); // 예시에서는 무조건 true로 설정합니다.
+  };
+
+  const handleEmailCheck = () => {
+    const url = `${Server_IP}/auth-service/check-email`;
+    const data = {
+      email: email,
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // 응답 데이터를 JSON 형식으로 파싱
+      })
+      .then((data) => {
+        if (data.isSuccess === true) {
+          alert("사용가능한 이메일입니다");
+        } else {
+          alert("사용불가능한 이메일입니다", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during signup:", error);
+        // 에러 발생 시 처리
+      });
+    console.log("Email checked!");
+    setEmailCheck(true);
   };
   return (
     <div id="signup">

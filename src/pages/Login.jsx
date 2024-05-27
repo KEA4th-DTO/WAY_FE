@@ -80,8 +80,11 @@ function Login() {
         if (response.status === 200) {
           const responseData = response.data;
           if (responseData.isSuccess) {
-            const { grantType, accessToken } = responseData.result.jwtToken;
+            const { grantType, accessToken, refreshToken } =
+              responseData.result.jwtToken;
             const { name, email, nickname } = responseData.result;
+            localStorage.setItem("grantType", grantType);
+            localStorage.setItem("refreshToken", refreshToken);
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("userName", name);
             localStorage.setItem("userEmail", email);

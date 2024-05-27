@@ -1,23 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import profileImg from "../assets/img/profile_img.jpeg";
 import "../assets/style/myPage.css";
 // import Posts from "../components/PostsList";
 import Followers from "../components/Followers";
 import Followings from "../components/Followings";
+import axios from "axios";
 
 function ProfilePage() {
   const [activeTab, setActiveTab] = useState("posts");
+  const [profile, setProfile] = useState({
+    imageUrl: "",
+    name: "",
+    nickName: "",
+    bio: "",
+    postsCount: 0,
+    followersCount: 0,
+    followingsCount: 0,
+  });
 
-  // 가상 데이터
-  const profile = {
-    imageUrl: profileImg,
-    name: "신짱구",
-    nickName: "Crayon",
-    bio: "빙글빙글 돌아가는 하루",
-    postsCount: 120,
-    followersCount: 80,
-    followingsCount: 72,
-  };
+  useEffect(() => {
+    const fetchProfille = async () => {
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      try {
+        const response = await axios.get(
+          `${Server_IP}/member-service/profile/${localStorage.getItem(
+            "userNickname"
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        const data = response.data.result;
+        setProfile({
+          imageUrl: data.imageUrl,
+          name: data.name,
+          nickName: data.nickName,
+          bio: data.introduce,
+          dailyCount: data.dailyCount,
+          historyCount: data.historyCount,
+          followersCount: data.followerCount,
+          followingsCount: data.followingCount,
+        });
+        console.log(profile);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+    fetchProfille();
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -50,7 +82,9 @@ function ProfilePage() {
               className="btn-post"
               onClick={() => handleTabClick("posts")}
             >
-              <span className="tab-count">{profile.postsCount}</span>
+              <span className="tab-count">
+                {profile.dailyCount + profile.historyCount}
+              </span>
               <span className="tab-label">게시글</span>
             </button>
             <button

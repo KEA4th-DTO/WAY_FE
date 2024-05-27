@@ -19,7 +19,6 @@ function Followers() {
           },
           withCredentials: true,
         });
-
         if (response.status === 200) {
           const data = response.data;
           if (data.isSuccess && Array.isArray(data.result)) {
@@ -49,7 +48,7 @@ function Followers() {
             name={follower.name}
             history={follower.history}
             daily={follower.daily}
-            nickName={follower.nickName}
+            nickName={follower.nickname}
             image={follower.image}
             isFollow={follower.isFollow}
           />
