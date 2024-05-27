@@ -21,7 +21,7 @@ function Login() {
   // const { setUser } = useUserContext();
 
   function kakaoLoginHandler() {
-    const Rest_api_key = "	a636a1c4c0b845384ca75dd034081a1b";
+    const Rest_api_key = "a636a1c4c0b845384ca75dd034081a1b";
     const redirect_uri = "http://localhost:3000/auth";
 
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -60,8 +60,9 @@ function Login() {
   };
 
   const handleSubmit = async (event) => {
+    const Server_IP = process.env.REACT_APP_Server_IP;
     event.preventDefault();
-    const url = "http://210.109.54.80:50004/member-service/login";
+    const url = `${Server_IP}/auth-service/login`;
     const data = {
       email: email,
       password: password,

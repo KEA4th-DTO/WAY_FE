@@ -1,16 +1,42 @@
 // Follower.js
-import React from "react";
+import React, { useState } from "react";
 import "../assets/style/follower.css";
+import axios from "axios";
 function Follower({
   name,
   nickName,
   history,
   daily,
   profileImageUrl,
-  isFollow,
+  initialFollowState,
 }) {
+  const [isFollow, setIsFollow] = useState(initialFollowState);
   const handleFollowClick = () => {
+    const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
     console.log(`Current follow state for ${name}: ${isFollow}`); // 현재 팔로우 상태 로그 출력
+
+    const url = !isFollow
+      ? `${Server_IP}/member-service/follow/${nickName}`
+      : `${Server_IP}/member-service/follow/follower-list/${nickName}`;
+
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setIsFollow(!isFollow);
+        } else {
+          console.error(`Follow ${name} failed: ${response.status}`);
+        }
+      });
   };
   return (
     <div className="follower-container">

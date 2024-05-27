@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Follower from "./Follower";
-import "../assets/style/follower.css";
+import Following from "./Following";
+import "../assets/style/following.css";
 
 function Followings({ nickname }) {
   const [followings, setFollowings] = useState([]);
@@ -9,17 +9,16 @@ function Followings({ nickname }) {
   useEffect(() => {
     const fetchFollowings = async () => {
       const token = localStorage.getItem("accessToken");
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      const url = `${Server_IP}/member-service/follow/${nickname}/following-list`;
 
       try {
-        const response = await axios.get(
-          `http://61.109.239.63:50001/member-service/follow/${nickname}/following-list`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         if (response.status === 200) {
           const data = response.data;
           if (data.isSuccess && Array.isArray(data.result)) {
@@ -41,10 +40,10 @@ function Followings({ nickname }) {
 
   return (
     <div className="post-title">
-      <p className="following-label">팔로잉 목록</p>
+      <p className="follower-label">팔로잉 목록</p>
       <div className="post-list">
         {followings.map((following) => (
-          <Follower
+          <Following
             key={following.id}
             name={following.name}
             history={following.history}

@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 import "../assets/style/follower.css";
-function Following({ name, nickName, history, daily, image, isFollow }) {
+function Following({
+  name,
+  nickName,
+  history,
+  daily,
+  image,
+  initialFollowState,
+}) {
+  const [isFollow, setIsFollow] = useState(initialFollowState);
   const handleFollowClick = () => {
+    const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    const nickName = localStorage.getItem("userNickname");
     console.log(`Current follow state for ${name}: ${isFollow}`); // 현재 팔로우 상태 로그 출력
+    const url = !isFollow
+      ? `${Server_IP}/member-service/follow/${nickName}`
+      : `${Server_IP}/member-service/follow/following-list/${nickName}`;
+
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setIsFollow(!isFollow);
+        } else {
+          console.error(`Follow ${name} failed: ${response.status}`);
+        }
+      });
   };
 
   return (

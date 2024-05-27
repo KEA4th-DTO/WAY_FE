@@ -42,8 +42,8 @@ function ProfilePage() {
               left: "15%",
             }}
           />
-          <h1 className="userName">{profile.name}</h1>
-          <p className="nickName">{profile.nickName}</p>
+          <h1 className="userName">{localStorage.getItem("userName")}</h1>
+          <p className="nickName">{localStorage.getItem("userNickname")}</p>
           <p className="bio">{profile.bio}</p>
           <div className="btn-container">
             <button
