@@ -1,21 +1,35 @@
+import React, { useEffect, useRef, useState } from 'react';
+import "../../assets/scss/layout/_chatcontent.scss";
+
 const ChatFromMe = ({ content }) => {
+  const textRef = useRef(null);
+  const [textWidth, setTextWidth] = useState(0);
+
+  useEffect(() => {
+    if (textRef.current && textWidth === 0) {
+      const width = textRef.current.offsetWidth;
+      setTextWidth(width);
+    }
+  }, [textWidth]);
+
+  if (!content) {
+    console.log("content is null");
+    return null;
+  }
+
   return (
-    <div>
-    <div
-        className="frame-rectangle46"
-        />
-        <div className="frame-frame3">
-        <span className="frame-text04">
-            <span>{content.nickname}신형만</span>
+    <div className="mychat-container">
+      <div className="mychat-rectangle" style={{ width: textWidth + 30 + 'px'}} />
+      <div className="mychat-frame" style={{width: textWidth + 30 + 'px'}}>
+        <span className="mychat-text" ref={textRef}>
+          <span>{content.content}</span>
         </span>
-        <span className="frame-text06">
-            <span>{content.content}저 위례사는데 같이 봐요!</span>
-        </span>
-        </div>
-        <span className="frame-text08">
+      </div>
+      <div className="mychat-time" style={{right: textWidth + 35 + 'px'}}>
         <span>{content.time}</span>
-        </span>
+      </div>
     </div>
   );
-}   
+};  
+
 export default ChatFromMe;

@@ -12,7 +12,7 @@ import refresh from "../../assets/images/icons/refresh.png";
 const UserMapinfo = ({userId}) => {
     const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
-    // const [bounds, setBounds] = useState({ ne: {lat: '', lng: ''}, sw: {lat: '', lng: ''} });
+    const [bounds, setBounds] = useState({ ne: {lat: '', lng: ''}, sw: {lat: '', lng: ''} });
     const mapRef = useRef(null);
     const [activePin, setActivePin] = useState("all"); // 현재 활성화된 핀 타입을 관리
     const k_center = { lat: 36.358949, lng: 127.7646949 }; 
@@ -99,25 +99,25 @@ const UserMapinfo = ({userId}) => {
                 }
             });
 
-            // //지도 이동시 bounds 변경(좌표 받아오기)
-            // function updateBounds() {
-            //     const bounds = map.getBounds();
-            //     setBounds({
-            //         ne: {
-            //             lat: bounds.getNE().lat(),
-            //             lng: bounds.getNE().lng()
-            //         },
-            //         sw: {
-            //             lat: bounds.getSW().lat(),
-            //             lng: bounds.getSW().lng()
-            //         }
-            //     });
-            // }
+            //지도 이동시 bounds 변경(좌표 받아오기)
+            function updateBounds() {
+                const bounds = map.getBounds();
+                setBounds({
+                    ne: {
+                        lat: bounds.getNE().lat(),
+                        lng: bounds.getNE().lng()
+                    },
+                    sw: {
+                        lat: bounds.getSW().lat(),
+                        lng: bounds.getSW().lng()
+                    }
+                });
+            }
 
-            // // Immediately update bounds when map is initialized
-            // updateBounds();
+            // Immediately update bounds when map is initialized
+            updateBounds();
 
-            // naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
+            naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
 
             //현재 위치 마커표시
             new naver.maps.Marker({
@@ -262,11 +262,11 @@ const UserMapinfo = ({userId}) => {
             </div>
             
             <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
-            {/* <div>
+            <div>
                 <h4>Map Bounds:</h4>
                 <p>North-East Latitude: {bounds.ne.lat}, Longitude: {bounds.ne.lng}</p>
                 <p>South-West Latitude: {bounds.sw.lat}, Longitude: {bounds.sw.lng}</p>
-            </div> */}
+            </div>
 
         </div>
     );

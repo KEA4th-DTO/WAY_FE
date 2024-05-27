@@ -1,0 +1,63 @@
+name: WAY-FE
+run-name: WAY FE
+on:
+    push:
+      branches:
+        - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Qemu
+      uses: docker/setup-qemu-action@v2
+
+    - name: Login KakaoCloud
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev
+        username: ${{ secrets.ACCESS_KEY }}
+        password: ${{ secrets.ACCESS_SECRET_KEY }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with: 
+        node-version: '21.7.2'
+
+    - name: Build and Push
+      uses: docker/build-push-action@v4
+      with:
+        file: Dockerfile
+        context: .
+        push: true
+        tags: ${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev/${{ secrets.REPOSITORY_NAME }}/way-fe:${{ github.sha }}
+
+  update-deployment-file:
+    runs-on: ubuntu-latest
+    needs: build
+      
+    steps:
+      - name: Checkout argo-manifest repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ secrets.USERNAME }}/argo-manifest
+          token: ${{ secrets.PAT }}
+      
+      - name: Install yq
+        run: sudo snap install yq
+      
+      - name: Update image in rollout file
+        run: |
+          yq e '.spec.template.spec.containers[0].image = "${{ secrets.PROJECT_NAME }}.kr-central-2.kcr.dev/${{ secrets.REPOSITORY_NAME }}/way-fe:${{ github.sha }}"' ./FE/FE-deployment.yaml -i 
+    
+      - name: Commit and Push changes 
+        run: |
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "${{ secrets.USERNAME }}"
+          git add .
+          git commit -m "[CI/CD] Update FE-deployment.yaml"
+          git remote set-url origin https://${{ secrets.PAT }}@github.com/${{ secrets.USERNAME }}/argo-manifest
+          git push --set-upstream origin HEAD

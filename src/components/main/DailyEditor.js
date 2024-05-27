@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import '@toast-ui/editor/dist/i18n/ko-kr';
 import '../../assets/scss/layout/_upload.scss';
-import UploadHisMap from './UploadHisMap';
-import axios from 'axios';
+import UploadMap from './UploadMap';
 
+const DailyEditor = ({ postType }) => {
+    // const [memberId] = useState('id_222');
+    //props로 받아오기
 
-const EditorBox = ({ postType }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기
     const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
+    const [expiredAt, setExpiredAt] = useState(''); // 만료 시간   //포맷: 2024-05-20T08:58:40.848Z
     const [address, setAddress] = useState('');
+    const [hour, setHour] = useState('1'); // 시간
+    const [minute, setMinute] = useState('00'); // 분
 
     const [image, setImage] = useState(null);   
     const [imagePreview, setImagePreview] = useState(null);
@@ -25,9 +22,8 @@ const EditorBox = ({ postType }) => {
     const [longitude, setLongitude] = useState('');
     const [showMap, setShowMap] = useState(false);
 
-    const { naver } = window;
     const navigate = useNavigate();
-    const editorRef = useRef(null);
+    const { naver } = window;
 
     const token = localStorage.getItem("accessToken");
 
@@ -44,26 +40,26 @@ const EditorBox = ({ postType }) => {
 
     const onSave = async () => {
         try {
-            if (!title || !address || !latitude || !longitude || !image || !body) {
-                alert("모든 필드를 채워주세요.");
+            if (!image) {
+                alert("이미지를 선택해주세요.");
                 return;
             }
     
             const formData = new FormData();
             formData.append('image', image); // Add the image file
-            formData.append('createHistoryDto', new Blob([JSON.stringify({ 
+            formData.append('createDailyDto', new Blob([JSON.stringify({ 
                 title,
+                body,
+                expiredAt,
+                address,
                 latitude,
                 longitude,
-                address,
-                bodyPreview,
             })], { type: 'application/json' }));
-            formData.append('html', new Blob([body], { type: 'text/html' })); // 본문 추가
-
-            const response = await fetch(`http://210.109.55.124/post-service/history`, {
+    
+            const response = await fetch(`http://210.109.55.124/post-service/daily`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                     Authorization: `Bearer ${token}`,
                     // 'Content-Type': 'multipart/form-data' // REMOVE this line
                 },
                 body: formData,
@@ -85,8 +81,8 @@ const EditorBox = ({ postType }) => {
             alert('저장 중 오류가 발생했습니다.');
         }
     };
-
-      
+    
+    
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setImage(file);
@@ -98,44 +94,19 @@ const EditorBox = ({ postType }) => {
             reader.readAsDataURL(file);
         }
     };
-    const onUploadImage = async (blob, callback) => {
-        const formData = new FormData();
-        formData.append("historyImage", blob);
-
-        try {
-        const response = await axios.post(
-        "http://210.109.55.124/post-service/history/upload-image",
-        formData,
-        {
-            headers: {
-            "Authorization": `Bearer ${token}`,
-            }
-        }
-        );
-
-        if (response.data.isSuccess) {
-        const url = response.data.result;
-        callback(url, "");
-        } else {
-        console.error("Error uploading image:", response.data.message);
-        callback(null, response.data.message);
-        }
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        callback(null, error.message);
-    }
-        return false;
-      };
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     };
 
-    const onChangeAddress = (e) => {
-        setAddress(e.target.value);
-    };
-
     const formattedTime = new Date(createdAt).toLocaleString('ko-KR');
+
+    const calculateExpiredAt = () => {
+        const createdAtDate = new Date(createdAt);
+        createdAtDate.setHours(createdAtDate.getHours() + Number(hour));
+        createdAtDate.setMinutes(createdAtDate.getMinutes() + Number(minute));
+        setExpiredAt(createdAtDate.toISOString());
+    };
 
     const clickMap = () => {
         setShowMap(!showMap);
@@ -158,31 +129,11 @@ const EditorBox = ({ postType }) => {
             }
         );
     };
-    const onChange = () => {
-        const data = editorRef.current.getInstance().getHTML();
-        setBody(data);
-        console.log(data);
-      
-        const markdown = editorRef.current.getInstance().getMarkdown();
-        
-        // 마크다운에서 이미지 구문 제거
-        const textWithoutImages = markdown.replace(/!\[.*?\]\(.*?\)/g, '');
-      
-        // 마크다운 문법 제거
-        const textContent = textWithoutImages.replace(/[#>*_~`[\]]+/g, '');
-        
-        setBodyPreview(textContent);
-        
-        // 저장할 textContent를 사용합니다.
-        console.log('텍스트 내용:', textContent);
-      };
-      
-
 
     return (
         <div className="edit_wrap" style={{ position: "relative" }}>
             <div>
-            <h2>
+                <h2>
                     제목: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
@@ -194,49 +145,62 @@ const EditorBox = ({ postType }) => {
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
-                        placeholder="주소를 입력하세요." 
+                        placeholder="지도로 주소를 설정해주세요." 
                         value={address} 
-                        onChange={onChangeAddress} />
+                        readOnly />
                     <br />
                     <button onClick={clickMap}>
                         {showMap ? "완료" : "지도 보기"}
                     </button>
                     {showMap && (
                         <div>
-                            <UploadHisMap setPostPosition={handlePostPositionChange} />
+                            <UploadMap setPostPosition={handlePostPositionChange} />
                         </div>
                     )}
                 </span>
+                
                 <div style={{ marginTop: "5px" }}>
-                <br />
+                    <br />
                     현재 시간: {formattedTime}
                 </div>
-                
-            </div>
-            <button className='save' onClick={onSave}>저장</button>
-            <span>썸네일 이미지 :
+                <div style={{ marginTop: "5px", position: "relative" }}>
+                    유효 시간: 
+                    <select style={{ marginLeft: "5px"}} value={hour} onChange={(e) => setHour(e.target.value)}>
+                        {[...Array(24)].map((_, i) => (
+                            <option key={i} value={i}>{String(i).padStart(2, '0')}</option>
+                        ))}
+                    </select>
+                    시
+                    <select style={{ marginLeft: "5px"}} value={minute} onChange={(e) => setMinute(e.target.value)}>
+                        {[...Array(60)].map((_, i) => (
+                            <option key={i} value={i}>{String(i).padStart(2, '0')}</option>
+                        ))}
+                    </select>
+                    분
+                    <button style={{ marginLeft: "10px" }} onClick={calculateExpiredAt}>적용</button>
+                    <div style={{ marginTop: "5px" }}>
+                        만료 시간: {expiredAt && new Date(expiredAt).toLocaleString('ko-KR')}
+                    </div>
+                </div>
+                <br />
+                <br />
                 <input type="file" onChange={handleImageUpload} accept="image/*" />
-                    {imagePreview && (
-                        <img src={imagePreview} alt="이미지 미리보기" style={{ marginTop: "10px", maxWidth: "100%", height: "auto" }} />
-                    )} 
-            </span>
-            <Editor
-                initialValue="hello react editor world!"
-                previewStyle="vertical"
-                height="600px"
-                initialEditType="wysiwyg"
-                useCommandShortcut={false}
-                hideModeSwitch={false} //하단 타입 선택탭 숨기기
-                plugins={[colorSyntax]}
-                language="ko-KR"
-                ref={editorRef}
-                onChange={onChange} // Update body state
-                hooks={{
-                    addImageBlobHook: onUploadImage
-                  }}
-            />
+                {imagePreview && (
+                    <img src={imagePreview} alt="이미지 미리보기" style={{ marginTop: "10px", maxWidth: "100%", height: "auto" }} />
+                )}
+                <br />
+                <br />
+                <textarea
+                    placeholder="내용을 입력하세요."
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                    style={{ marginTop: "10px", width: "100%", height: "200px" }}
+                />
+            </div>
+            <br />
+            <button className='save' onClick={onSave}>저장</button>
         </div>
     );
 };
 
-export default EditorBox;
+export default DailyEditor;

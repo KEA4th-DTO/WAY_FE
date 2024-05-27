@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_dailypost.scss";
 import user7 from "../../assets/images/users/user7.png";
-import sky from "../../assets/images/bg/sky.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import more from "../../assets/images/logos/more.png";
 import share from "../../assets/images/logos/share.png";
@@ -11,29 +10,73 @@ import full_like from "../../assets/images/logos/full_like.png";
 import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate, formatPeriod } from '../../utils/changeFormat';
 
-const DailyPost = ({ data }) => {
+const DailyPost = ({ postId }) => {
         // null 체크를 위해 미리 초기화
-        const [likeNum, setLikeNum] = useState(data ? data.likeNum : 0);
+        const [post, setPost] = useState([]);
+        const [likeNum, setLikeNum] = useState(0);
         const [liked, setLiked] = useState(false);
         const [followed, setFollowed] = useState(false);
+        const token = localStorage.getItem("accessToken");
+        const userEmail = localStorage.getItem("userEmail");
 
-        // 데이터가 없는 경우 null을 반환하므로 조건문을 사용하지 않음
         useEffect(() => {
-            if (!data) {
-                return;
-            }
-            // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
-            setLiked(data.liked);
-        }, [data]);
+          if (postId) {
+            
+            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+              method: "GET",
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+            })
+            .then(data => {
+              if (data.isSuccess) {
+                setPost(data.result);
+              } else {
+                console.error("Error in API response:", data.message);
+              }
+            })
+            .catch(error => console.error("Error fetching data:", error));
+          }
+        }, [userEmail, token]);
+      
+        console.log(post);
+
+        // useEffect(() => {
+        //     // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
+        //     setLiked(post.likesCount);
+        // }, [data]);
 
         const handleLikeClick = () => {
-            if (liked) {
-                setLikeNum(prevNum => prevNum - 1);
-            } else {
-                setLikeNum(prevNum => prevNum + 1);
-            }
-            setLiked(!liked);
-        };
+          // 좋아요 취소 로직 추가
+          fetch(`http://210.109.55.124/post-service/posts/like/${postId}`, {
+              method: "POST",
+              headers: {
+                  "Authorization": `Bearer ${token}`
+              }
+          })
+          .then(res => {
+              if (!res.ok) {
+                  throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+          })
+          .then(data => {
+              if (data.isSuccess) {
+                  setLikeNum(data.result.likesCount);
+                  setLiked(!liked);
+                  console.log("Successfully liked post:", data);
+              } else {
+                  console.error("Error unliking post:", data.message);
+              }
+          })
+          .catch(error => console.error("Error unliking post:", error));
+          };
 
         const handleFollowClick = () => {
             if (followed) {
@@ -42,14 +85,6 @@ const DailyPost = ({ data }) => {
                 setFollowed(true);
             }
         };
-        
-        // const onBackClick = () => { 
-        //     return(
-        //       <div>
-        //         <MainList />
-        //       </div>
-        //     );
-        // };
 
         // useEffect(() => {
         //     const script = document.createElement("script");
@@ -64,9 +99,12 @@ const DailyPost = ({ data }) => {
         <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
         <div style={{border: "3px solid orange"}} className="dailypost-frame3">
             <div className="dailypost-frame4">
-              <img alt="사용자 프로필 이미지" src={user7} className="dailypost-profileimage" />
+              <img 
+                alt="사용자 프로필 이미지" 
+                src={post.userImage || user7} 
+                className="dailypost-profileimage" />
               <span className="dailypost-text10">
-                <span>{data.memberId}</span>
+                <span>{post.writerEmail}</span>
               </span>
             </div>
             <img
@@ -87,23 +125,23 @@ const DailyPost = ({ data }) => {
           </div>
         </div>
           <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
-            <img alt="게시글 이미지" src={sky} className="dailypost-image" />
+            <img alt="게시글 이미지" src={post.imageUrl} className="dailypost-image" />
           </div>
 
           <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
             <span style={{border: "3px solid yellow"}} className="dailypost-text08">
-              <span>{data.title}</span>
+              <span>{post.title}</span>
             </span>
             <span style={{border: "3px solid yellow"}} className="dailypost-text02">
-              <span>{data.postType}</span>
+              <span>{post.postType}</span>
             </span>
             <span style={{border: "3px solid yellow"}} className="dailypost-text04">
               <span>
-                {data.body}
+                {post.body}
               </span>
             </span>
             <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{formatDate(data.createdAt)} {formatPeriod(data.period)}</span>
+              <span>{post.createdAt} ~ {post.expiredAt}</span>
             </span>
           </div>
          
@@ -119,7 +157,7 @@ const DailyPost = ({ data }) => {
             </button>
            
             <span className="dailypost-text16">
-              <span>{likeNum}</span>
+              <span>{post.likesCount}</span>
             </span>
           </div>
           <button className="dailypost-frame6" onClick={() => shareKakao()}>

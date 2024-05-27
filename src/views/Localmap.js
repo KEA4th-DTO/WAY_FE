@@ -10,6 +10,7 @@ import back from "../assets/images/logos/back.png";
 const Localmap = () => {
   //데이터 가져오기
   const [post, setPost] = useState([]);
+  const [postid, setPostid] = useState([]); // 추가: 선택된 게시글 상태
   const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
 
   
@@ -20,10 +21,14 @@ const Localmap = () => {
       })
       .then(data => {
           setPost(data);
+          setPostid(data.postId);
       })
       .catch(error => console.error("Error fetching data:", error));
   }, []);
   
+  // console.log(post);
+  console.log(post);
+
   // 포스트 클릭 시 선택된 포스트 업데이트
   const handlePostClick = (selectedItem) => {
     setSelectedPost(selectedItem);
@@ -47,7 +52,7 @@ const Localmap = () => {
       </div>
         
       {/* 게시글*/}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px", position: "relative"}}>
+      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
         <span className="initial-main-page-text">
           게시글
         </span>

@@ -16,6 +16,14 @@ const Signup = () => {
   const [encryptedData, setEncryptedData] = useState("");
   const Server_IP = process.env.REACT_APP_Server_IP;
 
+  const handlePhoneChange = (e) => {
+    const formattedPhoneNumber = e.target.value
+      .replace(/[^\d]/g, "") // Remove any non-digit characters
+      .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"); // Apply the desired format (010-0000-0000)
+
+    setPhone(formattedPhoneNumber);
+  };
+
   const handleSignUp = () => {
     const url = `${Server_IP}/auth-service/signup`;
     const secretKey = CryptoJS.lib.WordArray.random(32).toString();
@@ -32,8 +40,8 @@ const Signup = () => {
       password: password,
       passwordCheck: confirmPassword,
       nickname: nickname,
-      // agreement: agreement,
       phoneNumber: phone,
+      // agreement: agreement,
     };
 
     console.log(signUpData);
@@ -150,7 +158,7 @@ const Signup = () => {
               type="tel"
               className="signup-phoneNum"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
               placeholder="010-1234-5678"
               required
             />

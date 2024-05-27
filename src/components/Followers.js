@@ -12,7 +12,6 @@ function Followers() {
     const url = `${Server_IP}/member-service/follow/${nickName}/follower-list`;
     const fetchFollowers = async () => {
       const token = localStorage.getItem("accessToken");
-
       try {
         const response = await axios.get(url, {
           headers: {

@@ -89,7 +89,6 @@ function Login() {
             axios.defaults.headers.common[
               "Authorization"
             ] = `${grantType} ${accessToken}`;
-            // setUser(userData);
             navigate("/localmap");
           } else {
             console.error("로그인 실패:", responseData.message);

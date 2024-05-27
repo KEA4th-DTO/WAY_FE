@@ -28,7 +28,7 @@ const HistoryList = ({ data }) => {
       <button className="frame4-frame4">
         <div className="frame4-post1full">
           <img
-            src={data.image || bg1} // 게시글 이미지가 없을 때 기본 이미지 사용
+            src={data.imageUrl || bg1} // 게시글 이미지가 없을 때 기본 이미지 사용
             alt="게시글 이미지"
             className="frame4-image"
           />
@@ -47,24 +47,25 @@ const HistoryList = ({ data }) => {
               className="frame4-daily-pin-filled"
             />
             <span className="frame4-text04">
-              <span>{data.memberId}</span>
+              <span>{data.memberEmail}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
-              <span>{data.body}</span>
+              <span>{data.bodyPreview}</span>
             </span>
             <span className="frame4-text02">
-              <span>{formatDate(data.createdAt)}</span>
+              <span>{data.createdAt}</span>
+              {/* <span>{formatDate(data.createdAt)}</span> */}
             </span>
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />
               <span className="frame4-text">
-                <span>{data.likeNum}</span>
+                <span>{data.likesCount || 0}</span>
               </span>
             </div>
             <div className="frame4-frame2">
               <img src={comment} alt="댓글" className="frame4-svg" />
               <span className="frame4-text">
-                <span>{data.commentNum}</span>
+                <span>{data.commentsCount || 0}</span>
               </span>
             </div>
           </div>
