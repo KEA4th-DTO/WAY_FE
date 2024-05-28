@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import html2canvas from "html2canvas"; // html2canvas를 import
-import $ from "jquery"; // Import jQuery
 
 import currentPin from "../../assets/images/icons/currentPin.png";
 import allPin from "../../assets/images/icons/allPin.png";
@@ -10,7 +9,8 @@ import full_allPin from "../../assets/images/icons/full_allPin.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import refresh from "../../assets/images/icons/refresh.png";
-import MarkerClustering from "../../utils/MarkerClustering.js";
+// import MarkerClustering from "../../utils/MarkerClustering.js";
+// import $ from "jquery"; // Import jQuery
 
 const UserMapinfo = ({ userNickname }) => {
     const [userPost, setUserPost] = useState([]);
@@ -21,7 +21,7 @@ const UserMapinfo = ({ userNickname }) => {
     const [mapState, setMapState] = useState({ zoom: 7, center: k_center }); // 지도의 확대/축소 및 중심 좌표 상태 관리
     const [activeMarker, setActiveMarker] = useState(null);
     const clickedMarkers = {}; // 클릭된 마커를 저장할 객체
-    const [markers, setMarkers] = useState([]); // 마커 목록을 관리
+    // const [markers, setMarkers] = useState([]); // 마커 목록을 관리
 
     // allPin 을 누르면 allPin 이미지가 full_allPin으로 바뀌고 dailyPin, historyPin 이미지는 원래 이미지로 바뀌는 함수
     const [allPinState, setAllPinState] = useState(true);
@@ -143,7 +143,7 @@ const UserMapinfo = ({ userNickname }) => {
                     zIndex: index,
                 });
 
-                setMarkers(prevMarkers => [...prevMarkers, marker]);
+                // setMarkers(prevMarkers => [...prevMarkers, marker]);
 
                 // 마커에 클릭 이벤트를 추가합니다.
                 naver.maps.Event.addListener(marker, 'click', () => {
@@ -212,65 +212,54 @@ const UserMapinfo = ({ userNickname }) => {
                 createMarker(item, index);
             });
 
-            // function htmlMarker(width, height, color, borderWidth) {
-            //     return {
-            //         content: `
-            //             <div style="position: absolute; width: ${width}px; height: ${height}px; background: ${color}; border: ${borderWidth}px solid #000; border-radius: ${width}px;">
-            //                 <div style="font-size: 10px; color: #000; text-align: center; line-height: ${height}px;"></div>
-            //             </div>
-            //         `,
-            //         size: new naver.maps.Size(width, height),
-            //         anchor: new naver.maps.Point(width / 2, height / 2)
-            //     };
-            // }
         }
-    }, [currentMyLocation, userPost, activePin, mapState, markers]); // `activePin` 및 `mapState`를 의존성 목록에 추가
+    }, [currentMyLocation, userPost, activePin, mapState]); // `activePin` 및 `mapState`를 의존성 목록에 추가
 
-    const [cluster] = useState(() => {
-        const { naver } = window;
+    // const [cluster] = useState(() => {
+    //     const { naver } = window;
 
-        var htmlMarker1 = {
-            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-1.png);background-size:contain;"></div>',
-            size: new naver.maps.Size(40, 40),
-            anchor: new naver.maps.Point(20, 20)
-        },
-        htmlMarker2 = {
-            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-2.png);background-size:contain;"></div>',
-            size: new naver.maps.Size(40, 40),
-            anchor: new naver.maps.Point(20, 20)
-        },
-        htmlMarker3 = {
-            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-3.png);background-size:contain;"></div>',
-            size: new naver.maps.Size(40, 40),
-            anchor: new naver.maps.Point(20, 20)
-        },
-        htmlMarker4 = {
-            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-4.png);background-size:contain;"></div>',
-            size: new naver.maps.Size(40, 40),
-            anchor: new naver.maps.Point(20, 20)
-        },
-        htmlMarker5 = {
-            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-5.png);background-size:contain;"></div>',
-            size: new naver.maps.Size(40, 40),
-            anchor: new naver.maps.Point(20, 20)
-        };
+    //     var htmlMarker1 = {
+    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-1.png);background-size:contain;"></div>',
+    //         size: new naver.maps.Size(40, 40),
+    //         anchor: new naver.maps.Point(20, 20)
+    //     },
+    //     htmlMarker2 = {
+    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-2.png);background-size:contain;"></div>',
+    //         size: new naver.maps.Size(40, 40),
+    //         anchor: new naver.maps.Point(20, 20)
+    //     },
+    //     htmlMarker3 = {
+    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-3.png);background-size:contain;"></div>',
+    //         size: new naver.maps.Size(40, 40),
+    //         anchor: new naver.maps.Point(20, 20)
+    //     },
+    //     htmlMarker4 = {
+    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-4.png);background-size:contain;"></div>',
+    //         size: new naver.maps.Size(40, 40),
+    //         anchor: new naver.maps.Point(20, 20)
+    //     },
+    //     htmlMarker5 = {
+    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-5.png);background-size:contain;"></div>',
+    //         size: new naver.maps.Size(40, 40),
+    //         anchor: new naver.maps.Point(20, 20)
+    //     };
 
-        const cluster = new MarkerClustering({
-             minClusterSize: 2,
-             maxZoom: 12,
-             map: mapRef.current,
-             markers: markers,
-             disableClickZoom: false,
-             gridSize: 120,
-                icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
-             indexGenerator: [10, 100, 200, 500, 1000],
-             stylingFunction: (clusterMarker, count) => {
-                 $(clusterMarker.getElement()).find('div:first-child').text(count);
-             }
-         });
+    //     const cluster = new MarkerClustering({
+    //          minClusterSize: 2,
+    //          maxZoom: 12,
+    //          map: mapRef.current,
+    //          markers: markers,
+    //          disableClickZoom: false,
+    //          gridSize: 120,
+    //             icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+    //          indexGenerator: [10, 100, 200, 500, 1000],
+    //          stylingFunction: (clusterMarker, count) => {
+    //              $(clusterMarker.getElement()).find('div:first-child').text(count);
+    //          }
+    //      });
     
-        return cluster;
-    })
+    //     return cluster;
+    // })
 
     const captureMap = () => {
         const target = document.getElementById("download");
