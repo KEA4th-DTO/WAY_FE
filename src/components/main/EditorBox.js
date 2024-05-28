@@ -15,6 +15,8 @@ const EditorBox = ({ postType }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기
+    const [bodyPlainText, setBodyPlainText] = useState(''); // 본문 텍스트만 저장
+
     const currentTime = new Date();
     currentTime.setHours(currentTime.getHours() - 3); // 현재 시간에서 3시간을 빼기
     
@@ -60,6 +62,7 @@ const EditorBox = ({ postType }) => {
                 longitude,
                 address,
                 bodyPreview,
+                bodyPlainText,
             };
             formData.append('createHistoryDto', new Blob([JSON.stringify(historyDto)], { type: 'application/json' })); // createHistoryDto 추가
     
@@ -175,8 +178,8 @@ const EditorBox = ({ postType }) => {
         // 마크다운 문법 제거
         const textContent = textWithoutHTML.replace(/[#>*_~`[\]]+/g, '');
     
-        setBodyPreview(textContent.slice(0, 63)); // 제한된 길이로 본문 미리보기 설정
-        
+        setBodyPreview(textContent.slice(0, 35)); // 제한된 길이로 본문 미리보기 설정
+        setBodyPlainText(textContent);
         // 저장할 textContent를 사용합니다.
         console.log('텍스트 내용:', textContent);
       };
