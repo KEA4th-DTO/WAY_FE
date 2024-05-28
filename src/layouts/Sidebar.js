@@ -51,6 +51,7 @@ const Sidebar = () => {
     if (response.ok) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      window.localStorage.clear();
       navigate("/login"); // Redirect to login page after logout
     } else {
       console.error("Logout failed");

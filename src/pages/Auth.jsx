@@ -7,9 +7,10 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const Server_IP = process.env.REACT_APP_Server_IP;
     const sendCodeToServer = async () => {
       try {
-        const response = await axios.post("http://localhost:8080/auth/kakao", {
+        const response = await axios.post(`${Server_IP}/auth/kakao/callback`, {
           code: code,
         });
 

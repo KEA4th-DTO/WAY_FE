@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../assets/style/login.css";
+import CryptoJS from "crypto-js";
+import { SHA256 } from "crypto-js";
 import kakaoImg from "../assets/img/kakao.png";
 import googleImg from "../assets/img/google_login.png";
 import axios from "axios";
@@ -21,7 +23,7 @@ function Login() {
   // const { setUser } = useUserContext();
 
   function kakaoLoginHandler() {
-    const Rest_api_key = "a636a1c4c0b845384ca75dd034081a1b";
+    const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY;
     const redirect_uri = "http://localhost:3000/auth";
 
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -61,11 +63,13 @@ function Login() {
 
   const handleSubmit = async (event) => {
     const Server_IP = process.env.REACT_APP_Server_IP;
+    const secretKey = process.env.REACT_APP_CRYPTO_SECRET;
+    const encryptedPassword = SHA256(password, secretKey).toString();
     event.preventDefault();
     const url = `${Server_IP}/auth-service/login`;
     const data = {
       email: email,
-      password: password,
+      password: encryptedPassword,
       // rememberMe: rememberMe,
     };
 
@@ -92,6 +96,7 @@ function Login() {
             axios.defaults.headers.common[
               "Authorization"
             ] = `${grantType} ${accessToken}`;
+            console.log(data);
             navigate("/localmap");
           } else {
             console.error("로그인 실패:", responseData.message);
@@ -103,9 +108,7 @@ function Login() {
       .catch((error) => {
         console.error("서버 통신 오류: ", error);
       });
-
-    console.log("Email:", email);
-    console.log("Password:", password);
+    console.log(data);
     // console.log("Remember Me:", rememberMe); // 만약 사용한다면
   };
 

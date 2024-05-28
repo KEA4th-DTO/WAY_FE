@@ -13,6 +13,8 @@ function ProfilePage() {
     name: "",
     nickName: "",
     bio: "",
+    dailyCount: "",
+    historyCount: "",
     postsCount: 0,
     followersCount: 0,
     followingsCount: 0,
@@ -33,17 +35,17 @@ function ProfilePage() {
           }
         );
         const data = response.data.result;
+        console.log(data);
         setProfile({
-          imageUrl: data.imageUrl,
+          imageUrl: data.profileImageUrl,
           name: data.name,
-          nickName: data.nickName,
+          nickName: data.nickname,
           bio: data.introduce,
           dailyCount: data.dailyCount,
           historyCount: data.historyCount,
           followersCount: data.followerCount,
           followingsCount: data.followingCount,
         });
-        console.log(profile);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -74,8 +76,8 @@ function ProfilePage() {
               left: "15%",
             }}
           />
-          <h1 className="userName">{localStorage.getItem("userName")}</h1>
-          <p className="nickName">{localStorage.getItem("userNickname")}</p>
+          <h1 className="userName">{profile.name}</h1>
+          <p className="nickName">{profile.nickName}</p>
           <p className="bio">{profile.bio}</p>
           <div className="btn-container">
             <button

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
+import { SHA256 } from "crypto-js";
 import "../assets/style/signup.css";
 import axios from "axios";
 const Signup = () => {
@@ -26,19 +27,16 @@ const Signup = () => {
 
   const handleSignUp = () => {
     const url = `${Server_IP}/auth-service/signup`;
-    const secretKey = CryptoJS.lib.WordArray.random(32).toString();
-    const encryptedPassword = CryptoJS.AES.encrypt(
-      password,
-      secretKey
-    ).toString();
+    const secretKey = process.env.REACT_APP_CRYPTO_SECRET;
+    const encryptedPassword = SHA256(password, secretKey).toString();
     // 회원가입 정보 객체 생성
     const signUpData = {
       name: name,
       email: email,
-      // password: encryptedPassword,
-      // passwordCheck: encryptedPassword,
-      password: password,
-      passwordCheck: confirmPassword,
+      password: encryptedPassword,
+      passwordCheck: encryptedPassword,
+      // password: password,
+      // passwordCheck: confirmPassword,
       nickname: nickname,
       phoneNumber: phone,
       // agreement: agreement,
