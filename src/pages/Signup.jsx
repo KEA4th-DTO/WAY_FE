@@ -35,11 +35,8 @@ const Signup = () => {
       email: email,
       password: encryptedPassword,
       passwordCheck: encryptedPassword,
-      // password: password,
-      // passwordCheck: confirmPassword,
       nickname: nickname,
       phoneNumber: phone,
-      // agreement: agreement,
     };
 
     console.log(signUpData);
@@ -91,6 +88,7 @@ const Signup = () => {
         console.log(data);
         if (data.isSuccess === true) {
           alert("사용가능한 닉네임입니다");
+          setNicknameCheck(true);
         } else {
           alert("사용불가능한 닉네임입니다", data);
         }
@@ -100,7 +98,6 @@ const Signup = () => {
         // 에러 발생 시 처리
       });
     console.log("Email checked!");
-    setEmailCheck(true); // 예시에서는 무조건 true로 설정합니다.
   };
 
   const handleEmailCheck = () => {
@@ -126,6 +123,7 @@ const Signup = () => {
       .then((data) => {
         if (data.isSuccess === true) {
           alert("사용가능한 이메일입니다");
+          setEmailCheck(true);
         } else {
           alert("사용불가능한 이메일입니다", data);
         }

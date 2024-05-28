@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import QuestionDetail from "../components/QuestionDetail.js";
 import NoticeDetail from "../components/NoticeDetail.js";
 import FindIDPW from "../views/FindIDPW.js";
+import PrivateRoute from "./PrivateRoute";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -11,9 +12,9 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 const Login = lazy(() => import("../pages/Login.jsx"));
 const Signup = lazy(() => import("../pages/Signup.jsx"));
+const Auth = lazy(() => import("../pages/Auth.jsx"));
 
 /***** Views ****/
-
 const Localmap = lazy(() => import("../views/Localmap.js"));
 const Mymap = lazy(() => import("../views/Mymap.js"));
 const Upload = lazy(() => import("../views/Upload.js"));
@@ -34,13 +35,17 @@ const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 /*****Routes******/
 
 const ThemeRoutes = [
-  {
-    path: "/",
-    element: <Navigate to="/login" />,
-  },
+  // {
+  //   path: "/",
+  //   element: <Navigate to="/login" />,
+  // },
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
   },
   {
     path: "/signup",
@@ -52,7 +57,7 @@ const ThemeRoutes = [
   },
   {
     path: "/",
-    element: <FullLayout />,
+    element: <PrivateRoute element={<FullLayout />} />,
     children: [
       { path: "localmap", exact: true, element: <Localmap /> },
       { path: "/mymap", exact: true, element: <Mymap /> },

@@ -1,36 +1,48 @@
-import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
-import axios from "axios";
+import { useLocation } from "react-router-dom"; // react-router-dom의 useLocation 훅 사용
 
 const Auth = () => {
-  const code = new URL(window.location.href).searchParams.get("code");
-  const navigate = useNavigate();
-
+  const location = useLocation(); // 현재 URL 정보 가져오기
   useEffect(() => {
-    const Server_IP = process.env.REACT_APP_Server_IP;
-    const sendCodeToServer = async () => {
-      try {
-        const response = await axios.post(`${Server_IP}/auth/kakao/callback`, {
-          code: code,
-        });
-
-        if (response.status === 200) {
-          // Assuming you want to navigate to a home page or dashboard after successful login
-          navigate("/home");
-        } else {
-          console.error("Failed to send code to the server:", response.status);
-        }
-      } catch (error) {
-        console.error("Error sending code to the server:", error);
-      }
-    };
+    // URLSearchParams를 사용하여 code 값을 추출
+    const searchParams = new URLSearchParams(location.search);
+    const code = searchParams.get("code");
 
     if (code) {
-      sendCodeToServer();
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      const url = `${Server_IP}/oauth/kakao/callback`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      })
+        .then((response) => {
+          const result = response.result;
+          console.log(response);
+          if (response.status === 200 && result.isSuccess) {
+            localStorage.setItem("grantType", result.grantType);
+            localStorage.setItem("accessToken", result.accessToken);
+            localStorage.setItem("refreshToken", result.refreshToken);
+          } else {
+            // 로그인 실패 시 처리
+            alert("실패");
+          }
+        })
+        .catch((error) => {
+          // 에러 처리
+        });
     }
-  }, [code, navigate]);
+  }, [location.search]);
 
-  return null;
+  return (
+    <div>
+      <p>Loading...</p>
+    </div>
+  );
 };
 
 export default Auth;

@@ -70,7 +70,6 @@ function Login() {
     const data = {
       email: email,
       password: encryptedPassword,
-      // rememberMe: rememberMe,
     };
 
     axios
