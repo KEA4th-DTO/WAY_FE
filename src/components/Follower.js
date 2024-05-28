@@ -14,8 +14,6 @@ function Follower({
   const handleFollowClick = () => {
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
-    console.log(`Current follow state for ${name}: ${isFollow}`); // 현재 팔로우 상태 로그 출력
-
     const url = !isFollow
       ? `${Server_IP}/member-service/follow/${nickName}`
       : `${Server_IP}/member-service/follow/follower-list/${nickName}`;

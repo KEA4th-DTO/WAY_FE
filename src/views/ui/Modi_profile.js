@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Helmet } from "react-helmet";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-// import "./Modi_profile.css";
+import "../../assets/scss/layout/_modi_profile.scss";
 
 const Modi_profile = (props) => {
   const [nickname, setNickname] = useState(""); // 초기값을 빈 문자열로 설정합니다.
@@ -45,9 +44,6 @@ const Modi_profile = (props) => {
 
   return (
     <div className="Modi-profile-container">
-      <Helmet>
-        <title>exported project</title>
-      </Helmet>
       <div className="left-side">
         <div className="profile-card">
           <img src={profileImg} alt="프로필 이미지" className="profile-image" />

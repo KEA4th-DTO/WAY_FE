@@ -1,6 +1,6 @@
 import { Button, Nav, NavItem } from "reactstrap";
 import Logo from "./Logo";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
   {
@@ -13,7 +13,7 @@ const navigation = [
   },
   {
     title: "공지사항",
-    href: "/notices"
+    href: "/notices",
   },
   {
     title: "문의사항",
@@ -23,26 +23,53 @@ const navigation = [
     title: "회원탈퇴",
     href: "/withdrawal",
   },
-  
 ];
 
 const Sidebar = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
-  let location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const granttype = localStorage.getItem("grantType");
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    const response = await fetch(`${Server_IP}/auth-service/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        granttype: granttype,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      }),
+    });
 
+    if (response.ok) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      window.localStorage.clear();
+      navigate("/login"); // Redirect to login page after logout
+    } else {
+      console.error("Logout failed");
+    }
+  };
   return (
     <div className="p-3">
       <div className="d-flex align-items-center">
-      <NavItem><Logo></Logo></NavItem>
+        <NavItem>
+          <Logo></Logo>
+        </NavItem>
         <span className="ms-auto d-lg-none">
-        <Button
-          close
-          size="sm"
-          className="ms-auto d-lg-none"
-          onClick={() => showMobilemenu()}
-        ></Button>
+          <Button
+            close
+            size="sm"
+            className="ms-auto d-lg-none"
+            onClick={() => showMobilemenu()}
+          ></Button>
         </span>
       </div>
       <div className="pt-4 mt-2">
@@ -66,7 +93,9 @@ const Sidebar = () => {
             color="danger"
             tag="a"
             target="_blank"
-            className="mt-3"          >
+            className="mt-3"
+            onClick={handleLogout}
+          >
             로그아웃
           </Button>
         </Nav>
