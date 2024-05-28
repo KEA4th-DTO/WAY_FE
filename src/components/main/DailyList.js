@@ -18,7 +18,7 @@ const DailyList = ({ data }) => {
   }, []);
 
   // console.log('time: ', currentTime);
-  console.log('data: ', data);  
+  // console.log('data: ', data);  
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }

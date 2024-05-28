@@ -9,6 +9,8 @@ import back from "../assets/images/logos/back.png";
 
 const Localmap = () => {
   const [post, setPost] = useState([]);
+  // const [postid, setPostid] = useState([]); // 추가: 선택된 게시글 상태
+
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentMyLocation, setCurrentMyLocation] = useState(null);
   const [bounds, setBounds] = useState({

@@ -13,7 +13,7 @@ const MapInformation = () => {
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const [post, setPost] = useState([]);
     const mapRef = useRef(null);
-    const [activePin, setActivePin] = useState("all"); // 현재 활성화된 핀 타입을 관리
+    const [activePin, setActivePin] = useState("ALL"); // 현재 활성화된 핀 타입을 관리
     const [mapState, setMapState] = useState({ zoom: 16, center: null }); // 지도의 확대/축소 및 중심 좌표 상태 관리
     const [activeMarker, setActiveMarker] = useState(null);
     const clickedMarkers = {}; // 클릭된 마커를 저장할 객체
@@ -156,6 +156,7 @@ const MapInformation = () => {
             // updateBounds();
 
             // naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
+
 
             //현재 위치 마커표시
             new naver.maps.Marker({
