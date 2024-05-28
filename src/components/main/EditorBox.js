@@ -52,27 +52,27 @@ const EditorBox = ({ postType }) => {
             }
     
             const formData = new FormData();
-            formData.append('image', image); // Add the image file
-            formData.append('createHistoryDto', new Blob([JSON.stringify({ 
+            formData.append('thumbnailImage', image); // 썸네일 이미지 추가
+            const historyDto = {
                 title,
+                body,
                 latitude,
                 longitude,
                 address,
                 bodyPreview,
-            })], { type: 'application/json' }));
-            formData.append('html', new Blob([body], { type: 'text/html' })); // 본문 추가
-
+            };
+            formData.append('createHistoryDto', new Blob([JSON.stringify(historyDto)], { type: 'application/json' })); // createHistoryDto 추가
+    
             const response = await fetch(`http://210.109.55.124/post-service/history`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    // 'Content-Type': 'multipart/form-data' // REMOVE this line
                 },
                 body: formData,
             });
             
             const data = await response.json();
-
+    
             if (response.ok) {
                 alert('저장되었습니다.');
                 // 페이지 이동
@@ -87,8 +87,10 @@ const EditorBox = ({ postType }) => {
             alert('저장 중 오류가 발생했습니다.');
         }
     };
+    
 
-      
+    // console.log('되나: ', new Blob([body], { type: 'text/html' }));
+
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setImage(file);
@@ -100,34 +102,34 @@ const EditorBox = ({ postType }) => {
             reader.readAsDataURL(file);
         }
     };
-    const onUploadImage = async (blob, callback) => {
-        const formData = new FormData();
-        formData.append("historyImage", blob);
 
-        try {
+    const onUploadImage = async (blob, callback) => {
+    try {
         const response = await axios.post(
-        "http://210.109.55.124/post-service/history/upload-image",
-        formData,
-        {
-            headers: {
-            "Authorization": `Bearer ${token}`,
+            "http://210.109.55.124/post-service/history/upload-image",
+            blob, // 이미지 데이터 직접 전달
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data", // 필요한 경우 Content-Type 설정
+                }
             }
-        }
         );
 
         if (response.data.isSuccess) {
-        const url = response.data.result;
-        callback(url, "");
+            const url = response.data.result;
+            callback(url, "");
         } else {
-        console.error("Error uploading image:", response.data.message);
-        callback(null, response.data.message);
+            console.error("Error uploading image:", response.data.message);
+            callback(null, response.data.message);
         }
     } catch (error) {
         console.error("Error uploading image:", error);
         callback(null, error.message);
     }
-        return false;
-      };
+    return false;
+};
+
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -166,17 +168,14 @@ const EditorBox = ({ postType }) => {
         console.log(data);
       
         const markdown = editorRef.current.getInstance().getMarkdown();
-        
         // 마크다운에서 이미지 구문 제거
         const textWithoutImages = markdown.replace(/!\[.*?\]\(.*?\)/g, '');
-      
         // HTML 태그 제거
         const textWithoutHTML = textWithoutImages.replace(/(<([^>]+)>)/ig, '');
-
         // 마크다운 문법 제거
         const textContent = textWithoutHTML.replace(/[#>*_~`[\]]+/g, '');
     
-        setBodyPreview(textContent);
+        setBodyPreview(textContent.slice(0, 63)); // 제한된 길이로 본문 미리보기 설정
         
         // 저장할 textContent를 사용합니다.
         console.log('텍스트 내용:', textContent);

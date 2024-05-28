@@ -19,6 +19,8 @@ const HistoryList = ({ data }) => {
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }
+    // console.log('data: ', data);  
+
 
   return (
     <div
