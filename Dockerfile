@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 3000
 
 # npm start 스크립트 실행
-CMD ["npm", "start"]
+CMD ["node", "server.js", "npm", "start"]
