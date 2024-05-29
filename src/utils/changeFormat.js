@@ -7,6 +7,13 @@ export const formatDate = (dateString) => {
     return `${year}년 ${month}월 ${day}일`;
 };
 
+export function addHours(dateTimeString) {
+    const date = new Date(dateTimeString);
+    date.setHours(date.getHours() + 9);
+    return date.toISOString();
+}
+
+
 export const formatDate2 = (createdAt, expiredAt) => {
     const createdDate = new Date(createdAt);
     const expiredDate = new Date(expiredAt);

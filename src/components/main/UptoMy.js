@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import UserMapinfo from "./UserMapinfo";
-import DailyPost from "./DailyPost";
 import html2canvas from "html2canvas";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import basic_profile from "../../assets/images/users/basic_profile.png";
 import "../../assets/scss/layout/_localmap.scss";
 import mymap_img from "../../assets/images/bg/mymap_img.png";
 import PreviewHistory from "./PreviewHistory";
+import PreviewDaily from "./PreviewDaily";
 
 const UptoMy = () => {
 
@@ -24,7 +24,7 @@ const UptoMy = () => {
 
     
     // const postType = state.result.postType;
-    const postType = 'HISTORY';
+    const postType = 'DAILY';
 
     console.log('post: ', postId, capture);
 
@@ -55,7 +55,7 @@ const UptoMy = () => {
         {
             postType === 'DAILY' 
             ? <div style={{ display: "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-                <DailyPost postId={postId} writerNickname={userNickname} writerProfileImageUrl={basic_profile} />
+                <PreviewDaily postId={postId} />
                 </div> 
             : <div className="historyPost-con">
                 <PreviewHistory postId={postId} />

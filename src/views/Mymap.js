@@ -38,7 +38,7 @@ const Mymap = () => {
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [userNickname, token]);
+  }, [userNickname, token, selectedPost]);
 
   console.log('userPost: ', userPost);
 
@@ -52,6 +52,10 @@ const Mymap = () => {
     setSelectedPost(null); // 선택된 포스트 초기화
   };
 
+  const handleDelete = (deletedPostId) => {
+    setUserPost(userPost.filter(post => post.postId !== deletedPostId));
+    setSelectedPost(null);
+  };
 
   return ( 
     <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
@@ -75,7 +79,7 @@ const Mymap = () => {
           }
         </button>
         <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-          {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} />}
+          {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
         </div>
         <div id="list" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
           {userPost.map(item => (

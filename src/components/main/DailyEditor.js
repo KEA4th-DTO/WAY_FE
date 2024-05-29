@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/scss/layout/_upload.scss';
 import UploadMap from './UploadMap';
+import { addHours } from '../../utils/changeFormat';
 
 const DailyEditor = ({ postType }) => {
     // const [memberId] = useState('id_222');
@@ -9,12 +10,10 @@ const DailyEditor = ({ postType }) => {
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const currentTime = new Date();
-    currentTime.setHours(currentTime.getHours());
-    
+    const [current, setCurrent] = useState(new Date().toISOString());
+    const [expired, setExpired] = useState(''); // 만료 시간   //포맷: 2024-05-20T08:58:40.848Z
     // 로컬 시간으로 생성 시간 설정
-    const [createdAt, setCreatedAt] = useState(currentTime.toISOString());
-   
+    const [createdAt, setCreatedAt] = useState(addHours(current)); // 생성 시간
     const [expiredAt, setExpiredAt] = useState(''); // 만료 시간   //포맷: 2024-05-20T08:58:40.848Z
     const [address, setAddress] = useState('');
     const [hour, setHour] = useState('1'); // 시간
@@ -36,7 +35,8 @@ const DailyEditor = ({ postType }) => {
         // 컴포넌트가 처음 마운트될 때 한 번 실행
         const interval = setInterval(() => {
             // 매 초마다 현재 시간을 업데이트
-            setCreatedAt(new Date().toISOString());
+            setCurrent(new Date().toISOString());
+            setCreatedAt(addHours(current));
         }, 1000);
 
         // 컴포넌트가 언마운트될 때 clearInterval을 호출하여 메모리 누수를 방지
@@ -74,7 +74,9 @@ const DailyEditor = ({ postType }) => {
 
             if (response.ok) {
                 alert('저장되었습니다.');
-                navigate('/uptomy', { state: data });
+                // 페이지 이동
+                navigate('/mymap');
+                console.log('Success:', data);
             } else {
                 console.error('Error:', data);
                 alert('저장에 실패했습니다.');
@@ -85,11 +87,9 @@ const DailyEditor = ({ postType }) => {
         }
     };    
 
-    // console.log('현재: ', currentTime);
-    // console.log('생성: ', createdAt);
+    console.log('생성: ', createdAt);
+    console.log('만료: ', expiredAt);
 
-    // console.log('만료: ', expiredAt);
-    
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setImage(file);
@@ -106,13 +106,15 @@ const DailyEditor = ({ postType }) => {
         setTitle(e.target.value);
     };
 
-    const formattedTime = new Date(createdAt).toLocaleString('ko-KR');
+    const formattedTime = new Date(current).toLocaleString('ko-KR');
+    const formattedTime2 = new Date(expired).toLocaleString('ko-KR');
 
     const calculateExpiredAt = () => {
-        const createdAtDate = new Date(createdAt);
+        const createdAtDate = new Date(current);
         createdAtDate.setHours(createdAtDate.getHours() + Number(hour));
         createdAtDate.setMinutes(createdAtDate.getMinutes() + Number(minute));
-        setExpiredAt(createdAtDate.toISOString());
+        setExpired(createdAtDate.toISOString());
+        setExpiredAt(addHours(createdAtDate.toISOString()));
     };
 
     const clickMap = () => {
@@ -179,14 +181,14 @@ const DailyEditor = ({ postType }) => {
                     </select>
                     시
                     <select style={{ marginLeft: "5px"}} value={minute} onChange={(e) => setMinute(e.target.value)}>
-                        {[...Array(6)].map((_, i) => (
-                            <option key={i * 10} value={i * 10}>{String(i * 10).padStart(2, '0')}</option>
+                        {[...Array(60)].map((_, i) => (
+                            <option key={i} value={i}>{String(i).padStart(2, '0')}</option>
                         ))}
                     </select>
                     분
                     <button style={{ marginLeft: "10px" }} onClick={calculateExpiredAt}>적용</button>
                     <div style={{ marginTop: "5px" }}>
-                        만료 시간: {expiredAt && new Date(expiredAt).toLocaleString('ko-KR')}
+                        만료 시간: {expiredAt && formattedTime2}
                     </div>
                 </div>
                 <br />

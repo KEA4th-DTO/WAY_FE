@@ -127,7 +127,7 @@ const MapInformation = () => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 7, //12
+                minZoom: 10,
                 maxZoom: 16,
 
                 zoomControl: true,
