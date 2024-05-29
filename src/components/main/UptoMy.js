@@ -1,0 +1,71 @@
+import React, { useState, useEffect, useRef } from "react";
+import UserMapinfo from "./UserMapinfo";
+import DailyPost from "./DailyPost";
+import html2canvas from "html2canvas";
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import basic_profile from "../../assets/images/users/basic_profile.png";
+import "../../assets/scss/layout/_localmap.scss";
+import mymap_img from "../../assets/images/bg/mymap_img.png";
+import PreviewHistory from "./PreviewHistory";
+
+const UptoMy = () => {
+
+    const state = useLocation().state;
+
+    const token = localStorage.getItem("accessToken");
+    const userNickname = localStorage.getItem("userNickname");
+
+    console.log('state: ', state.result);
+
+    const postId = state.result.postId;
+    const capture = state.result.capture;
+    // const capture = true;
+
+    
+    // const postType = state.result.postType;
+    const postType = 'HISTORY';
+
+    console.log('post: ', postId, capture);
+
+  return ( 
+    <>
+    <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
+      {/* 지도 & 핀 */}
+      <div id="map-con" style={{border: "3px solid blue"}}>
+        <div>
+          <span className="initial-main-page-text">미리보기</span>
+          <div>
+            <UserMapinfo userNickname={userNickname} capture={capture} />
+            <div>
+                <Link to="/mymap" style={{ textDecoration: "none", color: "inherit" }}>
+                <button style={{ border: "none" }}>
+                    <span className="linkto-mymap" style={{ border: "2px"}}>
+                    마이맵으로 이동하기
+                    </span>
+                </button>
+                </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      {/* 게시글 */}
+      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
+        {
+            postType === 'DAILY' 
+            ? <div style={{ display: "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+                <DailyPost postId={postId} writerNickname={userNickname} writerProfileImageUrl={basic_profile} />
+                </div> 
+            : <div className="historyPost-con">
+                <PreviewHistory postId={postId} />
+                </div>
+        }
+      </div>
+    </div>
+    
+    </>
+  );
+};
+
+export default UptoMy;

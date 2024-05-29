@@ -13,7 +13,7 @@ const Mymap = () => {
   const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
-  const mapRef = useRef(null); // 추가: 지도를 캡처할 DOM 요소 참조
+  // const mapRef = useRef(null); // 추가: 지도를 캡처할 DOM 요소 참조
 
   useEffect(() => {
     if (userNickname) {
@@ -60,7 +60,7 @@ const Mymap = () => {
         <div>
           <span className="initial-main-page-text">마이맵</span>
           <div>
-            <UserMapinfo userNickname={userNickname} />
+            <UserMapinfo userNickname={userNickname} capture={false} />
           </div>
         </div>
       </div>

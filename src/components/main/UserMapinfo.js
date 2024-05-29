@@ -12,7 +12,7 @@ import refresh from "../../assets/images/icons/refresh.png";
 // import MarkerClustering from "../../utils/MarkerClustering.js";
 // import $ from "jquery"; // Import jQuery
 
-const UserMapinfo = ({ userNickname }) => {
+const UserMapinfo = ({ userNickname, capture }) => {
     const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const mapRef = useRef(null);
@@ -107,7 +107,7 @@ const UserMapinfo = ({ userNickname }) => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 6, //12
+                minZoom: 7, //12
                 maxZoom: 16,
                 zoomControl: true,
                 zoomControlOptions: {
@@ -161,7 +161,6 @@ const UserMapinfo = ({ userNickname }) => {
                 return item.postType === 'DAILY' ? dailyPin : item.postType === 'HISTORY' ? historyPin : allPin;
             };
 
-            // postId에 따라 full 아이콘을 반환합니다.
             const getFullPin = (postId) => {
                 const item = userPost.find(item => item.postId === postId);
                 // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
@@ -173,12 +172,18 @@ const UserMapinfo = ({ userNickname }) => {
             const handleMarkerClick = (postId, marker) => {
                 // postId에 해당하는 게시물을 찾습니다.
                 const item = userPost.find(item => item.postId === postId);
+                console.log("tlqkf:", item);
+                console.log("tlqkf1:", marker);
+                console.log("clickedMarkers:", clickedMarkers);
+                console.log("activeMarker:", activeMarker);
+                var ok = (activeMarker) ? 1 : 0;
                 // postId에 해당하는 게시물이 없을 경우 처리하지 않습니다.
                 if (!item) return;
 
                 // 클릭된 마커가 이미 클릭된 상태인지 확인합니다.
                 if (activeMarker === postId) {
                     // 클릭된 마커를 다시 클릭하면 원래 아이콘으로 변경하고 상태를 비활성화합니다.
+                    console.log("tlqkf2:", marker);
                     marker.setIcon({
                         url: getNormalPin(postId),
                         size: new naver.maps.Size(40, 40),
@@ -186,35 +191,71 @@ const UserMapinfo = ({ userNickname }) => {
                     });
                     setActiveMarker(null);
                 } else {
+                    if(ok === 1){
+                        //예전에 클릭한 마커 지우기
+                        Object.values(clickedMarkers).forEach((clickedMarker) => {
+                            clickedMarker.setIcon({
+                                url: getNormalPin(clickedMarker.get("postId")),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
+                            });
+                            });
+                    }
                     // 현재 클릭된 마커의 상태를 변경합니다.
-                    setActiveMarker(postId);
-                    // 모든 클릭된 마커의 아이콘을 원래 아이콘으로 변경합니다.
-                    Object.values(clickedMarkers).forEach(clickedMarker => {
-                        clickedMarker.setIcon({
-                            url: getNormalPin(clickedMarker.get('postId')),
-                            size: new naver.maps.Size(40, 40),
-                            scaledSize: new naver.maps.Size(40, 40),
-                        });
-                    });
-                    // 클릭된 마커의 아이콘을 full 아이콘으로 변경합니다.
+                    ok =0;
                     marker.setIcon({
                         url: getFullPin(postId),
-                        size: new naver.maps.Size(46, 46), // 크기를 (50, 50)으로 변경
+                        size: new naver.maps.Size(46, 46),
                         scaledSize: new naver.maps.Size(46, 46),
                     });
-                    // 클릭된 마커를 clickedMarkers에 저장합니다.
-                    clickedMarkers[postId] = marker;
-                }
-            };
 
+                    clickedMarkers[postId] = marker;
+                    console.log("clickedMarkers1:", clickedMarkers);
+                }
+                
+            if(ok === 0){
+                setActiveMarker(item);
+            };
+        };
             // 게시글 마커 표시
             userPost.filter(item => activePin === 'ALL' || item.postType === activePin).forEach((item, index) => {
                 createMarker(item, index);
             });
 
-        }
-    }, [currentMyLocation, userPost, activePin, mapState]); // `activePin` 및 `mapState`를 의존성 목록에 추가
+            if(capture){
+            const tilesloadedListener = naver.maps.Event.addListener(map, 'tilesloaded', () => {
+                // 지도 타일이 모두 로드된 후에 캡처를 실행
+                captureMap();
+                // 이벤트 리스너 제거
+                naver.maps.Event.removeListener(tilesloadedListener);
+            });
+         };
 
+        }
+    }, [currentMyLocation, userPost, activePin, mapState, activeMarker, clickedMarkers]); // `activePin` 및 `mapState`를 의존성 목록에 추가
+
+    // // activeMarker가 변경된 후 실행되는 useEffect
+    // useEffect(() => {
+    //     const { naver } = window;
+    //     console.log("activeMarker2:", activeMarker);
+    //      // postId에 따라 full 아이콘을 반환합니다.
+         
+
+    //     if (activeMarker) {
+    //         const marker = clickedMarkers[activeMarker];
+    //         console.log("Marker3:", marker);
+    //         if (marker) {
+    //             marker.setIcon({
+    //                 url: getFullPin(activeMarker),
+    //                 size: new naver.maps.Size(46, 46),
+    //                 scaledSize: new naver.maps.Size(46, 46),
+    //             });
+    //         }
+    //         // 모든 클릭된 마커의 아이콘을 원래 아이콘으로 변경합니다.
+    //         // 
+    //     // );
+    //     }
+    // }, [activeMarker, clickedMarkers, userPost]);
     // const [cluster] = useState(() => {
     //     const { naver } = window;
 
@@ -261,10 +302,12 @@ const UserMapinfo = ({ userNickname }) => {
     //     return cluster;
     // })
 
+    
+
     const captureMap = () => {
         const target = document.getElementById("download");
         if (!target) {
-          return alert("사진 저장에 실패했습니다.");
+          return alert("사진이 없다는디?");
         }
     
         html2canvas(target, {
@@ -282,6 +325,12 @@ const UserMapinfo = ({ userNickname }) => {
           alert("사진 저장에 실패했습니다.");
         });
       };
+
+    //   console.log("cap: ", capture);
+    //   if(capture){
+    //     // captureMap();
+    //     console.log("캡처되었습니다.");
+    //   }
 
     return (
         <div>
@@ -305,10 +354,7 @@ const UserMapinfo = ({ userNickname }) => {
                 </button>
             </div>
 
-            <div id="download" ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
-            <button onClick={captureMap}>
-                지도 캡처
-            </button>   
+            <div id="download" ref={mapRef} style={{ width: "500px", height: "500px" }}></div> 
         </div>
     );
 };

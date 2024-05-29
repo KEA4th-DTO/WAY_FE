@@ -75,12 +75,10 @@ const EditorBox = ({ postType }) => {
             });
             
             const data = await response.json();
-    
             if (response.ok) {
                 alert('저장되었습니다.');
-                // 페이지 이동
-                navigate('/mymap');
-                console.log('Success:', data);
+                navigate('/uptomy', { state: data });
+
             } else {
                 console.error('Error:', data);
                 alert('저장에 실패했습니다.');
@@ -107,32 +105,42 @@ const EditorBox = ({ postType }) => {
     };
 
     const onUploadImage = async (blob, callback) => {
-    try {
-        const response = await axios.post(
-            "http://210.109.55.124/post-service/history/upload-image",
-            blob, // 이미지 데이터 직접 전달
-            {
+        try {
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('historyImage', blob); // Using 'historyImage' as the key
+    
+            const response = await fetch("http://210.109.55.124/post-service/history/upload-image", {
+                method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data", // 필요한 경우 Content-Type 설정
+                    // Do not set 'Content-Type' manually
+                },
+                body: formData
+            });
+    
+            // Capture full response details
+            const data = await response.json();
+    
+            if (response.ok) {
+                if (data.isSuccess) {
+                    const url = data.result;
+                    callback(url, "");
+                } else {
+                    console.error("Error uploading image:", data.message);
+                    callback(null, data.message);
                 }
+            } else {
+                console.error(`Error uploading image: ${response.status} ${response.statusText}`);
+                callback(null, `Server responded with status: ${response.status} ${response.statusText}`);
             }
-        );
-
-        if (response.data.isSuccess) {
-            const url = response.data.result;
-            callback(url, "");
-        } else {
-            console.error("Error uploading image:", response.data.message);
-            callback(null, response.data.message);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            callback(null, error.message);
         }
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        callback(null, error.message);
-    }
-    return false;
-};
-
+        return false;
+    };
+    
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -168,7 +176,7 @@ const EditorBox = ({ postType }) => {
     const onChange = () => {
         const data = editorRef.current.getInstance().getHTML();
         setBody(data);
-        console.log(data);
+        // console.log(data);
       
         const markdown = editorRef.current.getInstance().getMarkdown();
         // 마크다운에서 이미지 구문 제거
@@ -181,7 +189,7 @@ const EditorBox = ({ postType }) => {
         setBodyPreview(textContent.slice(0, 35)); // 제한된 길이로 본문 미리보기 설정
         setBodyPlainText(textContent);
         // 저장할 textContent를 사용합니다.
-        console.log('텍스트 내용:', textContent);
+        // console.log('텍스트 내용:', textContent);
       };
       
 
@@ -201,9 +209,9 @@ const EditorBox = ({ postType }) => {
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
-                        placeholder="주소를 입력하세요." 
+                        placeholder="지도로 주소를 설정해주세요." 
                         value={address} 
-                        onChange={onChangeAddress} />
+                        readOnly />
                     <br />
                     <button onClick={clickMap}>
                         {showMap ? "완료" : "지도 보기"}

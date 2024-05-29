@@ -74,9 +74,7 @@ const DailyEditor = ({ postType }) => {
 
             if (response.ok) {
                 alert('저장되었습니다.');
-                // 페이지 이동
-                navigate('/mymap');
-                console.log('Success:', data);
+                navigate('/uptomy', { state: data });
             } else {
                 console.error('Error:', data);
                 alert('저장에 실패했습니다.');
@@ -87,8 +85,8 @@ const DailyEditor = ({ postType }) => {
         }
     };    
 
-    console.log('현재: ', currentTime);
-    console.log('생성: ', createdAt);
+    // console.log('현재: ', currentTime);
+    // console.log('생성: ', createdAt);
 
     // console.log('만료: ', expiredAt);
     

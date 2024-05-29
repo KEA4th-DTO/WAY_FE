@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import QuestionDetail from "../components/QuestionDetail.js";
 import NoticeDetail from "../components/NoticeDetail.js";
 import FindIDPW from "../views/FindIDPW.js";
+import UptoMy from "../components/main/UptoMy.js";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -56,6 +57,7 @@ const ThemeRoutes = [
     children: [
       { path: "localmap", exact: true, element: <Localmap /> },
       { path: "/mymap", exact: true, element: <Mymap /> },
+      { path: "/uptomy", exact: true, element: <UptoMy /> },
       { path: "/upload", exact: true, element: <Upload /> },
       { path: "/chatting", exact: true, element: <Chatting /> },
       { path: "/search", exact: true, element: <Search /> },

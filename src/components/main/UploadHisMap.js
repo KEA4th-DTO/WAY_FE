@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
+import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import refresh from "../../assets/images/icons/refresh.png";
 
 const UploadHisMap = ({ setPostPosition }) => {
@@ -47,7 +47,7 @@ const UploadHisMap = ({ setPostPosition }) => {
                 position: location,
                 map,
                 icon: {
-                    url: full_dailyPin,
+                    url: full_historyPin,
                     size: new naver.maps.Size(28, 28),
                     scaledSize: new naver.maps.Size(28, 28),
                 },
