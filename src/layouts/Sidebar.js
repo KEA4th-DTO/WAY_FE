@@ -7,10 +7,10 @@ const navigation = [
     title: "프로필 수정",
     href: "/modify_profile",
   },
-  {
-    title: "차단 목록",
-    href: "/blocklist",
-  },
+  // {
+  //   title: "차단 목록",
+  //   href: "/blocklist",
+  // },
   {
     title: "공지사항",
     href: "/notices",
@@ -19,10 +19,10 @@ const navigation = [
     title: "문의사항",
     href: "/questions",
   },
-  {
-    title: "회원탈퇴",
-    href: "/withdrawal",
-  },
+  // {
+  //   title: "회원탈퇴",
+  //   href: "/withdrawal",
+  // },
 ];
 
 const Sidebar = () => {
@@ -41,6 +41,7 @@ const Sidebar = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
       body: JSON.stringify({
         granttype: granttype,
         accessToken: accessToken,
@@ -49,8 +50,6 @@ const Sidebar = () => {
     });
 
     if (response.ok) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
       window.localStorage.clear();
       navigate("/login"); // Redirect to login page after logout
     } else {

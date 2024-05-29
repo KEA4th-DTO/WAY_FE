@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "../assets/style/login.css";
+import "../assets/style/_login.scss";
 import CryptoJS from "crypto-js";
 import { SHA256 } from "crypto-js";
 import kakaoImg from "../assets/img/kakao.png";
@@ -33,13 +33,12 @@ function Login() {
     const checkPopupClosed = setInterval(() => {
       if (popup.closed) {
         clearInterval(checkPopupClosed);
-        // window.location.href = "/localmap";
+        // 팝업이 닫힌 후 추가적인 작업을 여기서 수행할 수 있습니다.
       }
-    });
+    }, 500);
 
     window.addEventListener("message", (event) => {
-      if (event.origin !== window.origin) {
-        console.log("asdf");
+      if (event.origin !== window.location.origin) {
         return;
       }
 
@@ -47,7 +46,6 @@ function Login() {
 
       if (type === "kakaoLogin") {
         clearInterval(checkPopupClosed);
-        popup.close();
         window.location.href = "/localmap";
       }
     });
@@ -77,7 +75,6 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true,
       })
       .then((response) => {
         if (response.status === 200) {

@@ -5,6 +5,7 @@ import "../assets/style/myPage.css";
 import Followers from "../components/Followers";
 import Followings from "../components/Followings";
 import axios from "axios";
+import WayTag from "../components/main/Waytag";
 
 function ProfilePage() {
   const [activeTab, setActiveTab] = useState("posts");
@@ -18,6 +19,7 @@ function ProfilePage() {
     postsCount: 0,
     followersCount: 0,
     followingsCount: 0,
+    tags: [],
   });
 
   useEffect(() => {
@@ -45,7 +47,10 @@ function ProfilePage() {
           historyCount: data.historyCount,
           followersCount: data.followerCount,
           followingsCount: data.followingCount,
+          //태그 세개 -> 리스트
+          // tags: data.tags.slice(0, 3),
         });
+        console.log(profile);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -104,6 +109,14 @@ function ProfilePage() {
               <span className="tab-label">팔로잉</span>
             </button>
           </div>
+        </div>
+        <div className="tag-container">
+          <WayTag label="waytag1" value={"이정균미친놈"} />
+          <WayTag label="waytag1" value={"즉흥적"} />
+          <WayTag label="waytag1" value={"개노답"} />
+          {/* {profile.tags.map((tag, index) => (
+            <WayTag key={index} value={tag} />
+          ))} */}
         </div>
       </div>
       {/* right panel */}

@@ -35,10 +35,10 @@ const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 /*****Routes******/
 
 const ThemeRoutes = [
-  // {
-  //   path: "/",
-  //   element: <Navigate to="/login" />,
-  // },
+  {
+    path: "/",
+    element: <Navigate to="/login" />,
+  },
   {
     path: "/login",
     element: <Login />,
