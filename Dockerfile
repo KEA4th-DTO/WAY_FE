@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json .
 
 RUN npm install react-refresh --force
-RUN npm install elastic-apm-node —save
+RUN npm install elastic-apm-node —save --force
 
 # 명령어 실행 (의존성 설치)
 RUN npm init -y
