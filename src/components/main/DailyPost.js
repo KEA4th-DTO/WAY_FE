@@ -183,14 +183,18 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           >
             <img src={more} alt="profile" className="dailypost-menubutton" />
           </DropdownToggle>
-
-              <DropdownMenu>
+              {post.isOwned 
+              ?(<DropdownMenu>
                 <DropdownItem header>Edit</DropdownItem>
                 <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
                 <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>신고하기</DropdownItem>
-              </DropdownMenu>
+              </DropdownMenu>)
+              :(<DropdownMenu>
+                <DropdownItem>신고하기</DropdownItem>
+              </DropdownMenu>)}
+              
             </Dropdown>
 
           {/* <button style={{border: "none"}}>
@@ -218,7 +222,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           </span>
           <span style={{border: "3px solid green"}} className="dailypost-text">
             <span>
-              {formatDate2(post.createdAt, post.expiredAt)} {formatPeriod(currentTime, post.expiredAt)}남았습니다.
+              {formatDate2(post.createdAt, post.expiredAt)} {formatPeriod(currentTime, post.expiredAt)} 남았습니다.
             </span>
             </span>
         </div>

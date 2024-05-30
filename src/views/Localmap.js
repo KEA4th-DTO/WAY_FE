@@ -9,15 +9,24 @@ import back from "../assets/images/logos/back.png";
 
 const Localmap = () => {
   const [post, setPost] = useState([]);
-  // const [postid, setPostid] = useState([]); // 추가: 선택된 게시글 상태
-
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentMyLocation, setCurrentMyLocation] = useState(null);
+  const [active, setActive] = useState(null);
+
   const [bounds, setBounds] = useState({
     ne: { lat: 0, lng: 0 },
     sw: { lat: 0, lng: 0 }
   });
   const token = localStorage.getItem("accessToken");
+
+  const [activeId, setActiveId] = useState(null);
+
+  useEffect(() => {
+    if (active && active.item) {
+      console.log("active: ", active);
+      setActiveId(active.item.postId);
+    }
+  }, [active]);
 
   // 현재 위치 가져오기
   useEffect(() => {
@@ -74,6 +83,7 @@ const Localmap = () => {
         .then((data) => {
           if (data.isSuccess) {
             setPost(data.result.postResultDtoList); // API 응답 형식에 맞게 데이터 설정
+            console.log("Success:", data);
           } else {
             console.error("Error in API response:", data.message);
           }
@@ -92,13 +102,19 @@ const Localmap = () => {
     setSelectedPost(null);
   };
 
+
+  // Order posts so that the active post appears first
+  const orderedPosts = activeId
+    ? [post.find((item) => item.postId === activeId), ...post.filter((item) => item.postId !== activeId)]
+    : post;
+
   return (
     <div id="local-con" style={{ border: "5px solid red", display: "flex", width: "950px" }}>
       {/* 지도 및 핀 */}
       <div id="map-con" style={{ border: "3px solid blue" }}>
         <div>
           <span className="initial-main-page-text">로컬맵</span>
-          <MapInformation />
+          <MapInformation active={setActive}/>
         </div>
       </div>
 
@@ -143,10 +159,10 @@ const Localmap = () => {
             height: "640px"
           }}
         >
-          {post && post.length > 0 ? (
-            post.map((item) => (
+          {orderedPosts && orderedPosts.length > 0 ? (
+            orderedPosts.map((item) => (
               <button style={{ border: "none" }} key={item.postId} onClick={() => handlePostClick(item)}>
-                {item.postType === "DAILY" ? <DailyList data={item} /> : <HistoryList data={item} />}
+                {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
               </button>
             ))
           ) : (

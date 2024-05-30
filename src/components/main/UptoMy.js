@@ -23,8 +23,8 @@ const UptoMy = () => {
     // const capture = true;
 
     
-    // const postType = state.result.postType;
-    const postType = 'DAILY';
+    const postType = state.result.postType;
+    // const postType = 'DAILY';
 
     console.log('post: ', postId, capture);
 
