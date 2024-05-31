@@ -116,7 +116,7 @@ const Localmap = () => {
       <div id="map-con" style={{ border: "3px solid blue" }}>
         <div>
           <span className="initial-main-page-text">로컬맵</span>
-          <MapInformation active={setActive} dailybound={setDailyBounds} historybound={setHistoryBounds}/>
+          <MapInformation active={setActive} dailybound={setDailyBounds} historybound={setHistoryBounds} />
         </div>
       </div>
 

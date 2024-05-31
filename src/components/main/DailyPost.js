@@ -17,6 +17,7 @@ import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate2, formatPeriod } from '../../utils/changeFormat';
 
 import EditDailyPost from './EditDailyPost';
+import Report from './Report';
 
 const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) => {
         // null 체크를 위해 미리 초기화
@@ -25,6 +26,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const [liked, setLiked] = useState(false);
         const [followed, setFollowed] = useState(false);
         const [editMode, setEditMode] = useState(false);
+        const [reportMode, setReportMode] = useState(false);
 
         const token = localStorage.getItem("accessToken");
         const userNickname = localStorage.getItem("userNickname");
@@ -123,35 +125,58 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           setEditMode(false);
         };
 
-        const handleDeleteClick = () => {
-          fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
-            method: 'DELETE',
-            headers: {
-              'accept': '*/*',
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          .then(res => {
-            if (!res.ok) {
-              throw new Error('Network response was not ok ' + res.statusText);
-            }
-            return res.json();
-          })
-          .then(data => {
-            if (data.isSuccess) {
-              console.log("Successfully deleted post:", data);
-              onDelete(postId);
-            } else {
-              console.error("Error deleting post:", data.message);
-            }
-          })
-          .catch(error => console.error("Error deleting post:", error));
+        // 수정창에서 신고버튼 클릭 시
+        const handleReportClick = () => {
+          setReportMode(true);
         };
+
+        // 뒤로가기 버튼 클릭 처리
+        const handleBackClick = () => {
+          setReportMode(false);
+        };
+
+        const handleDeleteClick = () => {
+          const confirmDelete = window.confirm("정말로 게시글을 삭제하시겠습니까?");
+          if (confirmDelete) {
+            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+              method: 'DELETE',
+              headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+            })
+            .then(data => {
+              if (data.isSuccess) {
+                console.log("Successfully deleted post:", data);
+                onDelete(postId);
+              } else {
+                console.error("Error deleting post:", data.message);
+              }
+            })
+            .catch(error => console.error("Error deleting post:", error));
+          }
+        };
+        
 
     return(
       <>
       {editMode ? <EditDailyPost post={post} writerProfileImageUrl={writerProfileImageUrl} onsave={handleSaveClick} />
       : <div style={{border: "3px solid red"}} className="dailypost-frame">
+          {reportMode === true && (
+          <div>
+            <Report 
+              targetId = {post.postId}
+              type = "POST"
+              onClose={handleBackClick}
+            />
+          </div>
+        )}
       <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
       <div style={{border: "3px solid orange"}} className="dailypost-frame3">
           <div className="dailypost-frame4">
@@ -184,15 +209,16 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             <img src={more} alt="profile" className="dailypost-menubutton" />
           </DropdownToggle>
               {post.isOwned 
-              ?(<DropdownMenu>
+              ?(<DropdownMenu style={{marginLeft:"230px", marginTop:"20px"}}>
                 <DropdownItem header>Edit</DropdownItem>
                 <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
                 <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>신고하기</DropdownItem>
+                {/* <DropdownItem divider />
+                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem> */}
               </DropdownMenu>)
               :(<DropdownMenu>
-                <DropdownItem>신고하기</DropdownItem>
+                <DropdownItem header>Report</DropdownItem>
+                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
               </DropdownMenu>)}
               
             </Dropdown>
