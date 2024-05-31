@@ -4,7 +4,7 @@ import '../../assets/scss/layout/_upload.scss';
 import UploadMap from './UploadMap';
 import { addHours } from '../../utils/changeFormat';
 
-const DailyEditor = ({ postType }) => {
+const DailyEditor = () => {
     // const [memberId] = useState('id_222');
     //props로 받아오기
 

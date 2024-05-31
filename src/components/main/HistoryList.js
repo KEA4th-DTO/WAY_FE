@@ -8,14 +8,14 @@ import historyPin from "../../assets/images/icons/historyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import basic_profile from "../../assets/images/users/basic_profile.png";
 
-import { formatDate, formatPeriod } from "../../utils/changeFormat";
+import { formatDate } from "../../utils/changeFormat";
 
 const HistoryList = ({ data, isActive }) => {
   const [activeId, setActiveId] = useState(null);
 
   useEffect(() => { 
     if (isActive && isActive.item) {
-      console.log('isActive: ', isActive);
+      // console.log('isActive: ', isActive);
       setActiveId(isActive.item.postId);
     }
   }, [isActive]);

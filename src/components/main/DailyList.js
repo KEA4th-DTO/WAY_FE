@@ -10,13 +10,8 @@ import user1 from "../../assets/images/users/user1.jpg";
 import { formatDate2, formatPeriod } from "../../utils/changeFormat";
 
 const DailyList = ({ data, isActive }) => {
-  const [currentTime, setCurrentTime] = useState("");
-
-  useEffect(() => {
-    const current = new Date();
-    current.setHours(current.getHours() + 9); // 현재 시간에서 9시간을 더하기
-    setCurrentTime(current.toISOString());
-  }, []);
+  const currentTime = new Date();
+        currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
 
   const [activeId, setActiveId] = useState(null);
   

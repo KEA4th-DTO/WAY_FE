@@ -9,15 +9,20 @@ import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import refresh from "../../assets/images/icons/refresh.png";
 
-const MapInformation = ({ active }) => {
+const MapInformation = ({ active, dailybound, historybound }) => {
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const [post, setPost] = useState([]);
+    const [dailyPost, setDailyPost] = useState([]);
+    const [combinePost, setCombinePost] = useState([]);
+    const [isIn, setIsIn] = useState([]);
+
     const mapRef = useRef(null);
     const [activePin, setActivePin] = useState("ALL");
     const [mapState, setMapState] = useState({ zoom: 16, center: null });
     const [activeMarker, setActiveMarker] = useState(null);
     const [clickedMarker, setClickedMarker] = useState(null);
-    const [bounds, setBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
+    const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
+    const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
     const token = localStorage.getItem("accessToken");
 
     const [allPinState, setAllPinState] = useState(true);
@@ -47,6 +52,7 @@ const MapInformation = ({ active }) => {
 
     const onRefreshClick = () => {
         setMapState({ zoom: 16, center: currentMyLocation });
+        setCombinePost(post);
     };
 
     useEffect(() => {
@@ -74,7 +80,13 @@ const MapInformation = ({ active }) => {
                 lat: currentMyLocation.lat - 0.0408696,
                 lng: currentMyLocation.lng - 0.0514984
             };
-            setBounds({
+            setDailyBounds({
+                latitude1: sw_bound.lat,
+                longitude1: sw_bound.lng,
+                latitude2: ne_bound.lat,
+                longitude2: ne_bound.lng
+            });
+            dailybound({
                 latitude1: sw_bound.lat,
                 longitude1: sw_bound.lng,
                 latitude2: ne_bound.lat,
@@ -84,8 +96,8 @@ const MapInformation = ({ active }) => {
     }, [currentMyLocation]);
 
     useEffect(() => {
-        if (bounds) {
-            const { latitude1, longitude1, latitude2, longitude2 } = bounds;
+        if (dailyBounds) {
+            const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;
             const url = `http://210.109.55.124/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
 
             fetch(url, {
@@ -102,7 +114,10 @@ const MapInformation = ({ active }) => {
                 })
                 .then(data => {
                     if (data.isSuccess) {
-                        console.log("success_pin", data.result.pinResultDtoList);
+                        // console.log("success_pin", data.result.pinResultDtoList);
+                        const daily_p = data.result.pinResultDtoList.filter(item => item.postType === 'DAILY');
+                        setDailyPost(daily_p);
+                        setCombinePost(data.result.pinResultDtoList);
                         setPost(data.result.pinResultDtoList);
                     } else {
                         console.error("Error in API response:", data.message);
@@ -110,7 +125,7 @@ const MapInformation = ({ active }) => {
                 })
                 .catch(error => console.error("Error fetching pin data:", error));
         }
-    }, [bounds, token]);
+    }, [dailyBounds]);
 
     const getNormalPin = (item) => {
         return item.postType === 'DAILY' ? dailyPin : item.postType === 'HISTORY' ? historyPin : allPin;
@@ -120,6 +135,10 @@ const MapInformation = ({ active }) => {
         return item.postType === 'DAILY' ? full_dailyPin : item.postType === 'HISTORY' ? full_historyPin : full_allPin;
     };
 
+    // useEffect(() => {
+    //     setCombinePost([...post, ...historypost]);
+    // }, [combinePost]);
+
     useEffect(() => {
         const { naver } = window;
         if (mapRef.current && naver && currentMyLocation) {
@@ -127,7 +146,7 @@ const MapInformation = ({ active }) => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 10,
+                minZoom: 11,
                 maxZoom: 16,
                 zoomControl: true,
                 zoomControlOptions: {
@@ -147,13 +166,31 @@ const MapInformation = ({ active }) => {
                 zIndex: 999,
             });
 
-           
+            //지도 이동시 bounds 변경(좌표 받아오기)
+            function updateBounds() {
+                const bounds = map.getBounds();
+                setHistoryBounds({
+                    ne: {
+                        lat: bounds.getNE().lat(),
+                        lng: bounds.getNE().lng()
+                    },
+                    sw: {
+                        lat: bounds.getSW().lat(),
+                        lng: bounds.getSW().lng()
+                    }
+                });
+            }
+
+            // Immediately update bounds when map is initialized
+            updateBounds();
+
+            naver.maps.Event.addListener(map, 'bounds_changed', updateBounds);
 
             const handleMarkerClick = (item, marker) => {
-                console.log('clicked marker:', item, marker);
-                console.log('클릭햇던 마커:', clickedMarker);
+                // console.log('clicked marker:', item, marker);
+                // console.log('클릭햇던 마커:', clickedMarker);
                 if(clickedMarker && clickedMarker.item === item) {
-                    console.log('같은거 클릭해서 원래대로');
+                    // console.log('같은거 클릭해서 원래대로');
                     marker.setIcon({
                         url: getNormalPin(item),
                         size: new naver.maps.Size(43, 43),
@@ -164,14 +201,14 @@ const MapInformation = ({ active }) => {
                     return;
                 } 
                 else if(clickedMarker && clickedMarker.item !== item) {
-                    console.log('다른거 클릭해서 원래거 원래대로');
+                    // console.log('다른거 클릭해서 원래거 원래대로');
                     clickedMarker.marker.setIcon({
                         url: getNormalPin(clickedMarker.item),
                         size: new naver.maps.Size(43, 43),
                         scaledSize: new naver.maps.Size(43, 43),
                     });
                 }
-                console.log('다른거 클릭햇거나 처음 클릭');
+                // console.log('다른거 클릭햇거나 처음 클릭');
 
                 marker.setIcon({
                     url: getFullPin(item),
@@ -183,8 +220,13 @@ const MapInformation = ({ active }) => {
                
             };
 
-            const markers = post.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
+            // // Combine post and historypost arrays
+            // const combinedPosts = [...post, ...historypost];
+        
+            console.log('combinePost:', combinePost);
+            const markers = combinePost.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
+                // console.log('정보: ', item);
                 let iconUrl = getNormalPin(item);
                 const marker = new naver.maps.Marker({
                     position: postLocation,
@@ -219,7 +261,7 @@ const MapInformation = ({ active }) => {
                 })); 
             });
         }
-    }, [currentMyLocation, post, activePin, mapState, clickedMarker, activeMarker]);
+    }, [currentMyLocation, combinePost, activePin, mapState, clickedMarker, activeMarker]);
 
     useEffect(() => {
         if (currentMyLocation && mapRef.current) {
@@ -231,6 +273,57 @@ const MapInformation = ({ active }) => {
     }, [currentMyLocation]);
 
     active(activeMarker);
+
+    const onHistoryBound = async () => {
+        if (!historyBounds) {
+            alert("선택된 바운드가 없습니다.");
+            return;
+        }
+    
+        const latitude1 = historyBounds.sw.lat;
+        const longitude1 = historyBounds.sw.lng;
+        const latitude2 = historyBounds.ne.lat;
+        const longitude2 = historyBounds.ne.lng;
+
+        historybound({
+            latitude1: latitude1,
+            longitude1: longitude1,
+            latitude2: latitude2,
+            longitude2:  longitude2
+        });
+    
+        const url = `http://210.109.55.124/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+    
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "accept": "*/*",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+    
+            if (data.isSuccess) {
+                // console.log("범위의 히스토리 불러오기 성공", data.result.pinResultDtoList);
+                const history_p = data.result.pinResultDtoList.filter(item => item.postType === 'HISTORY');
+                setCombinePost([...dailyPost, ...history_p]);
+                if(history_p.length === 0) {
+                    alert("해당 위치에 히스토리가 없습니다.");
+                }
+            } else {
+                console.error("API 응답 오류:", data.message);
+            }
+        } catch (error) {
+            console.error("핀 데이터 가져오기 오류:", error);
+        }
+    };
+    
 
     return (
         <div>
@@ -253,6 +346,13 @@ const MapInformation = ({ active }) => {
                 </button> 
             </div>
             <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
+            <div>
+                <h4>Map Bounds:</h4>
+                <p>North-East Latitude: {historyBounds.ne.lat}, Longitude: {historyBounds.ne.lng}</p>
+                <p>South-West Latitude: {historyBounds.sw.lat}, Longitude: {historyBounds.sw.lng}</p>
+                <br />
+                <button onClick={onHistoryBound}>이 위치에서 재검색</button>
+            </div>
         </div>
     );
 };

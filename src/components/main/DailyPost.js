@@ -30,7 +30,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const userNickname = localStorage.getItem("userNickname");
         
         const currentTime = new Date();
-        currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
+        currentTime.setHours(currentTime.getHours());
 
         const [dropdownOpen, setDropdownOpen] = React.useState(false);
 

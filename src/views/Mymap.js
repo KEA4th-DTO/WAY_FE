@@ -15,6 +15,16 @@ const Mymap = () => {
   const userNickname = localStorage.getItem("userNickname");
   // const mapRef = useRef(null); // 추가: 지도를 캡처할 DOM 요소 참조
 
+  const [active, setActive] = useState(null);
+  const [activeId, setActiveId] = useState(null);
+
+  useEffect(() => {
+    if (active && active.item) {
+      console.log("active: ", active);
+      setActiveId(active.item.postId);
+    }
+  }, [active]);
+
   useEffect(() => {
     if (userNickname) {
       fetch(`http://210.109.55.124/post-service/posts/list/${userNickname}`, {
@@ -57,6 +67,11 @@ const Mymap = () => {
     setSelectedPost(null);
   };
 
+   // Order posts so that the active post appears first
+   const orderedPosts = activeId
+   ? [userPost.find((item) => item.postId === activeId), ...userPost.filter((item) => item.postId !== activeId)]
+   : userPost;
+
   return ( 
     <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
       {/* 지도 & 핀 */}
@@ -64,7 +79,7 @@ const Mymap = () => {
         <div>
           <span className="initial-main-page-text">마이맵</span>
           <div>
-            <UserMapinfo userNickname={userNickname} capture={false} />
+            <UserMapinfo userNickname={userNickname} capture={false} active={setActive}/>
           </div>
         </div>
       </div>
@@ -82,11 +97,15 @@ const Mymap = () => {
           {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
         </div>
         <div id="list" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-          {userPost.map(item => (
-            <button style={{border:"none"}} key={item.postId} onClick={() => handlePostClick(item)}>
-              {item.postType === 'DAILY' ? <DailyList data={item} /> : <HistoryList data={item} />}
-            </button>
-          ))}
+          {orderedPosts && orderedPosts.length > 0 ? (
+            orderedPosts.map((item) => (
+              <div key={item.postId} onClick={() => handlePostClick(item)}>
+                {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
+              </div>
+            ))
+          ) : (
+            <div>No posts available</div>
+          )}
         </div>
       </div>
       {selectedPost && selectedPost.postType === 'HISTORY' && (
