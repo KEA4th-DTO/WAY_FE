@@ -7,12 +7,12 @@ const App = () => {
   const serverUrl = process.env.REACT_APP_APM_SERVER_URL;
   const environment = process.env.REACT_APP_ENVIRONMENT;
 
-  var apm = require("elastic-apm-node").start({
-    serviceName: serviceName,
-    secretToken: secretToken,
-    serverUrl: serverUrl,
-    environment: environment,
-  });
+  // var apm = require("elastic-apm-node").start({
+  //   serviceName: serviceName,
+  //   secretToken: secretToken,
+  //   serverUrl: serverUrl,
+  //   environment: environment,
+  // });
 
   const routing = useRoutes(Themeroutes);
   return <div className="dark">{routing}</div>;
