@@ -16,6 +16,13 @@ const EditDailyPost = ({ post, writerProfileImageUrl, onsave }) => {
       
     console.log(post);
 
+    useEffect(() => {
+      // Component mount 시 post로부터 초기값을 설정
+      setTitle(post.title);
+      setBody(post.body);
+  }, [post]);
+
+
     const saveEditClick = async () => {
         try {
             const requestBody = {

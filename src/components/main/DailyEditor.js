@@ -4,7 +4,7 @@ import '../../assets/scss/layout/_upload.scss';
 import UploadMap from './UploadMap';
 import { addHours } from '../../utils/changeFormat';
 
-const DailyEditor = ({ postType }) => {
+const DailyEditor = () => {
     // const [memberId] = useState('id_222');
     //props로 받아오기
 
@@ -75,7 +75,7 @@ const DailyEditor = ({ postType }) => {
             if (response.ok) {
                 alert('저장되었습니다.');
                 // 페이지 이동
-                navigate('/mymap');
+                navigate('/uptomy', { state: data });
                 console.log('Success:', data);
             } else {
                 console.error('Error:', data);
@@ -181,8 +181,8 @@ const DailyEditor = ({ postType }) => {
                     </select>
                     시
                     <select style={{ marginLeft: "5px"}} value={minute} onChange={(e) => setMinute(e.target.value)}>
-                        {[...Array(60)].map((_, i) => (
-                            <option key={i} value={i}>{String(i).padStart(2, '0')}</option>
+                        {[...Array(6)].map((_, i) => (
+                            <option key={i * 10} value={i * 10}>{String(i * 10).padStart(2, '0')}</option>
                         ))}
                     </select>
                     분

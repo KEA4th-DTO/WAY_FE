@@ -83,7 +83,7 @@ const HistoryPost = ({ postId, writerNickname, writerProfileImageUrl, onClose })
       <img
           src={close}
           alt="닫기"
-          className="close"
+          // className="close"
           onClick={handleCloseClick} // 닫기 버튼 클릭 시 handleCloseClick 함수 호출
       />
 

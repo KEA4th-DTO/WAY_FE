@@ -12,7 +12,7 @@ import PreviewDaily from "./PreviewDaily";
 const UptoMy = () => {
 
     const state = useLocation().state;
-
+    const [active, setActive] = useState(null);
     const token = localStorage.getItem("accessToken");
     const userNickname = localStorage.getItem("userNickname");
 
@@ -23,8 +23,8 @@ const UptoMy = () => {
     // const capture = true;
 
     
-    // const postType = state.result.postType;
-    const postType = 'DAILY';
+    const postType = state.result.postType;
+    // const postType = 'DAILY';
 
     console.log('post: ', postId, capture);
 
@@ -36,13 +36,11 @@ const UptoMy = () => {
         <div>
           <span className="initial-main-page-text">미리보기</span>
           <div>
-            <UserMapinfo userNickname={userNickname} capture={capture} />
+            <UserMapinfo userNickname={userNickname} capture={capture}  active={setActive} />
             <div>
-                <Link to="/mymap" style={{ textDecoration: "none", color: "inherit" }}>
-                <button style={{ border: "none" }}>
-                    <span className="linkto-mymap" style={{ border: "2px"}}>
-                    마이맵으로 이동하기
-                    </span>
+                <Link to="/mymap" style={{ textDecoration: "none", color: "inherit" }} >
+                <button className="linkto-mymap">
+                    확인 완료
                 </button>
                 </Link>
             </div>

@@ -244,6 +244,20 @@
     border-radius: 10.800000190734863px;
     background-color: rgba(255, 255, 255, 1);
   }
+  .frame4-frame4-active {
+    width: 393px;
+    height: 139px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-color: rgb(200, 212, 248);
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10.800000190734863px;
+    background-color: rgb(190, 197, 247);
+  }
   .frame4-post1full {
     left: 13px;
     bottom: 10px;
@@ -327,6 +341,22 @@
     top: 95px;
     left: 58px;
     color: rgba(68, 66, 74, 1);
+    width: 238px;
+    height: auto;
+    position: absolute;
+    font-size: 12px;
+    font-style: Semi Bold;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame4-text02-daily {
+    top: 95px;
+    left: 10px;
+    color: rgb(203, 99, 85);
     width: 238px;
     height: auto;
     position: absolute;
@@ -440,15 +470,18 @@
   }
 
   .linkto-mymap {
-    top: 750px;
-    left: 350px;
+    top: 700px;
+    left: 600px;
     color: rgba(64, 77, 242, 1);
-    width: 188px;
-    height: auto;
+    width: 138px;
+    height: 30px;
     position: absolute;
     font-size: 20px;
     font-style: Semi Bold;
     text-align: center;
     font-family: Inter;
     font-weight: 700;
+    background-color: rgb(246, 250, 255);
+    border-color: rgba(64, 77, 242, 1);
+    border-radius: 15px;
   }

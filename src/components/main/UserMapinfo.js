@@ -12,7 +12,7 @@ import refresh from "../../assets/images/icons/refresh.png";
 // import MarkerClustering from "../../utils/MarkerClustering.js";
 // import $ from "jquery"; // Import jQuery
 
-const UserMapinfo = ({ userNickname, capture }) => {
+const UserMapinfo = ({ userNickname, capture, active }) => {
     const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const mapRef = useRef(null);
@@ -172,26 +172,28 @@ const UserMapinfo = ({ userNickname, capture }) => {
             const handleMarkerClick = (postId, marker) => {
                 // postId에 해당하는 게시물을 찾습니다.
                 const item = userPost.find(item => item.postId === postId);
-                console.log("tlqkf:", item);
-                console.log("tlqkf1:", marker);
-                console.log("clickedMarkers:", clickedMarkers);
-                console.log("activeMarker:", activeMarker);
+                console.log("클릭한 마커:", item, marker);
+                console.log("클릭햇엇던 마커 clickedMarkers:", clickedMarkers);
+                console.log("활성화 마커 activeMarker:", activeMarker);
+                //활성화된 마커가 잇으면 1, 없으면 0
                 var ok = (activeMarker) ? 1 : 0;
-                // postId에 해당하는 게시물이 없을 경우 처리하지 않습니다.
+
                 if (!item) return;
 
                 // 클릭된 마커가 이미 클릭된 상태인지 확인합니다.
                 if (activeMarker === postId) {
                     // 클릭된 마커를 다시 클릭하면 원래 아이콘으로 변경하고 상태를 비활성화합니다.
-                    console.log("tlqkf2:", marker);
+                    console.log("클릭한거 또 클릭, 원래로 돌아가", marker);
                     marker.setIcon({
                         url: getNormalPin(postId),
                         size: new naver.maps.Size(40, 40),
                         scaledSize: new naver.maps.Size(40, 40),
                     });
                     setActiveMarker(null);
+                    ok = 0;
                 } else {
                     if(ok === 1){
+                        console.log("예전에 클릭햇던거 잇음. 지울게");
                         //예전에 클릭한 마커 지우기
                         Object.values(clickedMarkers).forEach((clickedMarker) => {
                             clickedMarker.setIcon({
@@ -202,7 +204,8 @@ const UserMapinfo = ({ userNickname, capture }) => {
                             });
                     }
                     // 현재 클릭된 마커의 상태를 변경합니다.
-                    ok =0;
+                    ok = 0;
+                    console.log("새로클릭한거 키워");
                     marker.setIcon({
                         url: getFullPin(postId),
                         size: new naver.maps.Size(46, 46),
@@ -234,6 +237,8 @@ const UserMapinfo = ({ userNickname, capture }) => {
         }
     }, [currentMyLocation, userPost, activePin, mapState, activeMarker, clickedMarkers]); // `activePin` 및 `mapState`를 의존성 목록에 추가
 
+    active(activeMarker);
+    
     // // activeMarker가 변경된 후 실행되는 useEffect
     // useEffect(() => {
     //     const { naver } = window;

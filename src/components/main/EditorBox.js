@@ -11,7 +11,7 @@ import UploadHisMap from './UploadHisMap';
 import axios from 'axios';
 
 
-const EditorBox = ({ postType }) => {
+const EditorBox = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기

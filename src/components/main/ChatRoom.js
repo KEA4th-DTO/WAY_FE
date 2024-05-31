@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_chatting.scss";  
-import sky from "../../assets/images/bg/sky.png";
+// import sky from "../../assets/images/bg/sky.png";
 import user6 from "../../assets/images/users/user6.png";
-import full_checkbox from "../../assets/images/icons/full_checkbox.png";
-import checkbox from "../../assets/images/icons/checkbox.png";
+// import full_checkbox from "../../assets/images/icons/full_checkbox.png";
+// import checkbox from "../../assets/images/icons/checkbox.png";
 
 const ChatRoom= ({data}) => {
   
