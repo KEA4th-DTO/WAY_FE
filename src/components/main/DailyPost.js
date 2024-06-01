@@ -23,7 +23,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         // null 체크를 위해 미리 초기화
         const [post, setPost] = useState([]);
         const [likeNum, setLikeNum] = useState(0);
-        const [liked, setLiked] = useState(false);
+        const [liked, setLiked] = useState(false); //좋아요 상태인지 아닌지
         const [followed, setFollowed] = useState(false);
         const [editMode, setEditMode] = useState(false);
         const [reportMode, setReportMode] = useState(false);
@@ -58,6 +58,8 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             .then(data => {
               if (data.isSuccess) {
                 setPost(data.result);
+                setLikeNum(data.result.likesCount);
+                setLiked(data.result.isLiked);
               } else {
                 console.error("Error in API response:", data.message);
               }
@@ -75,7 +77,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         // }, [data]);
 
         const handleLikeClick = () => {
-          // 좋아요 취소 로직 추가
+          // 좋아요 로직 추가
           fetch(`http://210.109.55.124/post-service/posts/like/${postId}`, {
               method: "POST",
               headers: {
@@ -91,10 +93,11 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           .then(data => {
               if (data.isSuccess) {
                   setLikeNum(data.result.likesCount);
+                  alert(data.message);
                   setLiked(!liked);
                   console.log("Successfully liked post:", data);
               } else {
-                  console.error("Error unliking post:", data.message);
+                  console.error("Error liking post:", data.message);
               }
           })
           .catch(error => console.error("Error unliking post:", error));
@@ -259,13 +262,13 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           <button style={{ border: "none" }} onClick={handleLikeClick}>
               <img
                   alt="좋아요"
-                  src={liked ? full_like : like}
+                  src={liked === true ? full_like : like}
                   className="dailypost-svg"
               />
           </button>
          
           <span className="dailypost-text16">
-            <span>{post.likesCount}</span>
+            <span>{likeNum}</span>
           </span>
         </div>
         <button className="dailypost-frame6" onClick={() => shareKakao()}>

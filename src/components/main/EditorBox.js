@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Editor } from '@toast-ui/react-editor';
-// import '@toast-ui/editor/dist/toastui-editor.css';
-// import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-// import 'tui-color-picker/dist/tui-color-picker.css';
-// import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 // import '@toast-ui/editor/dist/i18n/ko-kr';
 import '../../assets/scss/layout/_upload.scss';
 import UploadHisMap from './UploadHisMap';
+import axios from 'axios';
 
 
 const EditorBox = () => {
@@ -234,7 +235,7 @@ const EditorBox = () => {
                         <img src={imagePreview} alt="이미지 미리보기" style={{ marginTop: "10px", maxWidth: "100%", height: "auto" }} />
                     )} 
             </span>
-            {/* <Editor
+            <Editor
                 initialValue="hello react editor world!"
                 previewStyle="vertical"
                 height="600px"
@@ -248,7 +249,7 @@ const EditorBox = () => {
                 hooks={{
                     addImageBlobHook: onUploadImage
                   }}
-            /> */}
+            />
         </div>
     );
 };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_historypost.scss";
 
-// import { Viewer } from '@toast-ui/react-editor';
-// import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 import user3 from "../../assets/images/users/user3.jpg";
 import like from "../../assets/images/logos/like.png";
@@ -92,7 +92,7 @@ const PreviewHistory = ({ postId }) => {
         {/* -------------게시글 내용------------ */}    
         <div style={{border: "3px solid red"}} className="frame-content">
          
-            {/* <Viewer initialValue={post.body} /> */}
+            <Viewer initialValue={post.body} />
            
           
           {/* -------------해시태그------------ */}
