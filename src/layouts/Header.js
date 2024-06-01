@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Dropdown,
@@ -11,11 +11,14 @@ import {
   NavbarBrand,
   Collapse,
 } from "reactstrap";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { EventSourcePolyfill } from "event-source-polyfill";
 import wayLogo from "../assets/images/logos/way_logo.png";
 import user from "../assets/images/users/user.png";
 import alarm from "../assets/images/logos/alarm.png";
 import hamburger from "../assets/images/logos/hamburger.png";
+import NotificationList from "../components/NotificationList";
+import axios from "axios";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +26,29 @@ const Header = () => {
   const [alarmDropdownOpen, setAlarmDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [hasNewNotification, setHasNewNotification] = useState(false);
+  const [lastEventId, setLastEventId] = useState(null);
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:8080/notifications");
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    const token = localStorage.getItem("accessToken");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Last-Event-ID": lastEventId !== null ? lastEventId : "null",
+    };
+
+    const eventSource = new EventSourcePolyfill(
+      `${Server_IP}/notification-service/see-connection`,
+      {
+        headers: headers,
+      }
+    );
 
     eventSource.onmessage = (event) => {
       const newNotification = JSON.parse(event.data);
       setNotifications((prev) => [...prev, newNotification]);
       setHasNewNotification(true);
+      setLastEventId(event.lastEventId);
     };
 
     eventSource.onerror = (err) => {
@@ -41,6 +59,29 @@ const Header = () => {
     return () => {
       eventSource.close();
     };
+  }, [lastEventId]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      const token = localStorage.getItem("accessToken");
+
+      try {
+        const response = await axios.get(
+          `${Server_IP}/notification-service/notifications`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setNotifications(response.data.result);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchNotifications();
   }, []);
 
   const Handletoggle = () => {
@@ -122,13 +163,13 @@ const Header = () => {
             />
           </DropdownToggle>
 
-          <DropdownMenu>
+          <DropdownMenu
+            style={{ width: "350px", maxHeight: "500px", overflowY: "auto" }}
+          >
             {notifications.length === 0 ? (
               <DropdownItem header>알림이 없습니다</DropdownItem>
             ) : (
-              notifications.map((notification, index) => (
-                <DropdownItem key={index}>{notification.message}</DropdownItem>
-              ))
+              <NotificationList notifications={notifications} />
             )}
           </DropdownMenu>
         </Dropdown>

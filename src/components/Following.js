@@ -1,41 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "../assets/style/_follower.scss";
 import axios from "axios";
 
-import "../assets/style/follower.css";
-function Following({
-  name,
-  nickName,
-  history,
-  daily,
-  image,
-  initialFollowState,
-}) {
-  const [isFollow, setIsFollow] = useState(initialFollowState);
+function Following({ name, nickName, image, isFollow, onFollowChange }) {
+  const [isFollowing, setIsFollowing] = useState(isFollow);
+
+  // 아래 useEffect는 디버깅을 위해 추가했습니다. 초깃값 설정 확인을 위해 추가하였습니다.
+  useEffect(() => {
+    console.log(`Initial isFollowing state for ${nickName}:`, isFollowing);
+  }, [isFollowing, nickName]);
+
   const handleFollowClick = () => {
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
-    const nickName = localStorage.getItem("userNickname");
-    console.log(`Current follow state for ${name}: ${isFollow}`); // 현재 팔로우 상태 로그 출력
-    const url = !isFollow
-      ? `${Server_IP}/member-service/follow/${nickName}`
-      : `${Server_IP}/member-service/follow/following-list/${nickName}`;
+    const url = isFollowing
+      ? `${Server_IP}/member-service/follow/following-list/${nickName}`
+      : `${Server_IP}/member-service/follow/${nickName}`;
 
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+    axios({
+      method: isFollowing ? "DELETE" : "POST",
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
         if (response.status === 200) {
-          setIsFollow(!isFollow);
+          setIsFollowing(!isFollowing);
+          onFollowChange("followings", !isFollowing);
         } else {
           console.error(`Follow ${name} failed: ${response.status}`);
         }
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
       });
   };
 
@@ -46,26 +44,17 @@ function Following({
         <h3 className="follower-name">{name}</h3>
         <p className="follower-nickname">{nickName}</p>
       </div>
-      <div className="follower-stats">
-        <div>
-          <span className="post-type">History</span>
-          <span className="post-count">{history}</span>
-        </div>
-        <div>
-          <span className="post-type">Daily</span>
-          <span className="post-count">{daily}</span>
-        </div>
-      </div>
       <div className="follower-actions">
         <button
-          className={isFollow ? "btn-unfollow" : "btn-follow"}
+          className={isFollowing ? "btn-unfollow" : "btn-follow"}
           onClick={handleFollowClick}
         >
-          {isFollow ? "언팔로우" : "팔로우"}
+          {isFollowing ? "언팔로우" : "팔로우"}
         </button>
         <button className="btn-visit">지도 방문</button>
       </div>
     </div>
   );
 }
+
 export default Following;
