@@ -13,7 +13,6 @@ const Localmap = () => {
   const [combinePost, setCombinePost] = useState([]); //데일리와 히스토리를 합친 포스트 (업데이트)
 
   const [selectedPost, setSelectedPost] = useState(null);
-  const [currentMyLocation, setCurrentMyLocation] = useState(null);
   const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const token = localStorage.getItem("accessToken");
@@ -27,6 +26,10 @@ const Localmap = () => {
       setActiveId(active.item.postId);
     }
   }, [active]);
+
+  // useEffect(() => {
+    
+  // }, [selectedPost]);
 
   // 경계를 기반으로 게시글 데이터 가져오기
   useEffect(() => {
@@ -48,7 +51,7 @@ const Localmap = () => {
         })
         .then((data) => {
           if (data.isSuccess) {
-            // console.log("success_post", data.result.postResultDtoList);
+            console.log("success_post", data.result.postResultDtoList);
             const daily_p = data.result.postResultDtoList.filter(item => item.postType === 'DAILY');
             setDailyPost(daily_p);
             setCombinePost(data.result.postResultDtoList);
@@ -187,3 +190,4 @@ const Localmap = () => {
 };
 
 export default Localmap;
+
