@@ -6,26 +6,32 @@ import like from "../../assets/images/logos/like.png";
 import comment from "../../assets/images/logos/comment.png";
 import historyPin from "../../assets/images/icons/historyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
+import basic_profile from "../../assets/images/users/basic_profile.png";
 
-import user1 from "../../assets/images/users/user1.jpg";
-import user2 from "../../assets/images/users/user2.jpg";
-import user3 from "../../assets/images/users/user3.jpg";
-import user4 from "../../assets/images/users/user4.jpg";
-import user5 from "../../assets/images/users/user5.jpg";
+import { formatDate } from "../../utils/changeFormat";
 
-import { formatDate, formatPeriod } from "../../utils/changeFormat";
+const HistoryList = ({ data, isActive }) => {
+  const [activeId, setActiveId] = useState(null);
 
-const HistoryList = ({ data }) => {
+  useEffect(() => { 
+    if (isActive && isActive.item) {
+      // console.log('isActive: ', isActive);
+      setActiveId(isActive.item.postId);
+    }
+  }, [isActive]);
+
+  // If there is no data, return null to avoid rendering the component
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }
 
   return (
     <div
+      id="historyList"
       className="frame4-container"
       style={{ overflowY: "auto", maxHeight: "80vh" }}
     >
-      <button className="frame4-frame4">
+      <button className={data.postId === activeId ? "frame4-frame4-active" :"frame4-frame4"}>
         <div className="frame4-post1full">
           <img
             src={data.imageUrl || bg1} // 게시글 이미지가 없을 때 기본 이미지 사용
@@ -34,7 +40,7 @@ const HistoryList = ({ data }) => {
           />
           <div className="frame4-frame">
             <img
-              src={data.useImage || user2} // 사용자 프로필 이미지, 순환 사용
+              src={data.writerProfileImageUrl || basic_profile} // 사용자 프로필 이미지, 순환 사용
               alt="사용자 프로필 이미지"
               className="frame4-profileimage"
             />
@@ -42,19 +48,18 @@ const HistoryList = ({ data }) => {
               <span>{data.title}</span>
             </span>
             <img
-              src={historyPin}
+              src={data.postId === activeId ? full_historyPin : historyPin}
               alt="포스트 타입, 핀 이미지"
               className="frame4-daily-pin-filled"
             />
             <span className="frame4-text04">
-              <span>{data.memberEmail}</span>
+              <span>{data.writerNickname}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
               <span>{data.bodyPreview}</span>
             </span>
             <span className="frame4-text02">
-              <span>{data.createdAt}</span>
-              {/* <span>{formatDate(data.createdAt)}</span> */}
+              <span>{formatDate(data.createdAt)}</span>
             </span>
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />

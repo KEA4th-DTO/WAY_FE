@@ -51,7 +51,7 @@
     top: 88px;
     left: 5px;
     color: rgba(105, 105, 105, 1);
-    width: 80%;
+    width: 100%;
     height: auto;
     position: absolute;
     font-size: 12px;
@@ -79,6 +79,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
+  
   .dailypost-text04 {
     top: 39px;
     left: 1px;
@@ -90,9 +91,6 @@
     text-align: left;
     font-family: Inter;
     font-weight: 500;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
 
   }
   .dailypost-text08 {
@@ -281,3 +279,75 @@
     font-stretch: normal;
     text-decoration: none;
   }
+
+.report-con {
+  position: absolute;
+  top: 7%;
+  left: 20%;
+  z-index: 999;
+  background-color: rgb(255, 255, 255);
+  width: 270px;
+  height: 340px;
+  padding: 10px; 
+  border: 1px solid rgb(53, 53, 53);
+  border-radius: 10px;
+  overflow: auto;
+}
+.report-frame { //O
+  top: 0px;
+  left: 0px;
+  width: 250px;
+  height: 100%;
+  position: relative;
+  background-color: rgba(255, 255, 255, 1);
+  padding-top: 30px; 
+  padding-left: 10px;
+}
+.close { //O
+  top: 10px;
+  left: 220px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+.report-title {//O
+  color: rgba(0, 0, 0, 1);
+  width: 80%;
+  height: auto;
+  margin-top: 20px;
+  align-items: center;
+  font-size: 18px;
+  font-style: Regular;
+  font-family: Inter;
+  font-weight: 400;
+}
+.report-input {//O
+  color: rgba(0, 0, 0, 1);
+  width: 200px;
+  height: 70px;
+  margin-left: 5px;
+  align-items: center;
+}
+.report-save {//O
+  top: 280px;  
+  right: 2px;
+  color: rgb(255, 255, 255);
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  font-size: 17px;
+  font-style: Semi Bold;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  background-color: rgb(213, 37, 37);
+  border: none;
+  border-radius: 15px;
+}
+.report-img {//O
+  top: 25px;
+  left: 89px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}

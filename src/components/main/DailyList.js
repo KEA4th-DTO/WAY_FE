@@ -5,13 +5,23 @@ import sky from "../../assets/images/bg/sky.png";
 import like from "../../assets/images/logos/like.png";
 import dailyPin from "../../assets/images/icons/dailyPin.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
-
 import user1 from "../../assets/images/users/user1.jpg";
 
-import { formatDate, formatPeriod } from "../../utils/changeFormat";
+import { formatDate2, formatPeriod } from "../../utils/changeFormat";
 
-const DailyList = ({ data }) => {
-  console.log(data);  
+const DailyList = ({ data, isActive }) => {
+  const currentTime = new Date();
+        currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
+
+  const [activeId, setActiveId] = useState(null);
+  
+  useEffect(() => { 
+    if (isActive && isActive.item) {
+      setActiveId(isActive.item.postId);
+      console.log('액티브 ', isActive.item.postId);
+    }
+  }, [isActive]);
+
   if (!data) {
     return null; // Return null or any fallback content if there are no posts
   }
@@ -21,7 +31,7 @@ const DailyList = ({ data }) => {
       className="frame4-container"
       style={{ overflowY: "auto", maxHeight: "80vh" }}
     >
-      <button className="frame4-frame4">
+      <button className={(data.postId === activeId) ? "frame4-frame4-active" :"frame4-frame4"}>
         <div className="frame4-post1full">
           <img
             src={data.imageUrl || sky} // 게시글 이미지가 없을 때 기본 이미지 사용
@@ -30,7 +40,7 @@ const DailyList = ({ data }) => {
           />
           <div className="frame4-frame">
             <img
-              src={data.userImage || user1} // 사용자 프로필 이미지, 순환 사용
+              src={data.writerProfileImageUrl || user1} // 사용자 프로필 이미지, 순환 사용
               alt="사용자 프로필 이미지"
               className="frame4-profileimage"
             />
@@ -38,22 +48,24 @@ const DailyList = ({ data }) => {
               <span>{data.title}</span>
             </span>
             <img
-              src={dailyPin}
+              src={(data.postId === activeId) ? full_dailyPin : dailyPin}
               alt="포스트 타입, 핀 이미지"
               className="frame4-daily-pin-filled"
             />
             <span className="frame4-text04">
-              <span>{data.memberEmail}</span>
+              <span>{data.writerNickname}</span>
             </span>
             <span className="frame4-text06 text-ellipsis2">
               <span>{data.bodyPreview}</span>
             </span>
-            <span className="frame4-text02">
-              <span>{data.createdAt}
-              <br />
-              {data.expiredAt}</span>
-              {/* <span>{formatPeriod(data.period)}</span> */}
+            <span className="frame4-text02-daily">
+              {new Date(data.expiredAt) > new Date(currentTime) ? (
+                <span>{formatPeriod(currentTime, data.expiredAt)} 남았습니다.</span>
+              ) : (
+                <span>{formatDate2(data.createdAt, data.expiredAt)}</span>
+              )}
             </span>
+
             <div className="frame4-frame1">
               <img src={like} alt="좋아요" className="frame4-svg" />
               <span className="frame4-text">
@@ -62,7 +74,7 @@ const DailyList = ({ data }) => {
             </div>
           </div>
         </div>
-      </button> 
+      </button>
     </div>
   );
 };

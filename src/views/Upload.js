@@ -5,7 +5,7 @@ import DailyEditor from '../components/main/DailyEditor';
 
 const Upload= () => {
   const [postType, setPostType] = useState('daily'); // 포스트 타입 state
-  const [body, setBody] = useState(''); // 에디터 내용을 담는 state
+  // const [body, setBody] = useState(''); // 에디터 내용을 담는 state
 
    // 포스트 타입이 변경될 때 호출되는 함수
    const handlePostTypeChange = (type) => {
@@ -22,9 +22,9 @@ const Upload= () => {
       <br />
       {/* 선택된 포스트 타입에 따라 다른 에디터 박스를 렌더링 */}
       {postType === 'daily' ? (
-        <DailyEditor body={body} setBody={setBody} postType={postType} />
+        <DailyEditor  />
       ) : (
-        <EditorBox body={body} setBody={setBody} postType={postType}/>
+        <EditorBox />
       )}
     </div>
   );

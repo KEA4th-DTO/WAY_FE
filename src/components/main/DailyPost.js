@@ -6,19 +6,40 @@ import more from "../../assets/images/logos/more.png";
 import share from "../../assets/images/logos/share.png";
 import like from "../../assets/images/logos/like.png";
 import full_like from "../../assets/images/logos/full_like.png";
+import {
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+} from "reactstrap";
 
 import { shareKakao } from '../../utils/shareKakaoLink';
-import { formatDate, formatPeriod } from '../../utils/changeFormat';
+import { formatDate2, formatPeriod } from '../../utils/changeFormat';
 
-const DailyPost = ({ postId }) => {
+import EditDailyPost from './EditDailyPost';
+import Report from './Report';
+
+const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) => {
         // null 체크를 위해 미리 초기화
         const [post, setPost] = useState([]);
         const [likeNum, setLikeNum] = useState(0);
         const [liked, setLiked] = useState(false);
         const [followed, setFollowed] = useState(false);
-        const token = localStorage.getItem("accessToken");
-        const userEmail = localStorage.getItem("userEmail");
+        const [editMode, setEditMode] = useState(false);
+        const [reportMode, setReportMode] = useState(false);
 
+        const token = localStorage.getItem("accessToken");
+        const userNickname = localStorage.getItem("userNickname");
+        
+        const currentTime = new Date();
+        currentTime.setHours(currentTime.getHours());
+
+        const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
+        const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+        console.log('시간: ', currentTime);
+        
         useEffect(() => {
           if (postId) {
             
@@ -43,9 +64,10 @@ const DailyPost = ({ postId }) => {
             })
             .catch(error => console.error("Error fetching data:", error));
           }
-        }, [userEmail, token]);
+        }, [userNickname, token, editMode]);
       
         console.log(post);
+        console.log('만료: ',post.expiredAt);
 
         // useEffect(() => {
         //     // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
@@ -94,88 +116,176 @@ const DailyPost = ({ postId }) => {
         //     return () => document.body.removeChild(script);
         //     }, []);
 
-    return(
-      <div style={{border: "3px solid red"}} className="dailypost-frame">
-        <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
-        <div style={{border: "3px solid orange"}} className="dailypost-frame3">
-            <div className="dailypost-frame4">
-              <img 
-                alt="사용자 프로필 이미지" 
-                src={post.userImage || user7} 
-                className="dailypost-profileimage" />
-              <span className="dailypost-text10">
-                <span>{post.writerEmail}</span>
-              </span>
-            </div>
-            <img
-              alt="postType, 핀 이미지"
-              src={full_dailyPin}
-              className="dailypost-daily-pin-filled"
-            />
-            <button className="dailypost-text12" onClick={handleFollowClick} >
-                <span style={{ color: followed ? "#404DF2" : "#000" }}>팔로우</span>
-            </button>
-            <button style={{border: "none"}}>
-            <img
-              alt="더보가"
-              src={more}
-              className="dailypost-menubutton"
-            />
-            </button>
-          </div>
-        </div>
-          <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
-            <img alt="게시글 이미지" src={post.imageUrl} className="dailypost-image" />
-          </div>
+        const handleEditClick = () => {
+          setEditMode(true);
+      };
 
-          <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
-            <span style={{border: "3px solid yellow"}} className="dailypost-text08">
-              <span>{post.title}</span>
-            </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text02">
-              <span>{post.postType}</span>
-            </span>
-            <span style={{border: "3px solid yellow"}} className="dailypost-text04">
-              <span>
-                {post.body}
-              </span>
-            </span>
-            <span style={{border: "3px solid green"}} className="dailypost-text">
-              <span>{post.createdAt} ~ {post.expiredAt}</span>
-            </span>
-          </div>
-         
-        <div style={{border: "3px solid green"}} className="dailypost-group99">
-          
-          <div className="dailypost-frame7">
-            <button style={{ border: "none" }} onClick={handleLikeClick}>
-                <img
-                    alt="좋아요"
-                    src={liked ? full_like : like}
-                    className="dailypost-svg"
-                />
-            </button>
-           
-            <span className="dailypost-text16">
-              <span>{post.likesCount}</span>
-            </span>
-          </div>
-          <button className="dailypost-frame6" onClick={() => shareKakao()}>
-            <img
-              alt="공유하기"
-              src={share}
-              className="dailypost-vector"
-            />
-          </button>
-          <button className="dailypost-frame5">
-            <span className="dailypost-text14">
-              실시간 채팅하기
-            </span>
-          </button>
-        </div>
+       // 수정창에서 저장버튼 클릭 시
+        const handleSaveClick = () => {
+          setEditMode(false);
+        };
+
+        // 수정창에서 신고버튼 클릭 시
+        const handleReportClick = () => {
+          setReportMode(true);
+        };
+
+        // 뒤로가기 버튼 클릭 처리
+        const handleBackClick = () => {
+          setReportMode(false);
+        };
+
+        const handleDeleteClick = () => {
+          const confirmDelete = window.confirm("정말로 게시글을 삭제하시겠습니까?");
+          if (confirmDelete) {
+            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+              method: 'DELETE',
+              headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+            })
+            .then(data => {
+              if (data.isSuccess) {
+                console.log("Successfully deleted post:", data);
+                onDelete(postId);
+              } else {
+                console.error("Error deleting post:", data.message);
+              }
+            })
+            .catch(error => console.error("Error deleting post:", error));
+          }
+        };
         
+
+    return(
+      <>
+      {editMode ? <EditDailyPost post={post} writerProfileImageUrl={writerProfileImageUrl} onsave={handleSaveClick} />
+      : <div style={{border: "3px solid red"}} className="dailypost-frame">
+          {reportMode === true && (
+          <div>
+            <Report 
+              targetId = {post.postId}
+              type = "POST"
+              onClose={handleBackClick}
+            />
+          </div>
+        )}
+      <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
+      <div style={{border: "3px solid orange"}} className="dailypost-frame3">
+          <div className="dailypost-frame4">
+            <img 
+              alt="사용자 프로필 이미지" 
+              src={writerProfileImageUrl || user7} 
+              className="dailypost-profileimage" />
+            <span className="dailypost-text10">
+              <span>{writerNickname}</span>
+            </span>
+          </div>
+          <img
+            alt="postType, 핀 이미지"
+            src={full_dailyPin}
+            className="dailypost-daily-pin-filled"
+          />
+          <button className="dailypost-text12" onClick={handleFollowClick} >
+              <span style={{ color: followed ? "#404DF2" : "#000" }}>팔로우</span>
+          </button>
+
+          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle
+            style={{
+              backgroundColor: 'transparent',
+              border: 'none',
+              boxShadow: 'none',
+              padding: 0,
+            }}
+          >
+            <img src={more} alt="profile" className="dailypost-menubutton" />
+          </DropdownToggle>
+              {post.isOwned 
+              ?(<DropdownMenu style={{marginLeft:"230px", marginTop:"20px"}}>
+                <DropdownItem header>Edit</DropdownItem>
+                <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
+                <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
+                {/* <DropdownItem divider />
+                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem> */}
+              </DropdownMenu>)
+              :(<DropdownMenu>
+                <DropdownItem header>Report</DropdownItem>
+                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
+              </DropdownMenu>)}
+              
+            </Dropdown>
+
+          {/* <button style={{border: "none"}}>
+          <img
+            alt="더보가"
+            src={more}
+            className="dailypost-menubutton"
+          />
+          </button> */}
+        </div>
       </div>
-    
+        <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
+          <img alt="게시글 이미지" src={post.imageUrl} className="dailypost-image" />
+        </div>
+
+        <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
+          <span style={{border: "3px solid yellow"}} className="dailypost-text08">
+            {post.title}
+          </span>
+          {/* <span style={{border: "3px solid yellow"}} className="dailypost-text02">
+            {post.postType}
+          </span> */}
+          <span style={{border: "3px solid yellow"}} className="dailypost-text04">
+              {post.body}
+          </span>
+          <span style={{border: "3px solid green"}} className="dailypost-text">
+            <span>
+              {formatDate2(post.createdAt, post.expiredAt)} {formatPeriod(currentTime, post.expiredAt)} 남았습니다.
+            </span>
+            </span>
+        </div>
+       
+      <div style={{border: "3px solid green"}} className="dailypost-group99">
+        
+        <div className="dailypost-frame7">
+          <button style={{ border: "none" }} onClick={handleLikeClick}>
+              <img
+                  alt="좋아요"
+                  src={liked ? full_like : like}
+                  className="dailypost-svg"
+              />
+          </button>
+         
+          <span className="dailypost-text16">
+            <span>{post.likesCount}</span>
+          </span>
+        </div>
+        <button className="dailypost-frame6" onClick={() => shareKakao()}>
+          <img
+            alt="공유하기"
+            src={share}
+            className="dailypost-vector"
+          />
+        </button>
+        <button className="dailypost-frame5">
+          <span className="dailypost-text14">
+            실시간 채팅하기
+          </span>
+        </button>
+      </div>
+      
+    </div>}
+
+      
+      </>
     );
     
 };

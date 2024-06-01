@@ -11,12 +11,16 @@ import UploadHisMap from './UploadHisMap';
 import axios from 'axios';
 
 
-const EditorBox = ({ postType }) => {
+const EditorBox = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [bodyPreview, setBodyPreview] = useState(''); // 본문 미리보기
-    const [createdAt, setCreatedAt] = useState(new Date().toISOString()); // 현재 시간으로 초기화
-    const [address, setAddress] = useState('');
+    const [bodyPlainText, setBodyPlainText] = useState(''); // 본문 텍스트만 저장
+
+    const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() - 3); // 현재 시간에서 3시간을 빼기
+    
+    const [createdAt, setCreatedAt] = useState(currentTime.toISOString());    const [address, setAddress] = useState('');
 
     const [image, setImage] = useState(null);   
     const [imagePreview, setImagePreview] = useState(null);
@@ -50,32 +54,31 @@ const EditorBox = ({ postType }) => {
             }
     
             const formData = new FormData();
-            formData.append('image', image); // Add the image file
-            formData.append('createHistoryDto', new Blob([JSON.stringify({ 
+            formData.append('thumbnailImage', image); // 썸네일 이미지 추가
+            const historyDto = {
                 title,
+                body,
                 latitude,
                 longitude,
                 address,
                 bodyPreview,
-            })], { type: 'application/json' }));
-            formData.append('html', new Blob([body], { type: 'text/html' })); // 본문 추가
-
+                bodyPlainText,
+            };
+            formData.append('createHistoryDto', new Blob([JSON.stringify(historyDto)], { type: 'application/json' })); // createHistoryDto 추가
+    
             const response = await fetch(`http://210.109.55.124/post-service/history`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    // 'Content-Type': 'multipart/form-data' // REMOVE this line
                 },
                 body: formData,
             });
             
             const data = await response.json();
-
             if (response.ok) {
                 alert('저장되었습니다.');
-                // 페이지 이동
-                navigate('/mymap');
-                console.log('Success:', data);
+                navigate('/uptomy', { state: data });
+
             } else {
                 console.error('Error:', data);
                 alert('저장에 실패했습니다.');
@@ -85,8 +88,10 @@ const EditorBox = ({ postType }) => {
             alert('저장 중 오류가 발생했습니다.');
         }
     };
+    
 
-      
+    // console.log('되나: ', new Blob([body], { type: 'text/html' }));
+
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setImage(file);
@@ -98,34 +103,44 @@ const EditorBox = ({ postType }) => {
             reader.readAsDataURL(file);
         }
     };
+
     const onUploadImage = async (blob, callback) => {
-        const formData = new FormData();
-        formData.append("historyImage", blob);
-
         try {
-        const response = await axios.post(
-        "http://210.109.55.124/post-service/history/upload-image",
-        formData,
-        {
-            headers: {
-            "Authorization": `Bearer ${token}`,
+            // Create FormData object
+            const formData = new FormData();
+            formData.append('historyImage', blob); // Using 'historyImage' as the key
+    
+            const response = await fetch("http://210.109.55.124/post-service/history/upload-image", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    // Do not set 'Content-Type' manually
+                },
+                body: formData
+            });
+    
+            // Capture full response details
+            const data = await response.json();
+    
+            if (response.ok) {
+                if (data.isSuccess) {
+                    const url = data.result;
+                    callback(url, "");
+                } else {
+                    console.error("Error uploading image:", data.message);
+                    callback(null, data.message);
+                }
+            } else {
+                console.error(`Error uploading image: ${response.status} ${response.statusText}`);
+                callback(null, `Server responded with status: ${response.status} ${response.statusText}`);
             }
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            callback(null, error.message);
         }
-        );
-
-        if (response.data.isSuccess) {
-        const url = response.data.result;
-        callback(url, "");
-        } else {
-        console.error("Error uploading image:", response.data.message);
-        callback(null, response.data.message);
-        }
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        callback(null, error.message);
-    }
         return false;
-      };
+    };
+    
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -134,7 +149,7 @@ const EditorBox = ({ postType }) => {
     const onChangeAddress = (e) => {
         setAddress(e.target.value);
     };
-
+  
     const formattedTime = new Date(createdAt).toLocaleString('ko-KR');
 
     const clickMap = () => {
@@ -161,20 +176,20 @@ const EditorBox = ({ postType }) => {
     const onChange = () => {
         const data = editorRef.current.getInstance().getHTML();
         setBody(data);
-        console.log(data);
+        // console.log(data);
       
         const markdown = editorRef.current.getInstance().getMarkdown();
-        
         // 마크다운에서 이미지 구문 제거
         const textWithoutImages = markdown.replace(/!\[.*?\]\(.*?\)/g, '');
-      
+        // HTML 태그 제거
+        const textWithoutHTML = textWithoutImages.replace(/(<([^>]+)>)/ig, '');
         // 마크다운 문법 제거
-        const textContent = textWithoutImages.replace(/[#>*_~`[\]]+/g, '');
-        
-        setBodyPreview(textContent);
-        
+        const textContent = textWithoutHTML.replace(/[#>*_~`[\]]+/g, '');
+    
+        setBodyPreview(textContent.slice(0, 35)); // 제한된 길이로 본문 미리보기 설정
+        setBodyPlainText(textContent);
         // 저장할 textContent를 사용합니다.
-        console.log('텍스트 내용:', textContent);
+        // console.log('텍스트 내용:', textContent);
       };
       
 
@@ -194,9 +209,9 @@ const EditorBox = ({ postType }) => {
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
-                        placeholder="주소를 입력하세요." 
+                        placeholder="지도로 주소를 설정해주세요." 
                         value={address} 
-                        onChange={onChangeAddress} />
+                        readOnly />
                     <br />
                     <button onClick={clickMap}>
                         {showMap ? "완료" : "지도 보기"}

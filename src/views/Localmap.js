@@ -8,79 +8,182 @@ import "../assets/scss/layout/_localmap.scss";
 import back from "../assets/images/logos/back.png";
 
 const Localmap = () => {
-  //데이터 가져오기
-  const [post, setPost] = useState([]);
-  const [postid, setPostid] = useState([]); // 추가: 선택된 게시글 상태
-  const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
+  const [post, setPost] = useState([]); //초기 포스트
+  const [dailyPost, setDailyPost] = useState([]); //초기 포스트의 데일리
+  const [combinePost, setCombinePost] = useState([]); //데일리와 히스토리를 합친 포스트 (업데이트)
 
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [currentMyLocation, setCurrentMyLocation] = useState(null);
+  const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
+  const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
+  const token = localStorage.getItem("accessToken");
   
-  useEffect(()=>{
-      fetch('http://localhost:3001/post') //API경로 적어주기
-      .then(res => {
-          return res.json() //json으로 변환됨
-      })
-      .then(data => {
-          setPost(data);
-          setPostid(data.postId);
-      })
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
-  
-  // console.log(post);
-  console.log(post);
+  const [active, setActive] = useState(null);
+  const [activeId, setActiveId] = useState(null);
 
-  // 포스트 클릭 시 선택된 포스트 업데이트
+  useEffect(() => {
+    if (active && active.item) {
+      // console.log("active: ", active);
+      setActiveId(active.item.postId);
+    }
+  }, [active]);
+
+  // 경계를 기반으로 게시글 데이터 가져오기
+  useEffect(() => {
+    if (dailyBounds) {
+      const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;
+      const url = `http://210.109.55.124/post-service/posts/list/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok " + res.statusText);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data.isSuccess) {
+            // console.log("success_post", data.result.postResultDtoList);
+            const daily_p = data.result.postResultDtoList.filter(item => item.postType === 'DAILY');
+            setDailyPost(daily_p);
+            setCombinePost(data.result.postResultDtoList);
+            setPost(data.result.postResultDtoList); // API 응답 형식에 맞게 데이터 설정
+          } else {
+            console.error("Error in API response:", data.message);
+          }
+        })
+        .catch((error) => console.error("Error fetching pin data:", error));
+    }
+  }, [dailyBounds]);
+
+  useEffect(() => {
+    if (historyBounds) {
+      const { latitude1, longitude1, latitude2, longitude2 } = historyBounds;
+      const url = `http://210.109.55.124/post-service/history/list?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "accept": "*/*",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok " + res.statusText);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data.isSuccess) {
+            console.log("범위의 히스토리 게시글 불러오기 성공", data.result.historyResultDtoList);
+            setCombinePost([...dailyPost, ...data.result.historyResultDtoList]);
+          } else {
+            console.error("Error in API response:", data.message);
+          }
+        })
+        .catch((error) => console.error("Error fetching pin data:", error));
+    }
+  }, [historyBounds]);
+
+  useEffect(() => {
+    console.log('게시글//combinePost:', combinePost);
+  }, [combinePost]);
+
+  // 게시글 클릭 처리
   const handlePostClick = (selectedItem) => {
     setSelectedPost(selectedItem);
   };
 
-  // 뒤로가기 버튼 클릭 시
+  // 뒤로가기 버튼 클릭 처리
   const handleBackClick = () => {
-    setSelectedPost(null); // 선택된 포스트 초기화
+    setSelectedPost(null);
   };
 
-  return ( 
-    <div id="local-con" style={{border: "5px solid red", display: "flex", width: "950px"}}>
-      {/* 지도 & 핀*/}
-      <div id="map-con" style={{border: "3px solid blue"}}>
+  // Order posts so that the active post appears first
+  const orderedPosts = activeId
+    ? [combinePost.find((item) => item.postId === activeId), ...combinePost.filter((item) => item.postId !== activeId)]
+    : combinePost;
+
+  return (
+    <div id="local-con" style={{ border: "5px solid red", display: "flex", width: "950px" }}>
+      {/* 지도 및 핀 */}
+      <div id="map-con" style={{ border: "3px solid blue" }}>
         <div>
-          <span className="initial-main-page-text">
-            로컬맵
-          </span>
-          <MapInformation />
+          <span className="initial-main-page-text">로컬맵</span>
+          <MapInformation active={setActive} dailybound={setDailyBounds} historybound={setHistoryBounds} />
         </div>
       </div>
-        
-      {/* 게시글*/}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
-        <span className="initial-main-page-text">
-          게시글
-        </span>
-        <button style={{display: selectedPost && selectedPost.postType === 'daily' ? "block" : "none"}} className="dailypost-frame8" onClick={handleBackClick}>
-          {selectedPost && selectedPost.postType === 'daily' &&
-          <img
-            alt="뒤로가기"
-            src={back}
-            className="dailypost-vector3"
-          />}
+
+      {/* 게시글 */}
+      <div className="initial-main-page-frame" style={{ border: "3px solid green", marginLeft: "20px" }}>
+        <span className="initial-main-page-text">게시글</span>
+        <button
+          style={{ display: selectedPost && selectedPost.postType === "DAILY" ? "block" : "none" }}
+          className="dailypost-frame8"
+          onClick={handleBackClick}
+        >
+          {selectedPost && selectedPost.postType === "DAILY" && (
+            <img alt="뒤로가기" src={back} className="dailypost-vector3" />
+          )}
         </button>
-        <div style={{ display: selectedPost && selectedPost.postType === 'daily' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-          {selectedPost && selectedPost.postType === 'daily' && <DailyPost data={selectedPost} />}
+        <div
+          style={{
+            display: selectedPost && selectedPost.postType === "DAILY" ? "block" : "none",
+            border: "3px solid yellow",
+            overflow: "auto",
+            marginTop: "10%",
+            width: "410px",
+            height: "640px"
+          }}
+        >
+          {selectedPost && selectedPost.postType === "DAILY" && (
+            <DailyPost
+              postId={selectedPost.postId}
+              writerNickname={selectedPost.writerNickname}
+              writerProfileImageUrl={selectedPost.writerProfileImageUrl}
+            />
+          )}
         </div>
-        <div id="list" style={{ display: selectedPost && selectedPost.postType === 'daily' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-          {post.map(item => (
-            <button style={{border:"none"}} key={item.id} onClick={() => handlePostClick(item)}>
-              {item.postType === 'daily' ? <DailyList data={item} /> : <HistoryList data={item} />}
-            </button>
-          ))}
+        <div
+          id="list"
+          style={{
+            display: selectedPost && selectedPost.postType === "DAILY" ? "none" : "block",
+            border: "3px solid yellow",
+            overflow: "auto",
+            marginTop: "10%",
+            width: "410px",
+            height: "640px"
+          }}
+        >
+          {orderedPosts && orderedPosts.length > 0 ? (
+            orderedPosts.map((item) => (
+              <div key={item.postId} onClick={() => handlePostClick(item)}>
+                {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
+              </div>
+            ))
+          ) : (
+            <div>No posts available</div>
+          )}
         </div>
       </div>
-      {selectedPost && selectedPost.postType === 'history' && (
+      {selectedPost && selectedPost.postType === "HISTORY" && (
         <div className="historyPost-con">
-          <HistoryPost data={selectedPost} onClose={handleBackClick} />
+          <HistoryPost
+            postId={selectedPost.postId}
+            writerNickname={selectedPost.writerNickname}
+            writerProfileImageUrl={selectedPost.writerProfileImageUrl}
+            onClose={handleBackClick}
+          />
         </div>
       )}
     </div>
   );
 };
+
 export default Localmap;
