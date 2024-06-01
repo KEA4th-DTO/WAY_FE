@@ -4,6 +4,8 @@ import img from "../../assets/images/bg/bg5.png";
 import user3 from "../../assets/images/users/user3.jpg";
 
 const SearchList = ({ data }) => { 
+  if (!data) return null;
+  
   return (
     <div>
     <div className="group98-history-post1"></div>

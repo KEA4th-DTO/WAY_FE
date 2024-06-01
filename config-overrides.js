@@ -5,7 +5,7 @@ const devServerConfig = () => config => {
     ...config,
     allowedHosts: [
       'localhost',
-      '.yourdomain.com'
+      'http://210.109.54.44/'
     ],
   };
 };

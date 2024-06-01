@@ -9,8 +9,9 @@ COPY package.json .
 # RUN yarn add react-refresh @pmmmwh/react-refresh-webpack-plugin --dev
 
 # 명령어 실행 (의존성 설치)
-RUN npm init -y
-RUN npm install html2canvas-proxy express --force 
+# RUN npm init -y
+RUN npm install
+
 # 현재 디렉토리의 모든 파일을 도커 컨테이너의 워킹 디렉토리에 복사한다.
 COPY . .
 
