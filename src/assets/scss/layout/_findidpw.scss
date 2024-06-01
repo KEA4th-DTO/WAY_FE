@@ -1,68 +1,41 @@
-.findIDPW{
+.findIDPW {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 100px;
-
 }
-.nav-findIDPW{
+
+.nav-findIDPW {
     margin-top: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0 20px;
-
 }
 
-.btn-findEmail{
-    display: flex;
-    color: #8E8E8E;
-    font-size : 30px;
-    margin : 10px;
-    font-weight: bold;
-    border : 0px;
-    background-color: white;
-}
-
-.btn-findEmail:hover {
-    display: flex;
-    color: #404DF2;
-    margin: 10px;
-    font-size: 30px;
-    font-weight: bold;
-    border: 0px;
-    background-color: white;
-}
-
+.btn-findEmail,
 .btn-findPW {
     display: flex;
-    color: #8E8E8E;
+    color: #8e8e8e;
     font-size: 30px;
     margin: 10px;
     font-weight: bold;
     border: 0px;
     background-color: white;
+    transition: color 0.3s ease;
 }
 
+.btn-findEmail:hover,
 .btn-findPW:hover {
-    display: flex;
-    color: #404DF2;
-    font-size: 30px;
-    border: 0px;
-    margin: 10px;
-    font-weight: bold;
-    background-color: white;
+    color: #404df2;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
-.btn-findPW:active {
-    display: flex;
-    color: #404DF2;
-    font-size: 30px;
-    border: 0px;
-    margin: 10px;
-    font-weight: bold;
-    background-color: white;
+.btn-findEmail.active,
+.btn-findPW.active {
+    color: #404df2;
 }
 
 .horizontal-line {
@@ -75,62 +48,72 @@
     align-items: center;
 }
 
-.top-wrapper{
+.top-wrapper {
     display: flex;
     align-items: center;
-    width : 100%;
+    width: 100%;
 }
 
-.btm-wrapper{
+.btm-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 10%;
 }
 
-.find-password-input{
-    border: 1px solid #8E8E8E;
+.find-password-input {
+    border: 1px solid #8e8e8e;
     border-radius: 12px;
     width: 500px;
     height: 40px;
     margin: 10px 0;
-    align-items: left;
-    padding-bottom: 2px;
-    padding-left : 20px;
+    padding-left: 20px;
 }
 
-.btn-send{
+.btn-send {
     display: flex;
-    color: #404DF2;
+    color: #404df2;
     background-color: white;
     font-size: 15px;
     margin: 10px;
-    font-weight : bold;
+    font-weight: bold;
     border: 1px solid #828282;
     width: 20%;
     height: 40px;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease; // transition 추가
 }
 
+.btn-send:hover {
+    background-color: #404df2;
+    color: white;
+}
 
-.btn-final{
+.btn-final {
     display: flex;
     color: white;
-    background-color: #404DF2;
+    background-color: #404df2;
     font-size: 15px;
     margin: 10px;
-    font-weight : bold;
-    border: 1px solid #404DF2;
+    font-weight: bold;
+    border: 1px solid #404df2;
     width: 50%;
     height: 50px;
     border-radius: 25px;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease; // transition 추가
 }
 
-.btn-wrapper{
+.btn-final:hover {
+    background-color: white;
+    color: #404df2;
+    border: 1px solid #404df2;
+}
+
+.btn-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;

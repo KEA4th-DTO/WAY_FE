@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 import { SHA256 } from "crypto-js";
-import "../assets/style/signup.css";
+import "../assets/style/_signup.scss";
 import axios from "axios";
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -35,11 +35,8 @@ const Signup = () => {
       email: email,
       password: encryptedPassword,
       passwordCheck: encryptedPassword,
-      // password: password,
-      // passwordCheck: confirmPassword,
       nickname: nickname,
       phoneNumber: phone,
-      // agreement: agreement,
     };
 
     console.log(signUpData);
@@ -58,7 +55,7 @@ const Signup = () => {
       })
       .then((data) => {
         console.log("회원가입이 완료되었습니다.", data);
-        window.location.href = "http://localhost:3000/#/login";
+        window.location.href = "http://localhost:3000/login";
       })
       .catch((error) => {
         console.error("Error during signup:", error);
@@ -91,6 +88,7 @@ const Signup = () => {
         console.log(data);
         if (data.isSuccess === true) {
           alert("사용가능한 닉네임입니다");
+          setNicknameCheck(true);
         } else {
           alert("사용불가능한 닉네임입니다", data);
         }
@@ -100,7 +98,6 @@ const Signup = () => {
         // 에러 발생 시 처리
       });
     console.log("Email checked!");
-    setEmailCheck(true); // 예시에서는 무조건 true로 설정합니다.
   };
 
   const handleEmailCheck = () => {
@@ -126,6 +123,7 @@ const Signup = () => {
       .then((data) => {
         if (data.isSuccess === true) {
           alert("사용가능한 이메일입니다");
+          setEmailCheck(true);
         } else {
           alert("사용불가능한 이메일입니다", data);
         }
@@ -219,14 +217,13 @@ const Signup = () => {
             <button onClick={handleNicknameCheck} className="btn-duplicate">
               중복확인
             </button>
-
-            {nicknameCheck && <p>사용할 수 있는 닉네임입니다.</p>}
           </div>
           <div className="agree">
             <label>
               <span>개인정보 동의</span>
               <input
                 type="checkbox"
+                className="check-agree"
                 checked={agreement}
                 onChange={(e) => setAgreement(e.target.checked)}
               />

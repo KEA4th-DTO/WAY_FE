@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Follower from "./Follower";
-import "../assets/style/follower.css";
+import "../assets/style/_follower.scss";
 
 function Followers() {
   const [followers, setFollowers] = useState([]);
@@ -10,6 +10,7 @@ function Followers() {
     const Server_IP = process.env.REACT_APP_Server_IP;
     const nickName = localStorage.getItem("userNickname");
     const url = `${Server_IP}/member-service/follow/${nickName}/follower-list`;
+
     const fetchFollowers = async () => {
       const token = localStorage.getItem("accessToken");
       try {
@@ -19,12 +20,23 @@ function Followers() {
           },
           withCredentials: true,
         });
+
         if (response.status === 200) {
           const data = response.data;
           if (data.isSuccess && Array.isArray(data.result)) {
-            setFollowers(data.result); // result 배열을 상태에 저장
+            const followersData = data.result.map((follower) => ({
+              id: follower.memberInfoResponseDTO.memberId,
+              name: follower.memberInfoResponseDTO.name,
+              nickname: follower.memberInfoResponseDTO.nickname,
+              image: follower.memberInfoResponseDTO.profileImageUrl,
+              isFollow: follower.isFollowing,
+              history: follower.memberInfoResponseDTO.historyCount,
+              daily: follower.memberInfoResponseDTO.dailyCount,
+            }));
+            setFollowers(followersData); // result 배열을 상태에 저장
+            console.log(followersData);
           } else {
-            console.log(response.status);
+            // console.log(response.status);
             throw new Error("Unexpected response structure");
           }
         } else {
@@ -36,7 +48,7 @@ function Followers() {
     };
 
     fetchFollowers();
-  });
+  }, []);
 
   return (
     <div className="post-title">
@@ -46,11 +58,9 @@ function Followers() {
           <Follower
             key={follower.id}
             name={follower.name}
-            history={follower.history}
-            daily={follower.daily}
             nickName={follower.nickname}
             image={follower.image}
-            isFollow={follower.isFollow}
+            initialFollowState={follower.isFollow}
           />
         ))}
       </div>

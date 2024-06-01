@@ -1,36 +1,47 @@
-import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Auth = () => {
-  const code = new URL(window.location.href).searchParams.get("code");
   const navigate = useNavigate();
+  const KAKAO_CODE = new URL(window.location.href).searchParams.get("code");
 
   useEffect(() => {
-    const Server_IP = process.env.REACT_APP_Server_IP;
-    const sendCodeToServer = async () => {
+    const kakaoLogin = async () => {
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      const url = `${Server_IP}/auth-service/oauth/kakao/callback`;
+      console.log("kakao", KAKAO_CODE);
+
       try {
-        const response = await axios.post(`${Server_IP}/auth/kakao/callback`, {
-          code: code,
+        const response = await axios.get(url, {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
         });
 
+        console.log(response);
+
         if (response.status === 200) {
-          // Assuming you want to navigate to a home page or dashboard after successful login
-          navigate("/home");
+          localStorage.setItem("name", response.data.account.kakaoName);
+          navigate("/localmap");
         } else {
-          console.error("Failed to send code to the server:", response.status);
+          console.error("로그인 실패:", response);
+          alert("로그인에 실패했습니다.");
         }
       } catch (error) {
-        console.error("Error sending code to the server:", error);
+        console.error("로그인 요청 중 에러 발생:", error);
+        alert("로그인 요청 중 에러가 발생했습니다.");
       }
     };
 
-    if (code) {
-      sendCodeToServer();
-    }
-  }, [code, navigate]);
+    kakaoLogin();
+  }, [KAKAO_CODE, navigate]);
 
-  return null;
+  return (
+    <div>
+      <p>Loading...</p>
+    </div>
+  );
 };
 
 export default Auth;

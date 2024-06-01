@@ -1,57 +1,48 @@
-// Follower.js
 import React, { useState } from "react";
-import "../assets/style/follower.css";
+import "../assets/style/_follower.scss";
 import axios from "axios";
-function Follower({
-  name,
-  nickName,
-  history,
-  daily,
-  profileImageUrl,
-  initialFollowState,
-}) {
+
+function Follower({ name, nickName, image, initialFollowState }) {
   const [isFollow, setIsFollow] = useState(initialFollowState);
+  console.log(initialFollowState);
   const handleFollowClick = () => {
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
-    const url = !isFollow
-      ? `${Server_IP}/member-service/follow/${nickName}`
-      : `${Server_IP}/member-service/follow/follower-list/${nickName}`;
+    const url = isFollow
+      ? `${Server_IP}/member-service/follow/follower-list/${nickName}`
+      : `${Server_IP}/member-service/follow/${nickName}`;
 
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const request = axios({
+      method: isFollow ? "DELETE" : "POST",
+      url: url,
+      ...config,
+    });
+
+    request
       .then((response) => {
         if (response.status === 200) {
           setIsFollow(!isFollow);
         } else {
           console.error(`Follow ${name} failed: ${response.status}`);
         }
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
       });
   };
+
   return (
     <div className="follower-container">
-      <img src={profileImageUrl} alt={name} className="follower-image" />
+      <img src={image} alt={name} className="follower-image" />
       <div className="follower-info">
         <h3 className="follower-name">{name}</h3>
         <p className="follower-nickname">{nickName}</p>
-      </div>
-      <div className="follower-stats">
-        <div>
-          <span className="post-type">History</span>
-          <span className="post-count">{history}</span>
-        </div>
-        <div>
-          <span className="post-type">Daily</span>
-          <span className="post-count">{daily}</span>
-        </div>
       </div>
       <div className="follower-actions">
         <button
@@ -65,4 +56,5 @@ function Follower({
     </div>
   );
 }
+
 export default Follower;

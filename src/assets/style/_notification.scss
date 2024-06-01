@@ -1,0 +1,73 @@
+.notification-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.notification-comment {
+    background-color: #4caf50;
+    /* Green */
+
+    &:hover {
+        background-color: #388e3c;
+        /* Darker Green */
+    }
+}
+
+.notification-like {
+    background-color: #2196f3;
+    /* Blue */
+
+    &:hover {
+        background-color: #1976d2;
+        /* Darker Blue */
+    }
+}
+
+.notification-reply {
+    background-color: #ff9800;
+    /* Orange */
+
+    &:hover {
+        background-color: #f57c00;
+        /* Darker Orange */
+    }
+}
+
+.notification-time {
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.notification-list {
+    max-height: 500px;
+    /* Increased max height for the dropdown */
+    overflow-y: auto;
+    /* Enable vertical scroll */
+    padding: 10px;
+    /* Optional: add padding for better appearance */
+    background-color: #ffffff;
+    /* Optional: set background color for the list */
+    border-radius: 5px;
+    /* Optional: add border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional: add box shadow */
+    width: 350px;
+    /* Set a fixed width */
+}
+
+.notification-end {
+    padding: 10px;
+    text-align: center;
+    color: #999;
+}
