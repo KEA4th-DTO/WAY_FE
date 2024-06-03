@@ -13,6 +13,7 @@ const EditDailyPost = ({ post, writerProfileImageUrl, onsave }) => {
     const postId = post.postId;
     const token = localStorage.getItem("accessToken");
     const userNickname = localStorage.getItem("userNickname");
+    const Server_IP = process.env.REACT_APP_Server_IP;
       
     console.log(post);
 
@@ -30,7 +31,8 @@ const EditDailyPost = ({ post, writerProfileImageUrl, onsave }) => {
                 body: body
             };
 
-            const response = await fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+            const url = `${Server_IP}/post-service/daily/${postId}`;
+            const response = await fetch(url, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`,

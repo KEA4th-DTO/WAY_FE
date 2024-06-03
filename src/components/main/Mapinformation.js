@@ -24,6 +24,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
     const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
     const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
     const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
 
     const [allPinState, setAllPinState] = useState(true);
     const [dailyPinState, setDailyPinState] = useState(false);
@@ -98,7 +99,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
     useEffect(() => {
         if (dailyBounds) {
             const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;
-            const url = `http://210.109.55.124/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+            const url = `${Server_IP}/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
 
             fetch(url, {
                 method: "GET",
@@ -292,7 +293,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             longitude2:  longitude2
         });
     
-        const url = `http://210.109.55.124/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+        const url = `${Server_IP}/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
     
         try {
             const response = await fetch(url, {

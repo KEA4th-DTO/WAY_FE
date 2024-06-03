@@ -4,17 +4,18 @@ import "../../assets/scss/layout/_historypost.scss";
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
-import user3 from "../../assets/images/users/user3.jpg";
+import basic_profile from "../../assets/images/users/basic_profile.png";
 import like from "../../assets/images/logos/like.png";
 import comment from "../../assets/images/logos/comment.png";
 import more from "../../assets/images/logos/more.png";
 import comment_more from "../../assets/images/logos/comment_more.png";
 
-const PreviewHistory = ({ postId }) => {
+const PreviewHistory = ({ postId, userProfileimg }) => {
      // null 체크를 위해 미리 초기화
      const [post, setPost] = useState([]);
      const token = localStorage.getItem("accessToken");
      const userNickname = localStorage.getItem("userNickname");
+     const Server_IP = process.env.REACT_APP_Server_IP;
 
     //  "postId": 4,
     //  "writerNickname": null,
@@ -30,7 +31,9 @@ const PreviewHistory = ({ postId }) => {
 
   useEffect(() => {
     if (postId) {
-      fetch(`http://210.109.55.124/post-service/history/${postId}`, {
+      const url = `${Server_IP}/post-service/history/${postId}`;
+
+      fetch(url, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -65,8 +68,8 @@ const PreviewHistory = ({ postId }) => {
 
       {/* -------------게시글------------ */}
       <div>
-        <span style={{border: "3px solid green"}} className="intro-postType">
-          <span>History</span>
+        <span className="intro-postType">
+          History
         </span>
         <span className="intro-title">
           {post.title}
@@ -74,20 +77,20 @@ const PreviewHistory = ({ postId }) => {
         <span className="intro-createAt" style={{left:"80px"}}>
             {formattedTime}
         </span>
-          {/* <div style={{border: "3px solid red"}} id='작성자 정보' className="intro-writer">
+          <div style={{border: "3px solid red"}} id='작성자 정보' className="intro-writer">
             <div className="intro-writer-profileimg">
               <img
-                src={writerProfileImageUrl || user3}
+                src={userProfileimg || basic_profile}
                 className="profileimg"
               />
             </div>
             <span className="intro-writer-nickname">
-              <span>{writerNickname}</span>
+              <span>{userNickname}</span>
             </span>
-            <button className="intro-follow" onClick={handleFollowClick} >
-                <span style={{ color: followed ? "#404DF2" : "#000" }}>팔로우</span>
+            <button className="intro-follow" >
+                <span style={{ color: "#404DF2"}}>팔로우</span>
             </button>
-          </div> */}
+          </div>
 
         {/* -------------게시글 내용------------ */}    
         <div style={{border: "3px solid red"}} className="frame-content">

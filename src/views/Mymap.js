@@ -13,6 +13,7 @@ const Mymap = () => {
   const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
+  const Server_IP = process.env.REACT_APP_Server_IP;
   // const mapRef = useRef(null); // 추가: 지도를 캡처할 DOM 요소 참조
 
   const [active, setActive] = useState(null);
@@ -27,7 +28,8 @@ const Mymap = () => {
 
   useEffect(() => {
     if (userNickname) {
-      fetch(`http://210.109.55.124/post-service/posts/list/${userNickname}`, {
+      const url = `${Server_IP}/post-service/posts/list/${userNickname}`;
+      fetch(url, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -110,7 +112,12 @@ const Mymap = () => {
       </div>
       {selectedPost && selectedPost.postType === 'HISTORY' && (
         <div className="historyPost-con">
-          <HistoryPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onClose={handleBackClick} />
+          <HistoryPost 
+            postId={selectedPost.postId}  
+            thumbnail={selectedPost.imageUrl} 
+            writerNickname={selectedPost.writerNickname} 
+            writerProfileImageUrl={selectedPost.writerProfileImageUrl} 
+            onClose={handleBackClick} />
         </div>
       )}
     </div>

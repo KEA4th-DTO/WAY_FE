@@ -5,6 +5,7 @@ import report from "../../assets/images/icons/report.png";
 const Report = ({ targetId, type, onClose }) => {
     // null 체크를 위해 미리 초기화
     const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
     const userNickname = localStorage.getItem("userNickname");
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -27,7 +28,8 @@ const Report = ({ targetId, type, onClose }) => {
                 description: description,
             };
 
-            const response = await fetch(`http://210.109.55.124/post-service/report/${targetId}`, {
+            const url = `${Server_IP}/post-service/report/${targetId}`;
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,

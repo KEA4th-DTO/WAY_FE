@@ -27,9 +27,10 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const [followed, setFollowed] = useState(false);
         const [editMode, setEditMode] = useState(false);
         const [reportMode, setReportMode] = useState(false);
-
+        const friendNickname = writerNickname;
         const token = localStorage.getItem("accessToken");
         const userNickname = localStorage.getItem("userNickname");
+        const Server_IP = process.env.REACT_APP_Server_IP;
         
         const currentTime = new Date();
         currentTime.setHours(currentTime.getHours());
@@ -42,8 +43,9 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         
         useEffect(() => {
           if (postId) {
-            
-            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+            const url = `${Server_IP}/post-service/daily/${postId}`;
+
+            fetch(url, {
               method: "GET",
               headers: {
                 "Authorization": `Bearer ${token}`
@@ -76,9 +78,38 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         //     setLiked(post.likesCount);
         // }, [data]);
 
+        useEffect(() => {
+
+          const url = `${Server_IP}/member-service/follow/follow-status/${friendNickname}`;
+
+          fetch(url, {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok ' + res.statusText);
+            }
+            return res.json();
+          })
+          .then(data => {
+            if (data.isSuccess) {
+              console.log("팔로우 상태:", data.result.isFollowing);
+              setFollowed(data.result.isFollowing);
+            } else {
+              console.error("Error in API response:", data.message);
+            }
+          })
+          .catch(error => console.error("Error fetching data:", error));
+        }, [followed, friendNickname]);
+
+        
         const handleLikeClick = () => {
           // 좋아요 로직 추가
-          fetch(`http://210.109.55.124/post-service/posts/like/${postId}`, {
+          const url = `${Server_IP}/post-service/posts/like/${postId}`;
+          fetch(url, {
               method: "POST",
               headers: {
                   "Authorization": `Bearer ${token}`
@@ -103,14 +134,68 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           .catch(error => console.error("Error unliking post:", error));
           };
 
-        const handleFollowClick = () => {
-            if (followed) {
-                setFollowed(false);
-            } else {
-                setFollowed(true);
+        const handleFollowClick = async () => {
+          try {
+              const url = `${Server_IP}/member-service/follow/${friendNickname}`;
+      
+              const response = await fetch(url, {
+                  method: 'POST',
+                  headers: {
+                      'accept': '*/*',
+                      'Authorization': `Bearer ${token}`
+                  },
+                  body: ''  // 이 API는 요청 본문을 필요로 하지 않습니다.
+              });
+      
+              if (!response.ok) {
+                  const errorText = await response.text();
+                  throw new Error('Network response was not ok: ' + response.statusText + ', ' + errorText);
+              }
+      
+              const data = await response.json();
+      
+              if (data.isSuccess) {
+                  alert(`${friendNickname}님을 팔로잉하였습니다.`);
+                  setFollowed(true); // 팔로우 상태를 업데이트합니다.
+              } else {
+                  console.error("Error in API response:", data.message);
+                  alert(data.message);
+              }
+          } catch (error) {
+              console.error("Error following user:", error);
+          }
+      };
+      
+      const handleUnfollowClick = async () => {
+        try {
+          const url = `${Server_IP}/member-service/follow/following-list/${friendNickname}`;
+    
+            const response = await fetch(url, {
+              method: 'DELETE',
+              headers: {
+                    'accept': '*/*',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: ''  // 이 API는 요청 본문을 필요로 하지 않습니다.
+            });
+    
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error('Network response was not ok: ' + response.statusText + ', ' + errorText);
             }
-        };
-
+    
+            const data = await response.json();
+    
+            if (data.isSuccess) {
+                alert(`${friendNickname}님을 언팔로우하였습니다.`);
+                setFollowed(false); // 팔로우 상태를 업데이트합니다.
+            } else {
+                console.error("Error in API response:", data.message);
+            }
+        } catch (error) {
+            console.error("Error following user:", error);
+        }
+    };
         // useEffect(() => {
         //     const script = document.createElement("script");
         //     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -141,7 +226,8 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const handleDeleteClick = () => {
           const confirmDelete = window.confirm("정말로 게시글을 삭제하시겠습니까?");
           if (confirmDelete) {
-            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+            const url = `${Server_IP}/post-service/daily/${postId}`;
+            fetch(url, {
               method: 'DELETE',
               headers: {
                 'accept': '*/*',
@@ -196,8 +282,8 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             src={full_dailyPin}
             className="dailypost-daily-pin-filled"
           />
-          <button className="dailypost-text12" onClick={handleFollowClick} >
-              <span style={{ color: followed ? "#404DF2" : "#000" }}>팔로우</span>
+          <button className="dailypost-text12" onClick={followed ? handleUnfollowClick : handleFollowClick} >
+              <span style={{ color: followed ? "#404DF2" : "#000" }}> {followed ? "팔로잉" : "팔로우"}</span>
           </button>
 
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -219,7 +305,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
                 {/* <DropdownItem divider />
                 <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem> */}
               </DropdownMenu>)
-              :(<DropdownMenu>
+              :(<DropdownMenu style={{marginLeft:"230px", marginTop:"20px"}}>
                 <DropdownItem header>Report</DropdownItem>
                 <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
               </DropdownMenu>)}

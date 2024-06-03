@@ -10,11 +10,12 @@ import full_like from "../../assets/images/logos/full_like.png";
 import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate2, formatPeriod } from '../../utils/changeFormat';
 
-const PreviewDaily = ({ postId }) => {
+const PreviewDaily = ({ postId, userProfileimg }) => {
         // null 체크를 위해 미리 초기화
         const [post, setPost] = useState([]);
       
         const token = localStorage.getItem("accessToken");
+        const Server_IP = process.env.REACT_APP_Server_IP;
         const userNickname = localStorage.getItem("userNickname");
         
         const currentTime = new Date();
@@ -24,8 +25,9 @@ const PreviewDaily = ({ postId }) => {
         
         useEffect(() => {
           if (postId) {
-            
-            fetch(`http://210.109.55.124/post-service/daily/${postId}`, {
+            const url = `${Server_IP}/post-service/daily/${postId}`;
+
+            fetch(url, {
               method: "GET",
               headers: {
                 "Authorization": `Bearer ${token}`
@@ -58,7 +60,7 @@ const PreviewDaily = ({ postId }) => {
             <div className="dailypost-frame4">
               <img 
                 alt="사용자 프로필 이미지" 
-                src={basic_profile} 
+                src={userProfileimg || basic_profile} 
                 // src={writerProfileImageUrl || user7} 
                 className="dailypost-profileimage" />
               <span className="dailypost-text10">

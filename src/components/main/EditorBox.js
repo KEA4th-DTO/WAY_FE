@@ -5,7 +5,6 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-// import '@toast-ui/editor/dist/i18n/ko-kr';
 import '../../assets/scss/layout/_upload.scss';
 import UploadHisMap from './UploadHisMap';
 import axios from 'axios';
@@ -34,6 +33,7 @@ const EditorBox = () => {
     const editorRef = useRef(null);
 
     const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
 
     useEffect(() => {
         // 컴포넌트가 처음 마운트될 때 한 번 실행
@@ -65,8 +65,8 @@ const EditorBox = () => {
                 bodyPlainText,
             };
             formData.append('createHistoryDto', new Blob([JSON.stringify(historyDto)], { type: 'application/json' })); // createHistoryDto 추가
-    
-            const response = await fetch(`http://210.109.55.124/post-service/history`, {
+            const url = `${Server_IP}/post-service/history`;
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -109,8 +109,8 @@ const EditorBox = () => {
             // Create FormData object
             const formData = new FormData();
             formData.append('historyImage', blob); // Using 'historyImage' as the key
-    
-            const response = await fetch("http://210.109.55.124/post-service/history/upload-image", {
+            const url = `${Server_IP}/post-service/history/upload-image`;
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -243,7 +243,7 @@ const EditorBox = () => {
                 useCommandShortcut={false}
                 hideModeSwitch={false} //하단 타입 선택탭 숨기기
                 plugins={[colorSyntax]}
-                language="ko-KR"
+                // language="ko-KR"
                 ref={editorRef}
                 onChange={onChange} // Update body state
                 hooks={{

@@ -13,12 +13,12 @@ const Search = () => {
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
   const [filterToggle, setFilterToggle] = useState(false); // 토글 상태
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/recomendPost') //API경로 적어주기
-  //     .then(res => res.json())
-  //     .then(data => setRPost(data))
-  //     .catch(error => console.error("Error fetching data:", error));
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:3001/recomendPost') //API경로 적어주기
+      .then(res => res.json())
+      .then(data => setRPost(data))
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
 
   const handlePostClick = (selectedItem) => {
     setSelectedPost(selectedItem);
@@ -34,13 +34,13 @@ const Search = () => {
 
   return (
     <div className="group98-group98">
-      {/* <div className="group98-frame"> */}
+      <div className="group98-frame">
         {/* 검색창 */}
         <div className="group98-frame">
           {/* 검색창 내용 */}
         </div>
         {/* 토글 버튼 */}
-        {/* <div className="group98-frame2" onClick={toggleFilter}>
+        <div className="group98-frame2" onClick={toggleFilter}>
           <div className="group98-svg" />
           <button style={{ border: "none" }}>
             <img
@@ -51,9 +51,9 @@ const Search = () => {
           </button>
           <span className="group98-text02">
             <span>필터</span>
-          </span> */}
+          </span>
           {/* 토글된 상태일 때, 필터 목록 표시 */}
-          {/* {filterToggle && (
+          {filterToggle && (
             <div className="filter-buttons">
               <button className="filter-button">닉네임</button>
               <button className="filter-button">해시태그</button>
@@ -61,26 +61,26 @@ const Search = () => {
             </div>
           )}
         </div> 
-      </div> */}
+      </div>
 
       {/* 추천 게시글 목록 */}
-      {/* <div className="group98-frame-profile">
+      <div className="group98-frame-profile">
         {rpost.map(item => (
           <button style={{ border: "none" }} key={item.id} onClick={() => handlePostClick(item)}>
             <SearchList data={item} />
           </button>
         ))}
-      </div> */}
+      </div>
 
       {/* 선택된 포스트 표시 */}
-      {/* {selectedPost && (
+      {selectedPost && (
         <div className="historyPost-con">
           <HistoryPost data={selectedPost} onClose={handleBackClick} />
         </div>
-      )} */}
+      )}
 
       {/* 로컬맵, 마이맵 이동 버튼 */}
-      {/* <div className="group98-group77">
+      <div className="group98-group77">
         로컬맵 이동
         <Link to="/localmap" style={{ textDecoration: "none", color: "inherit" }}>
           <button style={{ border: "none" }}>
@@ -107,7 +107,7 @@ const Search = () => {
             </span>
           </button>
         </Link>
-      </div> */}
+      </div>
      
     </div>
   );
