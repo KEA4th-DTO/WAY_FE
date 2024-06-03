@@ -16,7 +16,8 @@ const Localmap = () => {
   const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const token = localStorage.getItem("accessToken");
-  
+  const Server_IP = process.env.REACT_APP_Server_IP;
+
   const [active, setActive] = useState(null);
   const [activeId, setActiveId] = useState(null);
 
@@ -34,8 +35,8 @@ const Localmap = () => {
   // 경계를 기반으로 게시글 데이터 가져오기
   useEffect(() => {
     if (dailyBounds) {
-      const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;
-      const url = `http://210.109.55.124/post-service/posts/list/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+      const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;     
+      const url = `${Server_IP}/post-service/posts/list/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
 
       fetch(url, {
         method: "GET",
@@ -67,7 +68,7 @@ const Localmap = () => {
   useEffect(() => {
     if (historyBounds) {
       const { latitude1, longitude1, latitude2, longitude2 } = historyBounds;
-      const url = `http://210.109.55.124/post-service/history/list?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+      const url = `${Server_IP}/post-service/history/list?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
 
       fetch(url, {
         method: "GET",
@@ -179,6 +180,7 @@ const Localmap = () => {
         <div className="historyPost-con">
           <HistoryPost
             postId={selectedPost.postId}
+            thumbnail={selectedPost.imageUrl}
             writerNickname={selectedPost.writerNickname}
             writerProfileImageUrl={selectedPost.writerProfileImageUrl}
             onClose={handleBackClick}

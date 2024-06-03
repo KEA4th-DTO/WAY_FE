@@ -29,6 +29,7 @@ const UserMapinfo = ({ userNickname, capture, active }) => {
     const [historyPinState, setHistoryPinState] = useState(false);
 
     const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
 
     const onClickAllPin = () => {
         setAllPinState(true);
@@ -60,7 +61,9 @@ const UserMapinfo = ({ userNickname, capture, active }) => {
     // 핀 데이터 가져오기
     useEffect(() => {
         if (userNickname) {
-            fetch(`http://210.109.55.124/post-service/posts/pin/${userNickname}`, {
+            const url = `${Server_IP}/post-service/posts/pin/${userNickname}`;
+
+            fetch(url, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import UserMapinfo from "./UserMapinfo";
-import html2canvas from "html2canvas";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import basic_profile from "../../assets/images/users/basic_profile.png";
@@ -13,6 +12,7 @@ const UptoMy = () => {
 
     const state = useLocation().state;
     const [active, setActive] = useState(null);
+    const Server_IP = process.env.REACT_APP_Server_IP;
     const token = localStorage.getItem("accessToken");
     const userNickname = localStorage.getItem("userNickname");
 
@@ -21,13 +21,43 @@ const UptoMy = () => {
     const postId = state.result.postId;
     const capture = state.result.capture;
     // const capture = true;
-
     
     const postType = state.result.postType;
+    const [userProfileimg, setUserprofileimg] = useState(false);
+
     // const postType = 'DAILY';
 
     console.log('post: ', postId, capture);
 
+    useEffect(() => {
+      if (userNickname) {
+        // console.log('유저 닉네임', userNickname);
+        const url = `${Server_IP}/member-service/profile/${userNickname}`;
+          fetch(url, {
+              method: 'GET',
+              headers: {
+                  'accept': '*/*',
+                  'Authorization': `Bearer ${token}`
+              }
+          })
+          .then(res => {
+              if (!res.ok) {
+                  throw new Error('Network response was not ok ' + res.statusText);
+              }
+              return res.json();
+          })
+          .then(data => {
+              if (data.isSuccess) {
+                // console.log('사진', data.result.profileImageUrl);
+                  setUserprofileimg(data.result.profileImageUrl);
+              } else {
+                  console.error("Error in API response:", data.message);
+              }
+          })
+          .catch(error => console.error("Error fetching data:", error));
+      }
+    }, [userNickname]);
+    
   return ( 
     <>
     <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
@@ -53,10 +83,10 @@ const UptoMy = () => {
         {
             postType === 'DAILY' 
             ? <div style={{ display: "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-                <PreviewDaily postId={postId} />
+                <PreviewDaily postId={postId} userProfileimg={userProfileimg} />
                 </div> 
             : <div className="historyPost-con">
-                <PreviewHistory postId={postId} />
+                <PreviewHistory postId={postId} userProfileimg={userProfileimg}/>
                 </div>
         }
       </div>

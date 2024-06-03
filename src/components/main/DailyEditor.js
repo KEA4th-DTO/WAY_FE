@@ -30,6 +30,7 @@ const DailyEditor = () => {
     const { naver } = window;
 
     const token = localStorage.getItem("accessToken");
+    const Server_IP = process.env.REACT_APP_Server_IP;
 
     useEffect(() => {
         // 컴포넌트가 처음 마운트될 때 한 번 실행
@@ -60,8 +61,10 @@ const DailyEditor = () => {
                 latitude,
                 longitude,
             })], { type: 'application/json' }));
+
+            const url = `${Server_IP}/post-service/daily`;
     
-            const response = await fetch(`http://210.109.55.124/post-service/daily`, {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                      Authorization: `Bearer ${token}`,
