@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
 import "../../assets/scss/layout/_modi_profile.scss";
+import axios from "axios";
 
 const Modi_profile = (props) => {
   const [nickname, setNickname] = useState(""); // 초기값을 빈 문자열로 설정합니다.
@@ -12,6 +12,28 @@ const Modi_profile = (props) => {
 
   const [profileImg, setProfileImg] = useState("기본 프로필 이미지 URL");
   const fileInputRef = useRef();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      try {
+        const response = await axios.get(
+          `${Server_IP}/member-service/profile/${localStorage.getItem(
+            "userNickname"
+          )}`
+        );
+        const profile = response.data.result;
+        console.log(profile);
+        setNickname(profile.nickname);
+        setOnelineIntro(profile.introduce);
+        setProfileImg(profile.profileImageUrl);
+      } catch (error) {
+        console.error("프로필 정보를 가져오는 중 오류 발생:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -124,18 +146,6 @@ const Modi_profile = (props) => {
               ></input>
               <span className="edit-element">
                 <span>비밀번호 확인</span>
-              </span>
-            </div>
-            <div className="agreement">
-              <div className="agreement-check">
-                <Form.Check // prettier-ignore
-                  type="switch"
-                  id="custom-switch"
-                />
-              </div>
-
-              <span className="edit-element">
-                <span>마케팅 수신동의</span>
               </span>
             </div>
             <div className="password-conditions">

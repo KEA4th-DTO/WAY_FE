@@ -26,6 +26,7 @@ const Signup = () => {
   };
 
   const handleSignUp = () => {
+    const Server_IP = process.env.REACT_APP_Server_IP;
     const url = `${Server_IP}/auth-service/signup`;
     const secretKey = process.env.REACT_APP_CRYPTO_SECRET;
     const encryptedPassword = SHA256(password, secretKey).toString();
@@ -55,7 +56,7 @@ const Signup = () => {
       })
       .then((data) => {
         console.log("회원가입이 완료되었습니다.", data);
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = `${Server_IP}/login`;
       })
       .catch((error) => {
         console.error("Error during signup:", error);

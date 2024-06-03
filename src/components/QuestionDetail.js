@@ -21,9 +21,7 @@ function QuestionDetail({ title, authorNickname, date, body }) {
   // }, [id]);
   return (
     <div className="question-contatiner">
-      <Helmet>
         <title>문의사항</title>
-      </Helmet>
       <div className="question-header">문의사항</div>
       <div className="horizontal-divider"></div>
       <div className="question-title">

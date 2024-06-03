@@ -20,7 +20,6 @@ function NoticeDetail({ title, authorNickname, date, body }) {
   // }, [id]);
   return (
     <div className="notice-contatiner">
-    
       <div className="notice-header">공지사항</div>
       <div className="horizontal-divider"></div>
       <div className="notice-title">
