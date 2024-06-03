@@ -16,11 +16,8 @@
 
 .notification-comment {
     background-color: #4caf50;
-    /* Green */
-
     &:hover {
         background-color: #388e3c;
-        /* Darker Green */
     }
 }
 
@@ -57,11 +54,11 @@
     padding: 10px;
     /* Optional: add padding for better appearance */
     background-color: #ffffff;
-    /* Optional: set background color for the list */
+    /* Set background color for the list */
     border-radius: 5px;
-    /* Optional: add border radius */
+    /* Add border radius */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Optional: add box shadow */
+    /* Add box shadow */
     width: 350px;
     /* Set a fixed width */
 }

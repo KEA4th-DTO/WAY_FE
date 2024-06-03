@@ -19,6 +19,7 @@ import alarm from "../assets/images/logos/alarm.png";
 import hamburger from "../assets/images/logos/hamburger.png";
 import NotificationList from "../components/NotificationList";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,62 +28,77 @@ const Header = () => {
   const [notifications, setNotifications] = useState([]);
   const [hasNewNotification, setHasNewNotification] = useState(false);
   const [lastEventId, setLastEventId] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("accessToken"));
+  const navigate = useNavigate();
+  const handleProfileClick = () => {
+    navigate("/mypage"); // 프로필 페이지로 이동
+  };
 
   useEffect(() => {
-    const Server_IP = process.env.REACT_APP_Server_IP;
-    const token = localStorage.getItem("accessToken");
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Last-Event-ID": lastEventId !== null ? lastEventId : "null",
-    };
-
-    const eventSource = new EventSourcePolyfill(
-      `${Server_IP}/notification-service/see-connection`,
-      {
-        headers: headers,
-      }
-    );
-
-    eventSource.onmessage = (event) => {
-      const newNotification = JSON.parse(event.data);
-      setNotifications((prev) => [...prev, newNotification]);
-      setHasNewNotification(true);
-      setLastEventId(event.lastEventId);
-    };
-
-    eventSource.onerror = (err) => {
-      console.error("EventSource failed:", err);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [lastEventId]);
+    if (!token) {
+      const storedToken = localStorage.getItem("accessToken");
+      setToken(storedToken);
+    }
+  }, [token]);
 
   useEffect(() => {
-    const fetchNotifications = async () => {
+    if (token) {
       const Server_IP = process.env.REACT_APP_Server_IP;
-      const token = localStorage.getItem("accessToken");
 
-      try {
-        const response = await axios.get(
-          `${Server_IP}/notification-service/notifications`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setNotifications(response.data.result);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      }
-    };
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Last-Event-ID": lastEventId !== null ? lastEventId : "null",
+      };
 
-    fetchNotifications();
-  }, []);
+      const eventSource = new EventSourcePolyfill(
+        `${Server_IP}/notification-service/see-connection`,
+        {
+          headers: headers,
+        }
+      );
+
+      eventSource.onmessage = (event) => {
+        const newNotification = JSON.parse(event.data);
+        setNotifications((prev) => [...prev, newNotification]);
+        setHasNewNotification(true);
+        setLastEventId(event.lastEventId);
+      };
+
+      eventSource.onerror = (err) => {
+        console.error("EventSource failed:", err);
+        eventSource.close();
+      };
+
+      return () => {
+        eventSource.close();
+      };
+    }
+  }, [token, lastEventId]);
+
+  useEffect(() => {
+    if (token) {
+      const fetchNotifications = async () => {
+        const Server_IP = process.env.REACT_APP_Server_IP;
+
+        try {
+          const response = await axios.post(
+            `${Server_IP}/notification-service/notification-list`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setNotifications(response.data.result);
+          console.log(response.data.result);
+        } catch (error) {
+          console.error("Error fetching notifications:", error);
+        }
+      };
+
+      fetchNotifications();
+    }
+  }, [token]);
 
   const Handletoggle = () => {
     setIsOpen(!isOpen);
@@ -174,33 +190,14 @@ const Header = () => {
           </DropdownMenu>
         </Dropdown>
 
-        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-          <DropdownToggle
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              boxShadow: "none",
-              padding: 0,
-            }}
-          >
-            <img
-              src={user}
-              alt="profile"
-              className="rounded-circle"
-              width="30"
-            />
-          </DropdownToggle>
-
-          <DropdownMenu>
-            <DropdownItem header>Info</DropdownItem>
-            <DropdownItem>My Account</DropdownItem>
-            <DropdownItem>Edit Profile</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem>My Balance</DropdownItem>
-            <DropdownItem>Inbox</DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        <img
+          src={user}
+          alt="profile"
+          className="rounded-circle"
+          width="30"
+          onClick={handleProfileClick} // 프로필 클릭 시 handleProfileClick 호출
+          style={{ cursor: "pointer" }} // 커서가 포인터로 변경되어 클릭 가능함을 표시
+        />
 
         <Button
           className="d-lg-none"

@@ -22,7 +22,6 @@ const getTimeDifference = (timestamp) => {
 
 const NotificationItem = ({ notification }) => {
   let notificationClass = "notification-item";
-
   const message = notification.message;
   if (/대댓글을 남겼습니다/.test(message)) {
     notificationClass += " notification-reply";

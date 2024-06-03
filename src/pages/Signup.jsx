@@ -57,7 +57,7 @@ const Signup = () => {
       return;
     }
     console.log(passwordError);
-    if (validatePassword) {
+    if (!validatePassword) {
       alert(
         "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다."
       );
@@ -135,8 +135,10 @@ const Signup = () => {
       setPasswordError(
         "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다."
       );
+      return false;
     } else {
       setPasswordError("");
+      return true;
     }
   };
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../assets/style/_myPage.scss";
-// import Posts from "../components/PostsList";
 import Followers from "../components/Followers";
 import Followings from "../components/Followings";
 import axios from "axios";
 import WayTag from "../components/main/Waytag";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const [activeTab, setActiveTab] = useState("posts");
@@ -20,6 +20,8 @@ function ProfilePage() {
     followingsCount: 0,
     tags: [],
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -67,8 +69,6 @@ function ProfilePage() {
     }));
   };
 
-  const Posts = () => <div>게시글 목록</div>;
-
   const renderTags = () => {
     const defaultTags = ["태그1", "태그2", "태그3"];
     const hasDefaultTags = profile.tags.every((tag) =>
@@ -106,14 +106,12 @@ function ProfilePage() {
             <p className="nickName">{profile.nickName}</p>
             <p className="bio">{profile.bio}</p>
             <div className="btn-container">
-              <button
-                className="btn-post"
-                onClick={() => handleTabClick("posts")}
-              >
+              <button className="btn-post" onClick={() => navigate("/mymap")}>
                 <span className="tab-count">
                   {profile.dailyCount + profile.historyCount}
                 </span>
                 <span className="tab-label">게시글</span>
+                <span className="hover-text">마이맵으로 이동</span>
               </button>
               <button
                 className="btn-followers"
@@ -136,7 +134,6 @@ function ProfilePage() {
       </div>
       {/* right panel */}
       <div className="myPage-rightpanel">
-        {activeTab === "posts" && <Posts />}
         {activeTab === "followers" && (
           <Followers onFollowChange={handleFollowChange} />
         )}
