@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Link to="/">
+    <Link to="/localmap">
       <img src={wayLogo} alt="Way Logo" style={{ maxWidth: "100px" }} />
     </Link>
   );

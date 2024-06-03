@@ -16,6 +16,8 @@ const Signup = () => {
   const [agreement, setAgreement] = useState(false);
   const [encryptedData, setEncryptedData] = useState("");
   const Server_IP = process.env.REACT_APP_Server_IP;
+  const [nicknameError, setNicknameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handlePhoneChange = (e) => {
     const formattedPhoneNumber = e.target.value
@@ -41,6 +43,27 @@ const Signup = () => {
     };
 
     console.log(signUpData);
+
+    if (!emailCheck) {
+      alert("이메일 중복확인을 해주세요.");
+      return;
+    }
+    if (!nicknameCheck) {
+      alert("닉네임 중복확인을 해주세요.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      return;
+    }
+    console.log(passwordError);
+    if (validatePassword) {
+      alert(
+        "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다."
+      );
+      return;
+    }
+
     axios
       .post(url, signUpData, {
         headers: {
@@ -56,7 +79,7 @@ const Signup = () => {
       })
       .then((data) => {
         console.log("회원가입이 완료되었습니다.", data);
-        window.location.href = `${Server_IP}/login`;
+        window.location.href = `https://www.way-blog.today/login`;
       })
       .catch((error) => {
         console.error("Error during signup:", error);
@@ -65,6 +88,10 @@ const Signup = () => {
   };
 
   const handleNicknameCheck = () => {
+    if (!validateNickname(nickname)) {
+      alert("닉네임은 영어로만 구성되어야 하며 최소 5글자 이상이어야 합니다.");
+      return;
+    }
     const url = `${Server_IP}/auth-service/check-nickname`;
     const data = {
       nickname: nickname,
@@ -99,6 +126,31 @@ const Signup = () => {
         // 에러 발생 시 처리
       });
     console.log("Email checked!");
+  };
+
+  const validatePassword = (password) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (!regex.test(password)) {
+      setPasswordError(
+        "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다."
+      );
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const validateNickname = (nickname) => {
+    const regex = /^[a-zA-Z]{5,}$/;
+    if (!regex.test(nickname)) {
+      setNicknameError(
+        "닉네임은 영어로만 구성되어야 하며 최소 5글자 이상이어야 합니다."
+      );
+      return false;
+    } else {
+      setNicknameError("");
+      return true;
+    }
   };
 
   const handleEmailCheck = () => {

@@ -13,7 +13,8 @@ const stringToColor = (str) => {
     const value = (hash >> (i * 8)) & 0xff;
     color += ("00" + value.toString(16)).substr(-2);
   }
-  return color;
+  // 파스텔톤 색상으로 변환
+  return chroma(color).saturate(0.9).brighten(1.2).hex();
 };
 
 // 배경색과 대비되는 글자색을 계산

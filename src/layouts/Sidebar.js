@@ -1,16 +1,22 @@
-import { Button, Nav, NavItem } from "reactstrap";
+import React, { useState } from "react";
+import {
+  Button,
+  Nav,
+  NavItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
 import Logo from "./Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ModifyProfile from "../components/main/ModifyProfile";
+import "../assets/scss/layout/_modi_profile.scss";
 
 const navigation = [
   {
     title: "프로필 수정",
-    href: "/modify_profile",
+    href: "#",
   },
-  // {
-  //   title: "차단 목록",
-  //   href: "/blocklist",
-  // },
   {
     title: "공지사항",
     href: "/notices",
@@ -19,18 +25,16 @@ const navigation = [
     title: "문의사항",
     href: "/questions",
   },
-  // {
-  //   title: "회원탈퇴",
-  //   href: "/withdrawal",
-  // },
 ];
 
 const Sidebar = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   const location = useLocation();
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     const granttype = localStorage.getItem("grantType");
     const accessToken = localStorage.getItem("accessToken");
@@ -51,16 +55,25 @@ const Sidebar = () => {
 
     if (response.ok) {
       window.localStorage.clear();
-      navigate("/login"); // Redirect to login page after logout
+      navigate("/login");
     } else {
       console.error("Logout failed");
     }
   };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleProfileUpdate = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="p-3">
       <div className="d-flex align-items-center">
         <NavItem>
-          <Logo></Logo>
+          <Logo />
         </NavItem>
         <span className="ms-auto d-lg-none">
           <Button
@@ -82,8 +95,8 @@ const Sidebar = () => {
                     ? "text-primary nav-link py-3"
                     : "nav-link text-secondary py-3"
                 }
+                onClick={navi.title === "프로필 수정" ? toggleModal : null}
               >
-                <i className={navi.icon}></i>
                 <span className="ms-3 d-inline-block">{navi.title}</span>
               </Link>
             </NavItem>
@@ -99,6 +112,12 @@ const Sidebar = () => {
           </Button>
         </Nav>
       </div>
+      <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
+        <ModalHeader toggle={toggleModal}>프로필 수정</ModalHeader>
+        <ModalBody>
+          <ModifyProfile onProfileUpdate={handleProfileUpdate} />
+        </ModalBody>
+      </Modal>
     </div>
   );
 };

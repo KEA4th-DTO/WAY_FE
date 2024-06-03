@@ -23,7 +23,7 @@ const Chatting = lazy(() => import("../views/Chatting.js"));
 const Search = lazy(() => import("../views/Search.js"));
 const MyPage = lazy(() => import("../views/MyPage"));
 
-const Modi_profile = lazy(() => import("../views/ui/Modi_profile"));
+const Modi_profile = lazy(() => import("../components/main/ModifyProfile.js"));
 const BlockList = lazy(() => import("../views/ui/BlockList"));
 const Notices = lazy(() => import("../views/ui/Notices"));
 const Questions = lazy(() => import("../views/ui/Questions"));

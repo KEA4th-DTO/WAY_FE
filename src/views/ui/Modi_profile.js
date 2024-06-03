@@ -12,6 +12,11 @@ const Modi_profile = (props) => {
 
   const [profileImg, setProfileImg] = useState("기본 프로필 이미지 URL");
   const fileInputRef = useRef();
+  const [profileData, setProfileData] = useState({
+    userNickname: "",
+    introduce: "",
+    profileImageUrl: "",
+  });
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -20,10 +25,16 @@ const Modi_profile = (props) => {
         const response = await axios.get(
           `${Server_IP}/member-service/profile/${localStorage.getItem(
             "userNickname"
-          )}`
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
         );
         const profile = response.data.result;
         console.log(profile);
+        setProfileData(profile);
         setNickname(profile.nickname);
         setOnelineIntro(profile.introduce);
         setProfileImg(profile.profileImageUrl);
@@ -34,6 +45,18 @@ const Modi_profile = (props) => {
 
     fetchProfile();
   }, []);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const Server_IP = process.env.REACT_APP_Server_IP;
+  //   const token = localStorage.getItem("accessToken");
+
+  //   const updateData = {
+  //     nickname,
+  //     // introduce,
+  //   };
+  // };
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -88,16 +111,16 @@ const Modi_profile = (props) => {
             </span>
           </div>
 
-          <form action="/profile-edit" method="post">
+          <form>
             <div className="nickname-edit">
               <input
                 id="nickname"
                 name="nickname"
                 type="text"
                 className="edit-value"
-                value={nickname}
+                // value={nickname}
                 onChange={handleChange}
-                placeholder="닉네임을 입력하세요."
+                placeholder={"닉네임을 입력하세요."}
               ></input>
               <span className="edit-element">
                 <span>닉네임 변경</span>
@@ -114,69 +137,17 @@ const Modi_profile = (props) => {
                 className="edit-value"
                 value={onelineIntro}
                 onChange={handleChange}
-                placeholder="한줄소개를 입력하세요."
+                placeholder={"한줄소개를 입력하세요."}
               ></input>
               <span className="edit-element">
                 <span>한줄소개 변경</span>
               </span>
             </div>
-            <div className="password-edit">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                className="edit-value"
-                value={password}
-                onChange={handleChange}
-                placeholder="비밀번호를 입력하세요."
-              ></input>
-              <span className="edit-element">
-                <span>비밀번호 변경</span>
-              </span>
-            </div>
-            <div className="passwordConfirmation">
-              <input
-                id="passwordConfirmation"
-                name="passwordConfirmation"
-                type="password"
-                className="edit-value"
-                value={passwordConfirmation}
-                onChange={handleChange}
-                placeholder="비밀번호를 다시 입력하세요."
-              ></input>
-              <span className="edit-element">
-                <span>비밀번호 확인</span>
-              </span>
-            </div>
-            <div className="password-conditions">
-              <span className="password-conditions1">
-                <span>
-                  ・ 최소 8자 이상, 대문자, 소문자, 숫자 및 기호의 혼합 포함
-                </span>
-              </span>
-              <span className="password-conditions2">
-                <span>・ 기호(예: !”$%^*&amp;)</span>
-              </span>
-              <span className="password-conditions3">
-                <span>・ 대문자(A~Z), 소문자(a~z)</span>
-              </span>
-            </div>
           </form>
-          <div className="edit-div">
-            <span>
-              <Button size="lg" variant="primary">
-                수정하기
-              </Button>{" "}
-            </span>
-          </div>
-          <div className="close-div">
-            <span>
-              <Button size="lg" variant="danger">
-                닫기
-              </Button>{" "}
-            </span>
-          </div>
         </div>
+        <span>
+          <button className="btn-edit">수정하기</button>{" "}
+        </span>
       </div>
     </div>
   );
