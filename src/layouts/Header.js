@@ -51,7 +51,7 @@ const Header = () => {
       };
 
       const eventSource = new EventSourcePolyfill(
-        `${Server_IP}/notification-service/see-connection`,
+        `${Server_IP}/notification-service/sse-connection`,
         {
           headers: headers,
         }
