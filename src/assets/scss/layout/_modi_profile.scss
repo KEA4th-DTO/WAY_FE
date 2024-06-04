@@ -21,6 +21,7 @@
     /* Ensure the items are in a row */
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 
     .profile-img-container {
       position: relative;
@@ -59,6 +60,7 @@
     .profile-details {
       flex: 1;
       margin-left: 20px;
+      margin-top: 10px;
 
       .duplicate-check-btn {
         margin-top: 10px;
@@ -71,10 +73,9 @@
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       }
-
-      .form-group {
-        margin-bottom: 15px;
-      }
+        .form-group {
+          margin-bottom: 30px;
+        }
     }
   }
 

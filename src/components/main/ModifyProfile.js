@@ -20,61 +20,6 @@ const ModifyProfile = ({ onProfileUpdate }) => {
     profileImageUrl: "",
   });
 
-  const validateNickname = (nickname) => {
-    const regex = /^[a-zA-Z]{5,}$/;
-    if (!regex.test(nickname)) {
-      setNicknameError(
-        "닉네임은 영어로만 구성되어야 하며 최소 5글자 이상이어야 합니다."
-      );
-      return false;
-    } else {
-      setNicknameError("");
-      return true;
-    }
-  };
-
-  const handleNicknameCheck = () => {
-    const Server_IP = process.env.REACT_APP_Server_IP;
-    if (!validateNickname(nickname)) {
-      alert("닉네임은 영어로만 구성되어야 하며 최소 5글자 이상이어야 합니다.");
-      return;
-    }
-    const url = `${Server_IP}/auth-service/check-nickname`;
-    const data = {
-      nickname: nickname,
-    };
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        console.log(response.status);
-        if (response.status !== 200) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // 응답 데이터를 JSON 형식으로 파싱
-      })
-      .then((data) => {
-        console.log(data);
-        if (data.isSuccess === true) {
-          alert("사용가능한 닉네임입니다");
-          setNicknameCheck(true);
-        } else {
-          alert("사용불가능한 닉네임입니다", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during signup:", error);
-        // 에러 발생 시 처리
-      });
-    console.log("Email checked!");
-  };
-
   useEffect(() => {
     const fetchProfile = async () => {
       const Server_IP = process.env.REACT_APP_Server_IP;
@@ -200,13 +145,6 @@ const ModifyProfile = ({ onProfileUpdate }) => {
                 value={nickname}
                 onChange={handleChange}
               />
-              <Button
-                variant="secondary"
-                className="duplicate-check-btn"
-                onClick={handleNicknameCheck}
-              >
-                중복확인
-              </Button>
             </Form.Group>
             <Form.Group controlId="formOnelineIntro">
               <Form.Label>상태메시지</Form.Label>

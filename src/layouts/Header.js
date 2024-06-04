@@ -20,6 +20,7 @@ import hamburger from "../assets/images/logos/hamburger.png";
 import NotificationList from "../components/NotificationList";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../assets/scss/layout/_header.scss"; // 스타일 추가
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,7 @@ const Header = () => {
   const [lastEventId, setLastEventId] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
   const navigate = useNavigate();
+
   const handleProfileClick = () => {
     navigate("/mypage"); // 프로필 페이지로 이동
   };
@@ -142,7 +144,7 @@ const Header = () => {
         </NavbarBrand>
       </div>
       <Collapse navbar isOpen={isOpen}>
-        <Nav className="me-auto" navbar>
+        <Nav className="me-auto navbar-nav" navbar>
           <NavItem>
             <NavLink to="/localmap" className="nav-link">
               로컬맵
@@ -174,64 +176,81 @@ const Header = () => {
           </NavItem>
         </Nav>
 
-        <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
-          <DropdownToggle
+        <div className="navbar-buttons">
+          <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
+            <DropdownToggle
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                boxShadow: "none",
+                padding: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={handleAlarmClick}
+            >
+              <img
+                src={alarm}
+                alt="alarm"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  filter: hasNewNotification
+                    ? "grayscale(0%)"
+                    : "grayscale(100%)",
+                }}
+              />
+            </DropdownToggle>
+
+            <DropdownMenu
+              style={{ width: "350px", maxHeight: "500px", overflowY: "auto" }}
+            >
+              {notifications.length === 0 ? (
+                <DropdownItem header>알림이 없습니다</DropdownItem>
+              ) : (
+                <NotificationList notifications={notifications} />
+              )}
+            </DropdownMenu>
+          </Dropdown>
+
+          <div
             style={{
-              backgroundColor: "transparent",
-              border: "none",
-              boxShadow: "none",
-              padding: 0,
+              display: "flex",
+              alignItems: "center",
             }}
-            onClick={handleAlarmClick}
           >
             <img
-              src={alarm}
-              alt="alarm"
+              src={user}
+              alt="profile"
+              width="30"
+              onClick={handleProfileClick} // 프로필 클릭 시 handleProfileClick 호출
               style={{
-                width: "30px",
-                height: "30px",
-                filter: hasNewNotification
-                  ? "grayscale(0%)"
-                  : "grayscale(100%)",
-              }}
+                cursor: "pointer",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+              }} // 커서가 포인터로 변경되어 클릭 가능함을 표시
             />
-          </DropdownToggle>
+          </div>
 
-          <DropdownMenu
-            style={{ width: "350px", maxHeight: "500px", overflowY: "auto" }}
+          <Button
+            className="d-lg-none"
+            onClick={showMobilemenu}
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              display: "flex",
+              alignItems: "center",
+            }}
           >
-            {notifications.length === 0 ? (
-              <DropdownItem header>알림이 없습니다</DropdownItem>
-            ) : (
-              <NotificationList notifications={notifications} />
-            )}
-          </DropdownMenu>
-        </Dropdown>
-
-        <img
-          src={user}
-          alt="profile"
-          className="rounded-circle"
-          width="30"
-          onClick={handleProfileClick} // 프로필 클릭 시 handleProfileClick 호출
-          style={{ cursor: "pointer" }} // 커서가 포인터로 변경되어 클릭 가능함을 표시
-        />
-
-        <Button
-          className="d-lg-none"
-          onClick={showMobilemenu}
-          style={{
-            background: "transparent",
-            border: "none",
-            padding: 0,
-          }}
-        >
-          <img
-            src={hamburger}
-            alt="Menu"
-            style={{ width: "25px", height: "25px" }}
-          />
-        </Button>
+            <img
+              src={hamburger}
+              alt="Menu"
+              style={{ width: "25px", height: "25px" }}
+            />
+          </Button>
+        </div>
       </Collapse>
     </Navbar>
   );

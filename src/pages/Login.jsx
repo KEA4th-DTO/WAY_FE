@@ -95,7 +95,7 @@ function Login() {
             console.log(data);
             navigate("/localmap");
           } else {
-            console.error("로그인 실패:", responseData.message);
+            alert("아이디나 비밀번호를 확인해주세요");
           }
         } else {
           console.error("서버 응답 오류: ", response.status);
