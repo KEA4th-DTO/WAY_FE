@@ -136,7 +136,7 @@ const ModifyProfile = ({ onProfileUpdate }) => {
             />
           </div>
           <div className="profile-details">
-            <Form.Group controlId="formNickname">
+            <Form.Group controlId="formNickname" className="form-group">
               <Form.Label>닉네임</Form.Label>
               <Form.Control
                 type="text"
@@ -146,7 +146,7 @@ const ModifyProfile = ({ onProfileUpdate }) => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="formOnelineIntro">
+            <Form.Group controlId="formOnelineIntro" className="form-group">
               <Form.Label>상태메시지</Form.Label>
               <Form.Control
                 type="text"

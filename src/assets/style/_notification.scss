@@ -21,7 +21,17 @@
     }
 }
 
-.notification-like {
+.notification-postlike {
+    background-color: #2196f3;
+    /* Blue */
+
+    &:hover {
+        background-color: #1976d2;
+        /* Darker Blue */
+    }
+}
+
+.notification-commentlike {
     background-color: #2196f3;
     /* Blue */
 
@@ -33,13 +43,19 @@
 
 .notification-reply {
     background-color: #ff9800;
-    /* Orange */
+    &:hover {
+        background-color: #f57c00;
+    }
+}
+
+.notification-follow {
+    background-color: #ff9800;
 
     &:hover {
         background-color: #f57c00;
-        /* Darker Orange */
     }
 }
+
 
 .notification-time {
     font-size: 0.9em;
@@ -48,19 +64,12 @@
 
 .notification-list {
     max-height: 500px;
-    /* Increased max height for the dropdown */
     overflow-y: auto;
-    /* Enable vertical scroll */
     padding: 10px;
-    /* Optional: add padding for better appearance */
     background-color: #ffffff;
-    /* Set background color for the list */
     border-radius: 5px;
-    /* Add border radius */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Add box shadow */
     width: 350px;
-    /* Set a fixed width */
 }
 
 .notification-end {

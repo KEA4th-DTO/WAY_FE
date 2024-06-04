@@ -6,22 +6,11 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  hr {
-    margin-bottom: 20px;
-  }
-
   .profile-content {
     display: flex;
     flex-direction: row;
-    /* Ensure the items are in a row */
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
 
     .profile-img-container {
       position: relative;
@@ -50,6 +39,8 @@
         background-color: rgba(0, 0, 0, 0.5);
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+        /* Prevents hover issues */
       }
 
       &:hover .profile-img-overlay {
@@ -60,7 +51,11 @@
     .profile-details {
       flex: 1;
       margin-left: 20px;
-      margin-top: 10px;
+
+      .form-group {
+        margin-bottom: 20px;
+        /* 입력 필드 사이의 간격 조정 */
+      }
 
       .duplicate-check-btn {
         margin-top: 10px;
@@ -73,9 +68,6 @@
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       }
-        .form-group {
-          margin-bottom: 30px;
-        }
     }
   }
 

@@ -27,8 +27,12 @@ const NotificationItem = ({ notification }) => {
     notificationClass += " notification-reply";
   } else if (/댓글을 남겼습니다/.test(message)) {
     notificationClass += " notification-comment";
-  } else if (/좋아요를 눌렀습니다/.test(message)) {
-    notificationClass += " notification-like";
+  } else if (/게시글에 좋아요를 눌렀습니다/.test(message)) {
+    notificationClass += " notification-postlike";
+  } else if (/팔로우하기/.test(message)) {
+    notificationClass += " notification-follow";
+  } else if (/댓글에 좋아요를 눌렀습니다/.test(message)) {
+    notificationClass += " notification-commentlike";
   }
 
   return (
