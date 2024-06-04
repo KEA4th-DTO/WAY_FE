@@ -9,13 +9,12 @@ import PreviewHistory from "./PreviewHistory";
 import PreviewDaily from "./PreviewDaily";
 
 const UptoMy = () => {
-
-    const state = useLocation().state;
     const [active, setActive] = useState(null);
     const Server_IP = process.env.REACT_APP_Server_IP;
     const token = localStorage.getItem("accessToken");
     const userNickname = localStorage.getItem("userNickname");
-
+    
+    const state = useLocation().state;
     console.log('state: ', state.result);
 
     const postId = state.result.postId;

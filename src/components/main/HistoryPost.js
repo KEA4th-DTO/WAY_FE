@@ -403,13 +403,6 @@ const ClickComment = async () => {
         <span className="intro-title">
           {post.title}
         </span>
-        {/* <div className="intro-thumbnail">
-          <img
-            src={thumbnail}
-            alt="썸네일 이미지"
-            className="thumbnail-img"
-          />
-        </div> */}
         <span className="intro-createAt">
             {formattedTime}
         </span>
@@ -431,7 +424,13 @@ const ClickComment = async () => {
 
         {/* -------------게시글 내용------------ */}    
         <div style={{border: "3px solid red"}} className="frame-content">
-        
+        <div className="intro-thumbnail">
+          <img
+            src={thumbnail}
+            alt="썸네일 이미지"
+            className="thumbnail-img"
+          />
+        </div>
         {post.body ? <EditorViewer contents={post.body} /> : <div>Loading...</div>}
            
           

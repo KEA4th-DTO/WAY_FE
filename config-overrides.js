@@ -5,7 +5,7 @@ const devServerConfig = () => config => {
     ...config,
     allowedHosts: [
       'localhost',
-      'http://210.109.54.44/'
+      'https://www.way-blog.today'
     ],
   };
 };

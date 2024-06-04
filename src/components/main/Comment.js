@@ -11,14 +11,12 @@ import {
 } from "reactstrap";
 import EditComment from "./EditComment";
 import Report from "./Report";
-import basic_profile from "../../assets/images/users/basic_profile.png";
 
 const Comment = ({ data }) => {
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
   const Server_IP = process.env.REACT_APP_Server_IP;
 
-  const [userProfileimg, setUserprofileimg] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [reportMode, setReportMode] = useState(false);
   const commentId = data.commentId;
@@ -26,34 +24,7 @@ const Comment = ({ data }) => {
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  useEffect(() => {
-    if (userNickname) {
-      // console.log('유저 닉네임', userNickname);
-      const url = `${Server_IP}/member-service/profile/${userNickname}`;
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'accept': '*/*',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error('Network response was not ok ' + res.statusText);
-            }
-            return res.json();
-        })
-        .then(data => {
-            if (data.isSuccess) {
-              // console.log('사진', data.result.profileImageUrl);
-                setUserprofileimg(data.result.profileImageUrl);
-            } else {
-                console.error("Error in API response:", data.message);
-            }
-        })
-        .catch(error => console.error("Error fetching data:", error));
-    }
-}, [userNickname]);
+ 
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -176,28 +147,7 @@ s                  <DropdownItem onClick={handleEditClick}>답글 달기</Dropdo
               </span>
             </div> 
 
-            <div style={{border: "3px solid green"}} className="floating-history-comment-group45">
             
-             <div style={{border: "3px solid green"}} className="floating-history-comment-group36">
-               <div className="floating-history-comment-group27">
-                 <span className="floating-history-comment-text059">
-                   {userNickname}
-                 </span>
-               </div>
-               <img
-                 src={userProfileimg || basic_profile}
-                 className="floating-history-comment-freeiconuser14907112"
-               />
-             </div>
-                 <div style={{border: "3px solid green"}} className="floating-history-comment-frame25">
-                 <span className="floating-history-comment-text061">
-                     <span>등록</span>
-                 </span>
-                 </div>
-                 <span className="floating-history-comment-text063">
-                 <span>댓글을 입력해주세요.</span>
-                 </span>
-           </div>
     </div>
     }
     </>

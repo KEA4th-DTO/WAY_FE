@@ -1,20 +1,23 @@
-import React, { useState } from "react";
-import "../assets/style/_follower.scss";
+import React, { useState, useEffect } from 'react';
+import "../../assets/scss/layout/_search.scss";
+import { formatDate_time } from '../../utils/changeFormat';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-function Follower({ name, nickName, image, initialFollowState }) {
-
+const SearchList2 = ({ data }) => { 
   const navigate = useNavigate();
-  const [isFollow, setIsFollow] = useState(initialFollowState);
+  const [isFollow, setIsFollow] = useState(false);
 
-  console.log(initialFollowState);
+  if (!data) return null;
+  const nickName = data.nickname;
+
+  // console.log(initialFollowState);
 
   const handleFollowClick = () => {
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
     const url = isFollow
-      ? `${Server_IP}/member-service/follow/following-list/${nickName}`
+      ? `${Server_IP}/member-service/follow/follower-list/${nickName}`
       : `${Server_IP}/member-service/follow/${nickName}`;
 
     const config = {
@@ -34,7 +37,7 @@ function Follower({ name, nickName, image, initialFollowState }) {
         if (response.status === 200) {
           setIsFollow(!isFollow);
         } else {
-          console.error(`Follow ${name} failed: ${response.status}`);
+          // console.error(`Follow ${name} failed: ${response.status}`);
         }
       })
       .catch((error) => {
@@ -47,17 +50,14 @@ function Follower({ name, nickName, image, initialFollowState }) {
     navigate('/othersmap', { state: nickName });
   };
 
-  
-
-
   return (
-    <div className="follower-container">
-      <img src={image} alt={name} className="follower-image" />
-      <div className="follower-info">
-        <h3 className="follower-name">{name}</h3>
-        <p className="follower-nickname">{nickName}</p>
+    <div className="searchlist2-container">
+      <img src={data.profileImageUrl} className="searchlist2-image" />
+      <div className="searchlist2-info">
+        <h3 className="searchlist2-name">{data.nickname}</h3>
+        <p className="searchlist2-nickname">{data.introduce}</p>
       </div>
-      <div className="follower-actions">
+      <div className="searchlist2-actions">
         <button
           className={isFollow ? "btn-unfollow" : "btn-follow"}
           onClick={handleFollowClick}
@@ -68,6 +68,5 @@ function Follower({ name, nickName, image, initialFollowState }) {
       </div>
     </div>
   );
-}
-
-export default Follower;
+}   
+export default SearchList2;
