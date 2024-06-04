@@ -9,6 +9,7 @@ import html2canvas from "html2canvas";
 
 const Mymap = () => {
   // 데이터 가져오기
+  
   const [userPost, setUserPost] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");

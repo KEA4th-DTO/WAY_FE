@@ -29,6 +29,7 @@ const EditorBox = () => {
     const [showMap, setShowMap] = useState(false);
 
     const { naver } = window;
+    
     const navigate = useNavigate();
     const editorRef = useRef(null);
 

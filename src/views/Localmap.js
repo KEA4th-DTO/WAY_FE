@@ -97,7 +97,7 @@ const Localmap = () => {
 
   useEffect(() => {
     console.log('게시글//combinePost:', combinePost);
-  }, [combinePost]);
+  }, [combinePost, selectedPost]);
 
   // 게시글 클릭 처리
   const handlePostClick = (selectedItem) => {
