@@ -7,7 +7,7 @@ import WayTag from "../components/main/Waytag";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
-  const [activeTab, setActiveTab] = useState("posts");
+  const [activeTab, setActiveTab] = useState("followers");
   const [profile, setProfile] = useState({
     imageUrl: "",
     name: "",

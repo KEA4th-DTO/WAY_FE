@@ -9,7 +9,7 @@ function Follower({ name, nickName, image, initialFollowState }) {
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
     const url = isFollow
-      ? `${Server_IP}/member-service/follow/follower-list/${nickName}`
+      ? `${Server_IP}/member-service/follow/following-list/${nickName}`
       : `${Server_IP}/member-service/follow/${nickName}`;
 
     const config = {
