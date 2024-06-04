@@ -34,6 +34,15 @@ const Header = () => {
     navigate("/mypage"); // 프로필 페이지로 이동
   };
 
+  const isValidJson = (str) => {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   useEffect(() => {
     if (!token) {
       const storedToken = localStorage.getItem("accessToken");
@@ -58,10 +67,19 @@ const Header = () => {
       );
 
       eventSource.onmessage = (event) => {
-        const newNotification = JSON.parse(event.data);
-        setNotifications((prev) => [...prev, newNotification]);
-        setHasNewNotification(true);
-        setLastEventId(event.lastEventId);
+        try {
+          // JSON 형식의 데이터인지 확인
+          if (isValidJson(event.data)) {
+            const newNotification = JSON.parse(event.data);
+            setNotifications((prev) => [...prev, newNotification]);
+            setHasNewNotification(true);
+            setLastEventId(event.lastEventId);
+          } else {
+            console.log("Non-JSON message received:", event.data);
+          }
+        } catch (error) {
+          console.error("Error parsing SSE event data:", error);
+        }
       };
 
       eventSource.onerror = (err) => {
