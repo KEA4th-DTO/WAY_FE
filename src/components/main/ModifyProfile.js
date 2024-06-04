@@ -101,9 +101,7 @@ const ModifyProfile = ({ onProfileUpdate }) => {
 
     try {
       const response = await axios.post(
-        `${Server_IP}/member-service/profile/${localStorage.getItem(
-          "userNickname"
-        )}`,
+        `${Server_IP}/member-service/profile/edit`,
         formData,
         {
           headers: {
@@ -112,10 +110,25 @@ const ModifyProfile = ({ onProfileUpdate }) => {
           },
         }
       );
-      console.log("Profile updated successfully:", response.data);
-      localStorage.setItem("userNickname", nickname);
-      alert("프로필 수정에 성공했습니다");
-      onProfileUpdate(); // Call the function to close the modal
+      if (response.status === 200 || response.status === 201) {
+        const isSuccess = response.data.isSuccess;
+        if (isSuccess) {
+          console.log("Profile updated successfully:", response.data);
+          localStorage.setItem("userNickname", nickname);
+          alert("프로필 수정에 성공했습니다");
+          onProfileUpdate(); // Call the function to close the modal
+        } else {
+          alert(
+            "프로필 수정에 실패했습니다. 오류 내용: " + response.data.message
+          );
+        }
+      } else {
+        // Handle unsuccessful response
+        console.error("Error updating profile:", response.data);
+        alert(
+          "프로필 수정에 실패했습니다. 오류 내용: " + response.data.message
+        ); // Display error message from backend (if provided)
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
     }

@@ -15,47 +15,54 @@
 }
 
 .notification-comment {
-    background-color: #4caf50;
+    background-color: #6a9f5b;
+
+    /* Green */
     &:hover {
-        background-color: #388e3c;
+        background-color: #588a4a;
+        /* Darker Green */
     }
 }
 
 .notification-postlike {
-    background-color: #2196f3;
-    /* Blue */
+    background-color: #3b82c4;
 
+    /* Blue */
     &:hover {
-        background-color: #1976d2;
+        background-color: #336ba3;
         /* Darker Blue */
     }
 }
 
 .notification-commentlike {
-    background-color: #2196f3;
-    /* Blue */
+    background-color: #3b82c4;
 
+    /* Blue */
     &:hover {
-        background-color: #1976d2;
+        background-color: #336ba3;
         /* Darker Blue */
     }
 }
 
 .notification-reply {
-    background-color: #ff9800;
+    background-color: #f5b748;
+
+    /* Orange */
     &:hover {
-        background-color: #f57c00;
+        background-color: #d99a38;
+        /* Darker Orange */
     }
 }
 
 .notification-follow {
-    background-color: #ff9800;
+    background-color: #d16060;
 
+    /* Red */
     &:hover {
-        background-color: #f57c00;
+        background-color: #b54848;
+        /* Darker Red */
     }
 }
-
 
 .notification-time {
     font-size: 0.9em;
