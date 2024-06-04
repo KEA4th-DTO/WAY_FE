@@ -162,12 +162,12 @@ const Header = () => {
               업로드
             </NavLink>
           </NavItem>
-          <div className="menu-divider"></div>
-          <NavItem>
-            <NavLink to="/chatting" className="nav-link">
-              채팅
-            </NavLink>
-          </NavItem>
+          // <div className="menu-divider"></div>
+          // <NavItem>
+          //   <NavLink to="/chatting" className="nav-link">
+          //     채팅
+          //   </NavLink>
+          // </NavItem>
           <div className="menu-divider"></div>
           <NavItem>
             <NavLink to="/search" className="nav-link">
