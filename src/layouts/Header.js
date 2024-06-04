@@ -96,26 +96,28 @@ const Header = () => {
   }, [token, lastEventId]);
 
   useEffect(() => {
+    const fetchNotifications = async () => {
+      const Server_IP = process.env.REACT_APP_Server_IP;
+      if (!token) return;
+
+      try {
+        const response = await axios.post(
+          `${Server_IP}/notification-service/notification-list`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setNotifications(response.data.result);
+        console.log(response.data.result);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
     if (token) {
-      const fetchNotifications = async () => {
-        const Server_IP = process.env.REACT_APP_Server_IP;
-
-        try {
-          const response = await axios.post(
-            `${Server_IP}/notification-service/notification-list`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setNotifications(response.data.result);
-          console.log(response.data.result);
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-        }
-      };
-
       fetchNotifications();
     }
   }, [token]);
@@ -162,12 +164,12 @@ const Header = () => {
               업로드
             </NavLink>
           </NavItem>
-          // <div className="menu-divider"></div>
-          // <NavItem>
-          //   <NavLink to="/chatting" className="nav-link">
-          //     채팅
-          //   </NavLink>
-          // </NavItem>
+          {/* <div className="menu-divider"></div>
+          <NavItem>
+            <NavLink to="/chatting" className="nav-link">
+              채팅
+            </NavLink>
+          </NavItem> */}
           <div className="menu-divider"></div>
           <NavItem>
             <NavLink to="/search" className="nav-link">
