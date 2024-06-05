@@ -423,7 +423,7 @@
     top: 4.521484375px;
     left: 57px;
     color: rgba(28, 27, 31, 1);
-    width: 130px;
+    width: 125px;
     height: auto;
     position: absolute;
     font-size: 16px;
@@ -449,8 +449,8 @@
   }
   .historyPost-con {
     position: absolute;
-    top: 50%;
-    left: 70%;
+    margin-bottom: 50%;
+    margin-left: 20%;
     transform: translate(-50%, -50%);
     z-index: 9999;
     background-color: white;
@@ -485,8 +485,8 @@
   }
 
   .linkto-mymap {
-    top: 700px;
-    left: 380px;
+    top: 720px;
+    left: 600px;
     color: rgba(64, 77, 242, 1);
     width: 138px;
     height: 30px;

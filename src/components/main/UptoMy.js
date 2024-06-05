@@ -59,9 +59,9 @@ const UptoMy = () => {
     
   return ( 
     <>
-    <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
+    <div style={{ display: "flex", width: "950px"}}>
       {/* 지도 & 핀 */}
-      <div id="map-con" style={{border: "3px solid blue"}}>
+      <div id="map-con">
         <div>
           <span className="initial-main-page-text">미리보기</span>
           <div>
@@ -78,13 +78,13 @@ const UptoMy = () => {
       </div>
         
       {/* 게시글 */}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
+      <div className="initial-main-page-frame" style={{ marginLeft: "20px"}}>
         {
             postType === 'DAILY' 
-            ? <div style={{ display: "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+            ? <div style={{ display: "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
                 <PreviewDaily postId={postId} userProfileimg={userProfileimg} />
                 </div> 
-            : <div className="historyPost-con">
+            : <div className="historyPost-con" style={{marginLeft:"45%"}}>
                 <PreviewHistory postId={postId} userProfileimg={userProfileimg}/>
                 </div>
         }

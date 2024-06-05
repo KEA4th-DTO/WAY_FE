@@ -31,6 +31,20 @@
     top: 16px; /* 원하는 위치 */
     right: 10px; /* 원하는 위치 */
 }
+
+.report-his {
+  position: absolute;
+  top: 7%;
+  right: 10%;
+  z-index: 999;
+  background-color: rgb(255, 255, 255);
+  width: 270px;
+  height: 340px;
+  padding: 10px; 
+  border: 1px solid rgb(53, 53, 53);
+  border-radius: 10px;
+}
+
   .history-frame { //O
     top: -10px;
     left: 0px;
@@ -71,6 +85,8 @@
     left: 0px;
     width: 36px;
     height: 36px;
+    border: none;
+    background-color: #fff;
   }
   .profileimg {//O
     width: 36px;
@@ -137,9 +153,9 @@
   }
   .frame-content {//O
     top: 164px;
-    left: 20px;
+    left: 0px;
     color: rgba(0, 0, 0, 1);
-    width: 730px;
+    width: 710px;
     align-content: center;
     height: auto;
     position: relative;
@@ -318,7 +334,7 @@
   left: 50px;
   color: rgba(152, 152, 152, 1);
   width: 350px;
-  height: auto;
+  height: 22px;
   position: absolute;
   font-size: 13px;
   font-style: Medium;

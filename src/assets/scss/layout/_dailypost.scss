@@ -19,7 +19,7 @@
     flex-shrink: 0;
     border-color: rgba(64, 77, 242, 1);
     border-style: solid;
-    border-width: 1px 0;
+    border-width: 2px 0;
   }
   .dailypost-post1-history {
     top: 65px;
@@ -48,7 +48,7 @@
     flex-shrink: 1;
   }
   .dailypost-text {
-    top: 88px;
+    top: 93px;
     left: 5px;
     color: rgba(105, 105, 105, 1);
     width: 100%;
@@ -81,8 +81,8 @@
   }
   
   .dailypost-text04 {
-    top: 39px;
-    left: 1px;
+    top: 45px;
+    left: 5px;
     color: rgba(0, 0, 0, 1);
     height: auto;
     position: absolute;
@@ -94,6 +94,7 @@
 
   }
   .dailypost-text08 {
+    top: 8px;
     left: 1px;
     color: rgba(0, 0, 0, 1);
     height: auto;
@@ -120,11 +121,13 @@
     top: 0px;
     left: 0px;
     width: 177px;
-    height: 45.72159957885742px;
+    height: 40px;
     display: flex;
     position: absolute;
     align-items: flex-start;
     flex-shrink: 1;
+    border: none;
+    background-color: #fff;
   }
   .dailypost-profileimage {
     top: -4px;
@@ -160,20 +163,17 @@
     position: absolute;
   }
   .dailypost-text12 {
-    top: 10px;
-    left: 310px;
+    top: 13px;
+    left: 308px;
     color: rgba(0, 0, 0, 1);
     width: 50px;
     height: auto;
     position: absolute;
     font-size: 12px;
     font-style: Bold;
-    text-align: left;
+    text-align: center;
     font-family: Inter;
     font-weight: 700;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
     border: none;
   }
   .dailypost-daily-pin-filled {
@@ -184,9 +184,9 @@
     position: absolute;
   }
   .dailypost-group99 {
-    top: 560px;
+    top: 580px;
     width: 100%;
-    height: 10%;
+    height: 9%;
     display: flex;
     position: absolute;
     align-items: center;
@@ -194,32 +194,24 @@
   }
   .dailypost-frame5 {
     top: 0px;
-    left: 230px;
-    width: 150px;
-    height: 45px;
+    left: 250px;
+    width: 120px;
+    height: 40px;
     display: flex;
     position: absolute;
     align-items: center;
-    flex-shrink: 1;
-    background-color: rgba(64, 77, 242, 1);
+    background-color: rgb(78, 87, 217);
     border-radius: 20px; /* 10px 둥근 경계 적용 */
     border: none;
   }
   .dailypost-text14 {
-    top: 12px;  
-    left: 17px;
     color: rgba(255, 255, 255, 1);
     width: 116px;
-    height: auto;
-    position: absolute;
+    text-align: center;
     font-size: 18px;
     font-style: Extra Bold;
-    text-align: center;
     font-family: Inter;
-    font-weight: 700;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
+    font-weight: 600;
   }
   .dailypost-frame6 {
     top: 9px;
@@ -231,6 +223,7 @@
     align-items: flex-start;
     flex-shrink: 1;
     border: none;
+    background-color: #fff;
   }
   .dailypost-vector {
     top: 0px;
@@ -279,8 +272,15 @@
     font-stretch: normal;
     text-decoration: none;
   }
-
-.report-con {
+  .close { //O
+    top: 10px;
+    left: 220px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+  }
+  
+.report-daily {
   position: absolute;
   top: 7%;
   left: 20%;
@@ -291,7 +291,6 @@
   padding: 10px; 
   border: 1px solid rgb(53, 53, 53);
   border-radius: 10px;
-  overflow: auto;
 }
 .report-frame { //O
   top: 0px;
@@ -303,13 +302,7 @@
   padding-top: 30px; 
   padding-left: 10px;
 }
-.close { //O
-  top: 10px;
-  left: 220px;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-}
+
 .report-title {//O
   color: rgba(0, 0, 0, 1);
   width: 80%;

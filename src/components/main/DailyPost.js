@@ -18,6 +18,7 @@ import { formatDate2, formatPeriod } from '../../utils/changeFormat';
 
 import EditDailyPost from './EditDailyPost';
 import Report from './Report';
+import { useNavigate } from 'react-router-dom';
 
 const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) => {
         // null 체크를 위해 미리 초기화
@@ -31,6 +32,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const token = localStorage.getItem("accessToken");
         const userNickname = localStorage.getItem("userNickname");
         const Server_IP = process.env.REACT_APP_Server_IP;
+        const navigate = useNavigate();
         
         const currentTime = new Date();
         currentTime.setHours(currentTime.getHours());
@@ -252,13 +254,16 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           }
         };
         
+        const handleMapClick = () => {
+          navigate('/othersmap', { state: writerNickname });
+        };
 
     return(
       <>
       {editMode ? <EditDailyPost post={post} writerProfileImageUrl={writerProfileImageUrl} onsave={handleSaveClick} />
-      : <div style={{border: "3px solid red"}} className="dailypost-frame">
+      : <div className="dailypost-frame">
           {reportMode === true && (
-          <div>
+          <div className='report-daily'>
             <Report 
               targetId = {post.postId}
               type = "POST"
@@ -266,9 +271,10 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             />
           </div>
         )}
-      <div style={{border: "3px solid red"}} className="dailypost-frame1"> 
-      <div style={{border: "3px solid orange"}} className="dailypost-frame3">
-          <div className="dailypost-frame4">
+      <div className="dailypost-frame1"> 
+
+      <div className="dailypost-frame3">
+          <button className="dailypost-frame4" onClick={handleMapClick}>
             <img 
               alt="사용자 프로필 이미지" 
               src={writerProfileImageUrl || user7} 
@@ -276,7 +282,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             <span className="dailypost-text10">
               <span>{writerNickname}</span>
             </span>
-          </div>
+          </button>
           <img
             alt="postType, 핀 이미지"
             src={full_dailyPin}
@@ -321,28 +327,28 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           </button> */}
         </div>
       </div>
-        <div style={{border: "3px solid orange"}} className="dailypost-post1-history">
+        <div className="dailypost-post1-history">
           <img alt="게시글 이미지" src={post.imageUrl} className="dailypost-image" />
         </div>
 
-        <div style={{border: "3px solid yellow"}} className="dailypost-frame2">
-          <span style={{border: "3px solid yellow"}} className="dailypost-text08">
+        <div className="dailypost-frame2">
+          <span className="dailypost-text08">
             {post.title}
           </span>
           {/* <span style={{border: "3px solid yellow"}} className="dailypost-text02">
             {post.postType}
           </span> */}
-          <span style={{border: "3px solid yellow"}} className="dailypost-text04">
+          <span className="dailypost-text04">
               {post.body}
           </span>
-          <span style={{border: "3px solid green"}} className="dailypost-text">
+          <span className="dailypost-text">
             <span>
               {formatDate2(post.createdAt, post.expiredAt)} {formatPeriod(currentTime, post.expiredAt)} 남았습니다.
             </span>
             </span>
         </div>
        
-      <div style={{border: "3px solid green"}} className="dailypost-group99">
+      <div className="dailypost-group99">
         
         <div className="dailypost-frame7">
           <button style={{ border: "none" }} onClick={handleLikeClick}>
@@ -366,7 +372,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         </button>
         <button className="dailypost-frame5">
           <span className="dailypost-text14">
-            실시간 채팅하기
+            채팅하기
           </span>
         </button>
       </div>

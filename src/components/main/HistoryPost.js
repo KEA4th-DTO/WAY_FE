@@ -22,6 +22,8 @@ import Comment from './Comment';
 import basic_profile from "../../assets/images/users/basic_profile.png";
 import Report from './Report.js';
 import EditHistoryPost from './EditHistoryPost';
+import { useNavigate } from 'react-router-dom';
+
 
 const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl, onClose }) => {
      // null 체크를 위해 미리 초기화
@@ -37,11 +39,14 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
 
      const [editMode, setEditMode] = useState(false);
      const [reportMode, setReportMode] = useState(false);
+     const [commentState, setCommentState] = useState(false);
 
      const token = localStorage.getItem("accessToken");
      const Server_IP = process.env.REACT_APP_Server_IP;
      const userNickname = localStorage.getItem("userNickname");
      const [dropdownOpen, setDropdownOpen] = React.useState(false);
+     const navigate = useNavigate();
+
 
      const toggle = () => setDropdownOpen((prevState) => !prevState);
     //  "postId": 4,
@@ -85,7 +90,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [postId]);
+  }, [postId, editMode]);
 
   useEffect(() => {
 
@@ -357,6 +362,9 @@ const ClickComment = async () => {
     }
 };
 
+const handleMapClick = () => {
+  navigate('/othersmap', { state: writerNickname });
+};
 
   return (
     <>
@@ -364,7 +372,7 @@ const ClickComment = async () => {
     : 
 <div className="history-con">
   {reportMode === true && (
-    <div>
+    <div className='report-his'>
       <Report 
         targetId = {postId}
         type = "POST"
@@ -372,8 +380,6 @@ const ClickComment = async () => {
       />
     </div>
   )}
-  
- 
     <div>   
       <img
       src={close}
@@ -421,12 +427,12 @@ const ClickComment = async () => {
           {post.title}
         </span>
           <div id='작성자 정보' className="intro-writer">
-            <div className="intro-writer-profileimg">
+            <button className="intro-writer-profileimg" onClick={handleMapClick}>
               <img
                 src={writerProfileImageUrl || user3}
                 className="profileimg"
               />
-            </div>
+            </button>
             <span className="intro-writer-nickname">
               <span>{writerNickname}</span>
             </span>
@@ -471,7 +477,7 @@ const ClickComment = async () => {
               </span>
             </div>
             <div className="frame-comment">
-              <button onClick={ClickComment} style={{border:"none"}}>
+            <button onClick={() => { ClickComment(); setCommentState(!commentState); }} style={{border:"none", backgroundColor:"#fff"}}>
               <img
                 src={comment}
                 alt="게시글 댓글"
@@ -487,10 +493,10 @@ const ClickComment = async () => {
       
 
       <div className='comment-container'>
-      {comments && comments.length > 0 && (
+      {commentState === true && comments.length > 0 && (
             comments.map((item) => (
               <div>
-                <Comment data={item} onDelete={handleDelete}></Comment>
+                <Comment data={item} onDelete={handleDelete} userProfileimg={userProfileimg}></Comment>
               </div>
             ))
           )}

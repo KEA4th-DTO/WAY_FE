@@ -15,6 +15,7 @@ const Localmap = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
+
   const token = localStorage.getItem("accessToken");
   const Server_IP = process.env.REACT_APP_Server_IP;
 
@@ -63,7 +64,7 @@ const Localmap = () => {
         })
         .catch((error) => console.error("Error fetching pin data:", error));
     }
-  }, [dailyBounds]);
+  }, [dailyBounds, selectedPost]);
 
   useEffect(() => {
     if (historyBounds) {
@@ -93,15 +94,16 @@ const Localmap = () => {
         })
         .catch((error) => console.error("Error fetching pin data:", error));
     }
-  }, [historyBounds]);
+  }, [historyBounds, selectedPost]);
 
-  useEffect(() => {
-    console.log('게시글//combinePost:', combinePost);
-  }, [combinePost, selectedPost]);
+  // useEffect(() => {
+  //   // console.log('게시글//combinePost:', combinePost);
+  // }, [combinePost]);
 
   // 게시글 클릭 처리
   const handlePostClick = (selectedItem) => {
     setSelectedPost(selectedItem);
+    console.log('selectedItem:', selectedItem);
   };
 
   // 뒤로가기 버튼 클릭 처리
@@ -170,11 +172,11 @@ const Localmap = () => {
           )}
         </div>
       </div>
-      {selectedPost && selectedPost.postType === "HISTORY" && (
+      {selectedPost && selectedPost.postType !== "DAILY" && (
         <div className="historyPost-con">
           <HistoryPost
             postId={selectedPost.postId}
-            thumbnail={selectedPost.imageUrl}
+            thumbnail={selectedPost.imageUrl || selectedPost.thumbnailImageUrl}
             writerNickname={selectedPost.writerNickname}
             writerProfileImageUrl={selectedPost.writerProfileImageUrl}
             onClose={handleBackClick}
