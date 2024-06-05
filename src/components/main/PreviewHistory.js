@@ -63,6 +63,7 @@ const PreviewHistory = ({ postId, userProfileimg }) => {
 
   
   return (
+    
 <div style={{border: "3px solid red"}}className="history-con">
   <div style={{border: "3px solid yellow"}} className="history-frame">
 

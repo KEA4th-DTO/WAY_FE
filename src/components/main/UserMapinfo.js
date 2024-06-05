@@ -342,22 +342,22 @@ const UserMapinfo = ({ userNickname, capture, active }) => {
 
     return (
         <div>
-            <button onClick={onRefreshClick}>
+            <button className="refresh-button" onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
             </button>
             
-            <div style={{ display: 'inline-block', marginLeft: '280px', border: "3px solid red" }}>
+            <div style={{ display: 'inline-block', marginLeft: '280px', marginTop:"7%" }}>
                 <span style={{ fontSize: '10px', margin: "3px" }}>all pin</span>
                 <span style={{ fontSize: '10px', margin: "3px" }}>daily pin</span>
                 <span style={{ fontSize: '10px', margin: "3px" }}>history pin</span>
                 <br />
-                <button onClick={onClickAllPin} style={{ border: "none" }}>
+                <button onClick={onClickAllPin} className="basic-button">
                     <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px' }} />
                 </button>
-                <button onClick={onClickDailyPin} style={{ border: "none" }}>
+                <button onClick={onClickDailyPin} className="basic-button">
                     <img src={dailyPinState ? full_dailyPin : dailyPin} alt="dailyPin" style={{ width: '30px', height: '30px' }} />
                 </button>
-                <button onClick={onClickHistoryPin} style={{ border: "none" }}>
+                <button onClick={onClickHistoryPin} className="basic-button">
                     <img src={historyPinState ? full_historyPin : historyPin} alt="historyPin" style={{ width: '30px', height: '30px' }} />
                 </button>
             </div>

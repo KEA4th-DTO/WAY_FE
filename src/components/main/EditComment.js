@@ -51,29 +51,29 @@ const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
     };
 
     return(
-    <div style={{border: "3px solid red"}} className="comment-con">
-        <div style={{border: "3px solid blue"}} className="floating-history-comment-frame02">
-              <div style={{border: "3px solid orange"}} className="comment-save">
-                <button onClick={saveEditClick} style={{border: "none"}}>
+    <div className="comment-con">
+        <div className="floating-history-comment-frame02">
+              <div className="comment-save">
+                <button onClick={saveEditClick} className="comment-edit-save">
                     <span>
                     저장
                     </span>
                 </button>
               </div>
              
-              <div style={{border: "3px solid orange"}} className="comment-writer">
+              <div className="comment-writer">
               <img
                   src={writerProfileImageUrl}
                   alt="댓글 작성자 프로필이미지"
                   className="comment-writer-profileimg"
                 />
-                <span style={{border: "3px solid orange"}} className="comment-writer-nickname">
+                <span className="comment-writer-nickname">
                   {userNickname}
                 </span>
               </div>
-              <span style={{border: "3px solid orange"}}  className="comment-content">
+              <span className="comment-content">
             <input 
-              style={{border: "3px solid yellow", width: "350px"}} 
+              style={{ width: "350px"}} 
               type="text" 
               defaultValue={comment.body}
               onChange={(e) => setBody(e.target.value)} 

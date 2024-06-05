@@ -76,9 +76,9 @@ const Mymap = () => {
    : userPost;
 
   return ( 
-    <div style={{border: "5px solid red", display: "flex", width: "950px"}}>
+    <div style={{ display: "flex", width: "950px"}}>
       {/* 지도 & 핀 */}
-      <div id="map-con" style={{border: "3px solid blue"}}>
+      <div id="map-con" >
         <div>
           <span className="initial-main-page-text">마이맵</span>
           <div>
@@ -88,7 +88,7 @@ const Mymap = () => {
       </div>
         
       {/* 게시글 */}
-      <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
+      <div className="initial-main-page-frame" style={{ marginLeft: "20px"}}>
         <span className="initial-main-page-text">게시글 {userPost.length}개</span>
       
         <button style={{display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none"}} className="dailypost-frame8" onClick={handleBackClick}>
@@ -96,10 +96,10 @@ const Mymap = () => {
             <img alt="뒤로가기" src={back} className="dailypost-vector3" />
           }
         </button>
-        <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
           {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
         </div>
-        <div id="list" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        <div id="list"  className='list-con' style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block" }}>
           {orderedPosts && orderedPosts.length > 0 ? (
             orderedPosts.map((item) => (
               <div key={item.postId} onClick={() => handlePostClick(item)}>

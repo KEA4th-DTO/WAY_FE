@@ -3,6 +3,7 @@ import "../../assets/scss/layout/_localmap.scss";
 
 import bg1 from "../../assets/images/bg/bg1.jpg";
 import like from "../../assets/images/logos/like.png";
+import full_like from "../../assets/images/logos/full_like.png";
 import comment from "../../assets/images/logos/comment.png";
 import historyPin from "../../assets/images/icons/historyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
@@ -12,6 +13,8 @@ import { formatDate } from "../../utils/changeFormat";
 
 const HistoryList = ({ data, isActive }) => {
   const [activeId, setActiveId] = useState(null);
+  const [liked, setLiked] = useState(data.isLiked);
+
 
   useEffect(() => { 
     if (isActive && isActive.item) {
@@ -62,7 +65,10 @@ const HistoryList = ({ data, isActive }) => {
               <span>{formatDate(data.createdAt)}</span>
             </span>
             <div className="frame4-frame1">
-              <img src={like} alt="좋아요" className="frame4-svg" />
+              <img 
+                 src={liked === true ? full_like : like}
+                 alt="좋아요" 
+                className="frame4-svg" />
               <span className="frame4-text">
                 <span>{data.likesCount || 0}</span>
               </span>

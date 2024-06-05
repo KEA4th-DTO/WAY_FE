@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/scss/layout/_comment.scss";
 import comment_more from "../../assets/images/logos/comment_more.png";
-import like from "../../assets/images/logos/like.png";
 import { formatDate_time } from '../../utils/changeFormat';
 import {
   DropdownToggle,
@@ -9,22 +8,84 @@ import {
   DropdownItem,
   Dropdown,
 } from "reactstrap";
+import like from "../../assets/images/logos/like.png";
+import full_like from "../../assets/images/logos/full_like.png";
 import EditComment from "./EditComment";
 import Report from "./Report";
+import reply from "../../assets/images/logos/comment.png";
 
-const Comment = ({ data }) => {
+const Comment = ({ data, onDelete }) => {
+  console.log('댓정보: ', data);
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
   const Server_IP = process.env.REACT_APP_Server_IP;
+
+  const [likeNum, setLikeNum] = useState(data.likeCounts);
+  const [liked, setLiked] = useState(data.isLiked);
+  const [replyNum, setReplyeNum] = useState(data.replyCounts);
 
   const [editMode, setEditMode] = useState(false);
   const [reportMode, setReportMode] = useState(false);
   const commentId = data.commentId;
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [body, setBody] = useState(data.body);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
- 
+  useEffect(() => {
+    if (commentId) {
+      const url = `${Server_IP}/post-service/comment/${commentId}`;
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok ' + res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.isSuccess) {
+          setBody(data.result.body);
+        } else {
+          console.error("Error in API response:", data.message);
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+    }
+  }, [userNickname, token, editMode]);
+
+  const handleLikeClick = () => {
+    // 좋아요 로직 추가
+    const url = `${Server_IP}/post-service/comment/like/${commentId}`;
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Network response was not ok ' + res.statusText);
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data.isSuccess) {
+            setLikeNum(data.result.commentLikesCount);
+            alert(data.message);
+            setLiked(!liked);
+            console.log("Successfully liked post:", data);
+        } else {
+            console.error("Error liking post:", data.message);
+        }
+    })
+    .catch(error => console.error("Error unliking post:", error));
+    };
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -65,7 +126,7 @@ const Comment = ({ data }) => {
       .then(data => {
         if (data.isSuccess) {
           console.log("Successfully deleted post:", data);
-          // onDelete(commentId);
+          onDelete(commentId);
         } else {
           console.error("Error deleting post:", data.message);
         }
@@ -77,7 +138,7 @@ const Comment = ({ data }) => {
     <>
     {editMode ? <EditComment comment={data} writerProfileImageUrl={data.writerProfileImageUrl} onsave={handleSaveClick} />
     :
-    <div style={{border: "3px solid red"}} className="comment-con">
+    <div className="comment-con">
      {reportMode === true && (
           <div>
             <Report 
@@ -87,17 +148,27 @@ const Comment = ({ data }) => {
             />
           </div>
         )}
-     <div style={{border: "3px solid blue"}} className="floating-history-comment-frame02">
-              <div style={{border: "3px solid orange"}} className="comment-like">
+     <div className="floating-history-comment-frame02">
+              <button className="comment-like" onClick={handleLikeClick}>
                   <img
-                      src={like}
+                      src={liked === true ? full_like : like}                      
                       alt="좋아요"
                       className="comment-like-img"
                   />
                   <span className="comment-like-text">
-                      <span>0</span>
+                      <span>{likeNum}</span>
                   </span>
-              </div>
+              </button>
+              <button className="comment-reply">
+                  <img
+                      src={reply}
+                      alt="답글"
+                      className="comment-like-img"
+                  />
+                  <span className="comment-like-text">
+                      <span>{replyNum}</span>
+                  </span>
+              </button>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
               <DropdownToggle
               style={{
@@ -113,34 +184,33 @@ const Comment = ({ data }) => {
           
             </DropdownToggle>
                 {data.isOwned 
-                ?(<DropdownMenu style={{marginLeft:"230px", marginTop:"5px", width:"30px"}}>
-                  <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
-                  <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
+                ?(<DropdownMenu  style={{marginLeft:"230px", marginTop:"5px", width:"100px", height:"90px"}}>
+                  <DropdownItem className="comment-drop" onClick={handleEditClick}>수정하기</DropdownItem>
+                  <DropdownItem className="comment-drop" onClick={handleDeleteClick}>삭제하기</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem onClick={handleEditClick}>답글달기</DropdownItem>
-                  <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
+                  <DropdownItem  className="comment-drop">답글달기</DropdownItem>
                   {/* <DropdownItem divider />
                   <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem> */}
                 </DropdownMenu>)
                 :(<DropdownMenu>
-s                  <DropdownItem onClick={handleEditClick}>답글 달기</DropdownItem>
+s                  <DropdownItem >답글 달기</DropdownItem>
                   <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
                 </DropdownMenu>)}
               
             </Dropdown>
              
-              <div style={{border: "3px solid orange"}} className="comment-writer">
+              <div className="comment-writer">
               <img
                   src={data.writerProfileImageUrl}
                   alt="댓글 작성자 프로필이미지"
                   className="comment-writer-profileimg"
                 />
-                <span style={{border: "3px solid orange"}} className="comment-writer-nickname">
+                <span className="comment-writer-nickname">
                   {data.writerNickname}
                 </span>
               </div>
-              <span style={{border: "3px solid orange"}}  className="comment-content">
-                <span>{data.body}</span>
+              <span className="comment-content">
+                <span>{body}</span>
               </span>
               <span className="comment-content-time">
                 <span>{formatDate_time(data.createdAt)}</span>

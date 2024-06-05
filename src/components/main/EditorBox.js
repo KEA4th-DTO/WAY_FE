@@ -66,6 +66,7 @@ const EditorBox = () => {
                 bodyPlainText,
             };
             formData.append('createHistoryDto', new Blob([JSON.stringify(historyDto)], { type: 'application/json' })); // createHistoryDto 추가
+           
             const url = `${Server_IP}/post-service/history`;
             const response = await fetch(url, {
                 method: 'POST',
@@ -237,7 +238,7 @@ const EditorBox = () => {
                     )} 
             </span>
             <Editor
-                initialValue="hello react editor world!"
+                initialValue="hello !"
                 previewStyle="vertical"
                 height="600px"
                 initialEditType="wysiwyg"

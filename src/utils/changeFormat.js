@@ -64,5 +64,5 @@ export function formatPeriod(currentTime, expiredAt) {
     const minutesRemaining = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
 
     // 결과 반환
-    return `{${hoursRemaining}시간 ${minutesRemaining}분}`;
+    return `"${hoursRemaining}시간 ${minutesRemaining}분"`;
 }
