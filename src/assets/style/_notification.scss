@@ -3,6 +3,7 @@
     margin-bottom: 10px;
     border-radius: 5px;
     color: #fff;
+    // font-size: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,51 +17,36 @@
 
 .notification-comment {
     background-color: #6a9f5b;
-
-    /* Green */
     &:hover {
         background-color: #588a4a;
-        /* Darker Green */
     }
 }
 
 .notification-postlike {
     background-color: #3b82c4;
-
-    /* Blue */
     &:hover {
         background-color: #336ba3;
-        /* Darker Blue */
     }
 }
 
 .notification-commentlike {
     background-color: #3b82c4;
-
-    /* Blue */
     &:hover {
         background-color: #336ba3;
-        /* Darker Blue */
     }
 }
 
 .notification-reply {
     background-color: #f5b748;
-
-    /* Orange */
     &:hover {
         background-color: #d99a38;
-        /* Darker Orange */
     }
 }
 
 .notification-follow {
     background-color: #d16060;
-
-    /* Red */
     &:hover {
         background-color: #b54848;
-        /* Darker Red */
     }
 }
 

@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { EventSourcePolyfill } from "event-source-polyfill";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import wayLogo from "../assets/images/logos/way_logo.png";
 import user from "../assets/images/users/user.png";
 import alarm from "../assets/images/logos/alarm.png";
@@ -30,6 +32,7 @@ const Header = () => {
   const [hasNewNotification, setHasNewNotification] = useState(false);
   const [lastEventId, setLastEventId] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
+  const [firstConnection, setFirstConnection] = useState(true); // 첫 연결 여부를 확인하는 상태
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -70,17 +73,25 @@ const Header = () => {
 
       eventSource.onmessage = (event) => {
         try {
-          // JSON 형식의 데이터인지 확인
           if (isValidJson(event.data)) {
             const newNotification = JSON.parse(event.data);
             setNotifications((prev) => [...prev, newNotification]);
             setHasNewNotification(true);
             setLastEventId(event.lastEventId);
+            if (!firstConnection) {
+              toast.info("알람이 왔습니다!");
+            }
           } else {
-            console.log("Non-JSON message received:", event.data);
+            // JSON이 아닌 경우에도 알림 표시
+            if (!firstConnection) {
+              toast.info("새로운 알림이 있습니다");
+            }
+            setHasNewNotification(true);
           }
         } catch (error) {
           console.error("Error parsing SSE event data:", error);
+        } finally {
+          setFirstConnection(false); // 첫 연결 이후로 플래그 변경
         }
       };
 
@@ -93,30 +104,30 @@ const Header = () => {
         eventSource.close();
       };
     }
-  }, [token, lastEventId]);
+  }, [token, lastEventId, firstConnection]);
+
+  const fetchNotifications = async () => {
+    const Server_IP = process.env.REACT_APP_Server_IP;
+    if (!token) return;
+
+    try {
+      const response = await axios.post(
+        `${Server_IP}/notification-service/notification-list`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setNotifications(response.data.result);
+      console.log(response.data.result);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      const Server_IP = process.env.REACT_APP_Server_IP;
-      if (!token) return;
-
-      try {
-        const response = await axios.post(
-          `${Server_IP}/notification-service/notification-list`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setNotifications(response.data.result);
-        console.log(response.data.result);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      }
-    };
-
     if (token) {
       fetchNotifications();
     }
@@ -136,6 +147,7 @@ const Header = () => {
 
   const handleAlarmClick = () => {
     setHasNewNotification(false);
+    fetchNotifications(); // 알람 아이콘 클릭 시 알람 리스트 새로고침
   };
 
   return (
@@ -254,6 +266,7 @@ const Header = () => {
           </Button>
         </div>
       </Collapse>
+      <ToastContainer />
     </Navbar>
   );
 };
