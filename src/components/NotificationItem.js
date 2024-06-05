@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/style/_notification.scss";
+import axios from "axios";
 
 const getTimeDifference = (timestamp) => {
   const now = new Date();
@@ -20,8 +21,12 @@ const getTimeDifference = (timestamp) => {
   }
 };
 
-const NotificationItem = ({ notification }) => {
+const NotificationItem = ({ notification, onDelete }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   let notificationClass = "notification-item";
+  if (isDeleting) notificationClass += " deleting";
+
   const message = notification.message;
   if (/대댓글을 남겼습니다/.test(message)) {
     notificationClass += " notification-reply";
@@ -35,12 +40,35 @@ const NotificationItem = ({ notification }) => {
     notificationClass += " notification-commentlike";
   }
 
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    setTimeout(async () => {
+      try {
+        const Server_IP = process.env.REACT_APP_Server_IP;
+        await axios.delete(
+          `${Server_IP}/notification-service/notification/delete/${notification.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        onDelete(notification.id);
+      } catch (error) {
+        console.error("Error deleting notification:", error);
+      }
+    }, 500); // 500ms 후 삭제 API 호출 및 상태 업데이트
+  };
+
   return (
     <div className={notificationClass}>
-      <div>{notification.message}</div>
+      <div className="notification-message">{notification.message}</div>
       <div className="notification-time">
         {getTimeDifference(notification.createdAt)}
       </div>
+      <button className="notification-delete" onClick={handleDelete}>
+        X
+      </button>
     </div>
   );
 };

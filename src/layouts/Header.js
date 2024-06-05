@@ -82,7 +82,6 @@ const Header = () => {
               toast.info("알람이 왔습니다!");
             }
           } else {
-            // JSON이 아닌 경우에도 알림 표시
             if (!firstConnection) {
               toast.info("새로운 알림이 있습니다");
             }
@@ -216,9 +215,7 @@ const Header = () => {
               />
             </DropdownToggle>
 
-            <DropdownMenu
-              style={{ width: "350px", maxHeight: "500px", overflowY: "auto" }}
-            >
+            <DropdownMenu className="notification-dropdown-menu">
               {notifications.length === 0 ? (
                 <DropdownItem header>알림이 없습니다</DropdownItem>
               ) : (
