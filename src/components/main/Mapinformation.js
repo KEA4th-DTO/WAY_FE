@@ -224,7 +224,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             // // Combine post and historypost arrays
             // const combinedPosts = [...post, ...historypost];
         
-            console.log('combinePost:', combinePost);
+            // console.log('combinePost:', combinePost);
             const markers = combinePost.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
                 // console.log('정보: ', item);

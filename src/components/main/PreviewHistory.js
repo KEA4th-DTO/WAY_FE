@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_historypost.scss";
+import close from "../../assets/images/logos/close.png";
+import EditorViewer from './EditorViewer.tsx';
 
-import { Viewer } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
-import basic_profile from "../../assets/images/users/basic_profile.png";
 import like from "../../assets/images/logos/like.png";
 import comment from "../../assets/images/logos/comment.png";
 import more from "../../assets/images/logos/more.png";
 import comment_more from "../../assets/images/logos/comment_more.png";
+import bg1 from "../../assets/images/bg/bg1.jpg";
 
 const PreviewHistory = ({ postId, userProfileimg }) => {
      // null 체크를 위해 미리 초기화
@@ -16,18 +15,6 @@ const PreviewHistory = ({ postId, userProfileimg }) => {
      const token = localStorage.getItem("accessToken");
      const userNickname = localStorage.getItem("userNickname");
      const Server_IP = process.env.REACT_APP_Server_IP;
-
-    //  "postId": 4,
-    //  "writerNickname": null,
-    //  "writerProfileImageUrl": null,
-    //  "title": "인천 바닷가",
-    //  "bodyHtmlUrl": "https://way-bucket-s3.s3.ap-northeast-2.amazonaws.com/history_body/a72d9141-2d92-457f-b0b2-ea962638963a",
-    //  "bodyPreview": "여기 넘 좋네요.\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n\n어쩌고 저쩌고\n\n\n강아지 귀엽네요",
-    //  "isLiked": false,
-    //  "likesCount": 4,
-    //  "commentsCount": 0,
-    //  "isOwned": true,
-    //  "createdAt": "2024-05-27T03:06:41.334138"
 
   useEffect(() => {
     if (postId) {
@@ -63,75 +50,93 @@ const PreviewHistory = ({ postId, userProfileimg }) => {
 
   
   return (
-    
-<div style={{border: "3px solid red"}}className="history-con">
-  <div style={{border: "3px solid yellow"}} className="history-frame">
 
-      {/* -------------게시글------------ */}
-      <div>
-        <span className="intro-postType">
-          History
-        </span>
-        <span className="intro-title">
-          {post.title}
-        </span>
-        <span className="intro-createAt" style={{left:"80px"}}>
-            {formattedTime}
-        </span>
-          <div style={{border: "3px solid red"}} id='작성자 정보' className="intro-writer">
-            <div className="intro-writer-profileimg">
-              <img
-                src={userProfileimg || basic_profile}
-                className="profileimg"
-              />
-            </div>
-            <span className="intro-writer-nickname">
-              <span>{userNickname}</span>
-            </span>
-            <button className="intro-follow" >
-                <span style={{ color: "#404DF2"}}>팔로우</span>
-            </button>
-          </div>
-
-        {/* -------------게시글 내용------------ */}    
-        <div style={{border: "3px solid red"}} className="frame-content">
-         
-            <Viewer initialValue={post.body} />
-           
-          
-          {/* -------------해시태그------------ */}
-          {/* <div style={{border: "3px solid red"}} id='해시태그' className="frame-hashtag">
-              <span className="frame-hashtag-text"> #짱구 </span>
-          </div> */}
-
-          {/* -------------게시글 좋아요수, 댓글수------------ */}
-          <div className='frame-like-and-comment'>
-            <div style={{border: "3px solid red"}} className="frame-like">
-              <img
-                src={like}
-                alt="게시글 좋아요"
-                className="frame-like-img"
-              />
-              <span id='좋아요 수' className="frame-like-text">
-                {post.likesCount}
-              </span>
-            </div>
-            <div style={{border: "3px solid red"}} className="frame-comment">
-              <img
-                src={comment}
-                alt="게시글 댓글"
-                className="frame-like-img"
-              />
-              <span id='댓글 수' className="frame-like-text">
-                {post.commentsCount}
-              </span>
-            </div>
-          </div>
-        </div>
+    <div className="history-con">
+      <div>   
+        <img
+        src={close}
+        alt="닫기"
+        className="close-img"
+      />
       </div>
+        {/* -------------게시글------------ */}
+       
+        <div className="history-frame">
+          <span className="intro-postType">
+            <span>History</span>
+          </span>
+          <span className="intro-title">
+            {post.title}
+          </span>
+            <div id='작성자 정보' className="intro-writer">
+              <button className="intro-writer-profileimg">
+                <img
+                  src={userProfileimg}
+                  className="profileimg"
+                />
+              </button>
+              <span className="intro-writer-nickname">
+                <span>{userNickname}</span>
+              </span>
+              <button className="intro-follow" >
+                <span style={{ color: "#000" }}>팔로우</span>
+              </button>
+              <span className="intro-createAt">
+                {formattedTime}
+              </span>
+            </div>
+  
+          {/* -------------게시글 내용------------ */}    
+          <div className="frame-content">
+          <div className="intro-thumbnail">
+            <img
+              src={bg1}
+              alt="썸네일 이미지"
+              className="thumbnail-img"
+            />
+          </div>
+          {post.body ? <EditorViewer contents={post.body} /> : <div>Loading...</div>}
+             
+            
+            {/* -------------해시태그------------ */}
+            {/* <div style={{border: "3px solid red"}} id='해시태그' className="frame-hashtag">
+                <span className="frame-hashtag-text"> #짱구 </span>
+            </div> */}
+  
+            {/* -------------게시글 좋아요수, 댓글수------------ */}
+            <div className='frame-like-and-comment'>
+              <div className="frame-like">
+                <button style={{ border: "none" }}>
+                  <img
+                      alt="좋아요"
+                      src={like}
+                      className="frame-like-img"
+                  />
+              </button>
+             
+                <span id='좋아요 수' className="frame-like-text">
+                  0
+                </span>
+              </div>
+              <div className="frame-comment">
+              <button style={{border:"none", backgroundColor:"#fff"}}>
+                <img
+                  src={comment}
+                  alt="게시글 댓글"
+                  className="frame-like-img"
+                />
+                </button>
+                <span id='댓글 수' className="frame-like-text">
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        
+  
       
+    </div>
   </div>
-</div>
     
   );
 };

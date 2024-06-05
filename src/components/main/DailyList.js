@@ -15,7 +15,6 @@ const DailyList = ({ data, isActive }) => {
         currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
 
   const [activeId, setActiveId] = useState(null);
-  const [liked, setLiked] = useState(data.isLiked);
 
   useEffect(() => { 
     if (isActive && isActive.item) {
@@ -70,7 +69,7 @@ const DailyList = ({ data, isActive }) => {
 
             <div className="frame4-frame1">
               <img 
-                 src={liked === true ? full_like : like}
+                 src={data.isLiked === true ? full_like : like}
                 alt="좋아요" 
                 className="frame4-svg" />
               <span className="frame4-text">

@@ -46,8 +46,8 @@
     padding: 7px 10px;
     position: absolute;
     top: 7px;
-    left: 10px;
-    width: 63px;
+    left: 5px;
+    width: 70px;
     height: 30px; 
     display: flex;
     flex-direction: column;
@@ -182,7 +182,8 @@
 .filter-buttons {
   position: absolute;
   top: 45px;
-  left: 10px;
+  left: 5px;
+  width: 70px;
   display: flex;
   flex-direction: column;
   background-color: white;
