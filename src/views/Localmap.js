@@ -128,7 +128,7 @@ const Localmap = () => {
       </div>
 
       {/* 게시글 */}
-      <div className="initial-main-page-frame" style={{ marginLeft: "20px" }}>
+      <div className="initial-main-page-frame">
         <span className="initial-main-page-text">게시글 {orderedPosts.length}개</span>
         <button
           style={{ display: selectedPost && selectedPost.postType === "DAILY" ? "block" : "none" }}

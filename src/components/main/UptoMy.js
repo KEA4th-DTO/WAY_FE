@@ -76,7 +76,7 @@ const UptoMy = () => {
       </div>
         
       {/* 게시글 */}
-      <div className="initial-main-page-frame" style={{ marginLeft: "20px"}}>
+      <div className="initial-main-page-frame">
         {
             postType === 'DAILY' 
             ? <div style={{ display: "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
