@@ -34,7 +34,6 @@ function Followers() {
               daily: follower.memberInfoResponseDTO.dailyCount,
             }));
             setFollowers(followersData); // result 배열을 상태에 저장
-            console.log(followersData);
           } else {
             // console.log(response.status);
             throw new Error("Unexpected response structure");
@@ -42,9 +41,7 @@ function Followers() {
         } else {
           throw new Error(`Unexpected response status: ${response.status}`);
         }
-      } catch (error) {
-        console.error("Error fetching followers:", error);
-      }
+      } catch (error) {}
     };
 
     fetchFollowers();

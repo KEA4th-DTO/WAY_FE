@@ -29,12 +29,9 @@ function Follower({ name, nickName, image, initialFollowState }) {
         if (response.status === 200) {
           setIsFollow(!isFollow);
         } else {
-          console.error(`Follow ${name} failed: ${response.status}`);
         }
       })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+      .catch((error) => {});
   };
 
   return (

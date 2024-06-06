@@ -7,7 +7,7 @@ function Following({ name, nickName, image, isFollow, onFollowChange }) {
 
   // 아래 useEffect는 디버깅을 위해 추가했습니다. 초깃값 설정 확인을 위해 추가하였습니다.
   useEffect(() => {
-    console.log(`Initial isFollowing state for ${nickName}:`, isFollowing);
+    // console.log(`Initial isFollowing state for ${nickName}:`, isFollowing);
   }, [isFollowing, nickName]);
 
   const handleFollowClick = () => {
@@ -29,11 +29,11 @@ function Following({ name, nickName, image, isFollow, onFollowChange }) {
           setIsFollowing(!isFollowing);
           onFollowChange("followings", !isFollowing);
         } else {
-          console.error(`Follow ${name} failed: ${response.status}`);
+          // console.error(`Follow ${name} failed: ${response.status}`);
         }
       })
       .catch((error) => {
-        console.error(`Error: ${error}`);
+        // console.error(`Error: ${error}`);
       });
   };
 

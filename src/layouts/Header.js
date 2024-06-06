@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Navbar,
-  Nav,
-  NavItem,
-  NavbarBrand,
-  Collapse,
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import { EventSourcePolyfill } from "event-source-polyfill";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EventSourcePolyfill } from "event-source-polyfill";
 import wayLogo from "../assets/images/logos/way_logo.png";
 import user from "../assets/images/users/user.png";
 import alarm from "../assets/images/logos/alarm.png";
 import hamburger from "../assets/images/logos/hamburger.png";
 import NotificationList from "../components/NotificationList";
+import Sidebar from "./Sidebar"; // Sidebar 컴포넌트 추가
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "../assets/scss/layout/_header.scss"; // 스타일 추가
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [alarmDropdownOpen, setAlarmDropdownOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // 사이드바 상태 추가
   const [notifications, setNotifications] = useState([]);
   const [hasNewNotification, setHasNewNotification] = useState(false);
   const [lastEventId, setLastEventId] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
   const [firstConnection, setFirstConnection] = useState(true); // 첫 연결 여부를 확인하는 상태
+  const [isNotificationBoxOpen, setIsNotificationBoxOpen] = useState(false); // 알림 박스 상태 추가
+  const [alarmDropdownOpen, setAlarmDropdownOpen] = useState(false);
+  const toggleAlarmDropdown = () =>
+    setAlarmDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -88,14 +85,12 @@ const Header = () => {
             setHasNewNotification(true);
           }
         } catch (error) {
-          console.error("Error parsing SSE event data:", error);
         } finally {
           setFirstConnection(false); // 첫 연결 이후로 플래그 변경
         }
       };
 
       eventSource.onerror = (err) => {
-        console.error("EventSource failed:", err);
         eventSource.close();
       };
 
@@ -120,10 +115,7 @@ const Header = () => {
         }
       );
       setNotifications(response.data.result);
-      console.log(response.data.result);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -132,65 +124,55 @@ const Header = () => {
     }
   }, [token]);
 
-  const Handletoggle = () => {
+  const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const showMobilemenu = () => {
-    document.getElementById("sidebarArea").classList.toggle("showSidebar");
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen); // 사이드바 상태 토글
   };
-
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggleAlarmDropdown = () =>
-    setAlarmDropdownOpen((prevState) => !prevState);
 
   const handleAlarmClick = () => {
     setHasNewNotification(false);
     fetchNotifications(); // 알람 아이콘 클릭 시 알람 리스트 새로고침
+    setIsNotificationBoxOpen(!isNotificationBoxOpen); // 알림 박스 상태 토글
   };
 
   return (
-    <Navbar color="light" dark expand="md" sticky="top">
-      <div className="d-flex align-items-center">
-        <NavbarBrand href="/" className="d-lg-none">
-          <img src={wayLogo} alt="Way Logo" style={{ maxWidth: "100px" }} />
-        </NavbarBrand>
-      </div>
-      <Collapse navbar isOpen={isOpen}>
-        <Nav className="me-auto navbar-nav" navbar>
-          <NavItem>
+    <header className="header">
+      <nav className="navbar">
+        <div className="navbar-brand">
+          <NavLink to="/">
+            <img src={wayLogo} alt="Way Logo" className="logo" />
+          </NavLink>
+        </div>
+        <ul className={`navbar-nav ${isOpen ? "show" : ""}`}>
+          <li className="nav-item">
             <NavLink to="/localmap" className="nav-link">
               로컬맵
             </NavLink>
-          </NavItem>
-          <div className="menu-divider"></div>
-          <NavItem>
+          </li>
+          <li className="nav-divider"></li> {/* 구분선 추가 */}
+          <li className="nav-item">
             <NavLink to="/mymap" className="nav-link">
               마이맵
             </NavLink>
-          </NavItem>
-          <div className="menu-divider"></div>
-          <NavItem>
+          </li>
+          <li className="nav-divider"></li> {/* 구분선 추가 */}
+          <li className="nav-item">
             <NavLink to="/upload" className="nav-link">
               업로드
             </NavLink>
-          </NavItem>
-          {/* <div className="menu-divider"></div>
-          <NavItem>
-            <NavLink to="/chatting" className="nav-link">
-              채팅
-            </NavLink>
-          </NavItem> */}
-          <div className="menu-divider"></div>
-          <NavItem>
+          </li>
+          <li className="nav-divider"></li> {/* 구분선 추가 */}
+          <li className="nav-item">
             <NavLink to="/search" className="nav-link">
               검색
             </NavLink>
-          </NavItem>
-        </Nav>
-
+          </li>
+        </ul>
         <div className="navbar-buttons">
-          <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
+        <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
             <DropdownToggle
               style={{
                 backgroundColor: "transparent",
@@ -223,48 +205,17 @@ const Header = () => {
               )}
             </DropdownMenu>
           </Dropdown>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={user}
-              alt="profile"
-              width="30"
-              onClick={handleProfileClick} // 프로필 클릭 시 handleProfileClick 호출
-              style={{
-                cursor: "pointer",
-                background: "transparent",
-                border: "none",
-                padding: 0,
-              }} // 커서가 포인터로 변경되어 클릭 가능함을 표시
-            />
+          <div className="navbar-item" onClick={handleProfileClick}>
+            <img src={user} alt="profile" className="profile-icon" />
           </div>
-
-          <Button
-            className="d-lg-none"
-            onClick={showMobilemenu}
-            style={{
-              background: "transparent",
-              border: "none",
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={hamburger}
-              alt="Menu"
-              style={{ width: "25px", height: "25px" }}
-            />
-          </Button>
+          <button className="navbar-toggler" onClick={toggleSidebar}>
+            <img src={hamburger} alt="Menu" />
+          </button>
         </div>
-      </Collapse>
+      </nav>
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <ToastContainer />
-    </Navbar>
+    </header>
   );
 };
 
