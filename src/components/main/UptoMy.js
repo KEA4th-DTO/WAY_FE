@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import UserMapinfo from "./UserMapinfo";
+import UptoMyMap from "./UptoMyMap";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import basic_profile from "../../assets/images/users/basic_profile.png";
@@ -62,10 +62,9 @@ const UptoMy = () => {
     <div style={{ display: "flex", width: "950px"}}>
       {/* 지도 & 핀 */}
       <div id="map-con">
-        <div>
           <span className="initial-main-page-text">미리보기</span>
           <div>
-            <UserMapinfo userNickname={userNickname} capture={capture}  active={setActive} />
+            <UptoMyMap userNickname={userNickname} capture={capture}  active={setActive} />
             <div>
                 <Link to="/mymap" style={{ textDecoration: "none", color: "inherit" }} >
                 <button className="linkto-mymap">
@@ -74,7 +73,6 @@ const UptoMy = () => {
                 </Link>
             </div>
           </div>
-        </div>
       </div>
         
       {/* 게시글 */}

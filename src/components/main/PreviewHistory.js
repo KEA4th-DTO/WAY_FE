@@ -7,7 +7,7 @@ import like from "../../assets/images/logos/like.png";
 import comment from "../../assets/images/logos/comment.png";
 import more from "../../assets/images/logos/more.png";
 import comment_more from "../../assets/images/logos/comment_more.png";
-import bg1 from "../../assets/images/bg/bg1.jpg";
+import sky from "../../assets/images/bg/bg1.jpg";
 
 const PreviewHistory = ({ postId, userProfileimg }) => {
      // null 체크를 위해 미리 초기화
@@ -90,7 +90,7 @@ const PreviewHistory = ({ postId, userProfileimg }) => {
           <div className="frame-content">
           <div className="intro-thumbnail">
             <img
-              src={bg1}
+              src={post.thumbnailImageUrl || sky}
               alt="썸네일 이미지"
               className="thumbnail-img"
             />

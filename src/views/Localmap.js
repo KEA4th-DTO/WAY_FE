@@ -15,7 +15,8 @@ const Localmap = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
   const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
-
+  const [historyBoundsState, setHistoryBoundsState] = useState(false); // 히스토리 범위가 설정되었는지 여부
+  
   const token = localStorage.getItem("accessToken");
   const Server_IP = process.env.REACT_APP_Server_IP;
 
@@ -120,8 +121,8 @@ const Localmap = () => {
     <div id="local-con" style={{ display: "flex", width: "950px" }}>
       {/* 지도 및 핀 */}
       <div id="map-con" >
+      <span className="initial-main-page-text">로컬맵</span>
         <div>
-          <span className="initial-main-page-text">로컬맵</span>
           <MapInformation active={setActive} dailybound={setDailyBounds} historybound={setHistoryBounds} />
         </div>
       </div>

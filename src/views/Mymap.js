@@ -79,12 +79,10 @@ const Mymap = () => {
     <div style={{ display: "flex", width: "950px"}}>
       {/* 지도 & 핀 */}
       <div id="map-con" >
-        <div>
           <span className="initial-main-page-text">마이맵</span>
           <div>
-            <UserMapinfo userNickname={userNickname} capture={false} active={setActive}/>
+            <UserMapinfo userNickname={userNickname} active={setActive}/>
           </div>
-        </div>
       </div>
         
       {/* 게시글 */}

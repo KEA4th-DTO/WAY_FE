@@ -9,7 +9,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 
 const EditHistoryPost = ({ post, writerProfileImageUrl, onsave, thumbnail }) => {
     const [title, setTitle] = useState(post.title);
-    const [body, setBody] = useState(post.body);
+    const [body, setBody] = useState('');
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(thumbnail);
     const [latitude, setLatitude] = useState(post.latitude);
@@ -25,7 +25,7 @@ const EditHistoryPost = ({ post, writerProfileImageUrl, onsave, thumbnail }) => 
     const userNickname = localStorage.getItem("userNickname");
     const Server_IP = process.env.REACT_APP_Server_IP;
       
-    console.log(post);
+    // console.log(post);
 
   //   useEffect(() => {
   //     // Component mount 시 post로부터 초기값을 설정
@@ -65,7 +65,7 @@ const saveEditClick = async () => {
 
     const updateHistoryDto = {
       title,
-      body,
+      body: body,
       latitude,
       longitude,
       address,
@@ -103,8 +103,7 @@ const saveEditClick = async () => {
 
   const onChange = () => {
     const data = editorRef.current.getInstance().getHTML();
-    setBody(data);
-    // console.log(data);
+    console.log("에디터내용:", data);
   
     const markdown = editorRef.current.getInstance().getMarkdown();
     // 마크다운에서 이미지 구문 제거
@@ -114,10 +113,11 @@ const saveEditClick = async () => {
     // 마크다운 문법 제거
     const textContent = textWithoutHTML.replace(/[#>*_~`[\]]+/g, '');
 
+    setBody(data);
     setBodyPreview(textContent.slice(0, 35)); // 제한된 길이로 본문 미리보기 설정
     setBodyPlainText(textContent);
     // 저장할 textContent를 사용합니다.
-    // console.log('텍스트 내용:', textContent);
+    console.log('텍스트 내용:', textContent);
   };
 
   const onUploadImage = async (blob, callback) => {
