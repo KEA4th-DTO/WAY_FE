@@ -138,6 +138,20 @@ const Header = () => {
     setIsNotificationBoxOpen(!isNotificationBoxOpen); // 알림 박스 상태 토글
   };
 
+  // 사이드바가 열려 있을 때 다른 곳을 클릭하면 사이드바를 닫음
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarOpen && !event.target.closest(".sidebar") && !event.target.closest(".navbar-toggler")) {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [sidebarOpen]);
+
   return (
     <header className="header">
       <nav className="navbar">
@@ -172,7 +186,7 @@ const Header = () => {
           </li>
         </ul>
         <div className="navbar-buttons">
-        <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
+          <Dropdown isOpen={alarmDropdownOpen} toggle={toggleAlarmDropdown}>
             <DropdownToggle
               style={{
                 backgroundColor: "transparent",

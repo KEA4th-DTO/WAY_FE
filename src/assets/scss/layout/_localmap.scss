@@ -251,7 +251,7 @@
     flex-shrink: 0;
     border-color: rgba(0, 0, 0, 1);
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     border-radius: 10.800000190734863px;
     background-color: rgba(255, 255, 255, 1);
   }
@@ -263,11 +263,9 @@
     position: relative;
     align-items: flex-start;
     flex-shrink: 0;
-    border-color: rgb(200, 212, 248);
-    border-style: solid;
-    border-width: 3px;
+    border: 1.5px solid rgb(96, 96, 96);
     border-radius: 10.800000190734863px;
-    background-color: rgb(190, 197, 247);
+    background-color: rgb(226, 231, 243);
   }
   .frame4-post1full {
     left: 13px;
@@ -501,19 +499,19 @@
     border-radius: 15px;
   }
 
-  .refresh-button{
-    top: 0px;
-    border: none;
-    background-color: #fff;
-  }
-  .basic-button{
-    border: none;
-    background-color: #fff;
-  }
+  .map-header-button {
+    margin-top: 70px;
+    display: flex;
+    align-items: center;
+}
 
-  .research-button {//O
-    margin-top: 20px;
-    margin-left: 10px;
+.refresh-button {
+    border: none;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+.research-button {
     width: 150px;
     height: 30px;
     background-color: rgb(101, 177, 111);
@@ -525,5 +523,17 @@
     text-align: center;
     font-family: Inter;
     font-weight: 500;
-  }
- 
+    margin-right: 20px;
+}
+
+.pin-buttons {
+    display: inline-block;
+    margin-left: 120px;
+    // align-items: end;
+}
+
+.basic-button {
+    border: none;
+    background-color: #fff;
+    margin-right: 10px;
+}

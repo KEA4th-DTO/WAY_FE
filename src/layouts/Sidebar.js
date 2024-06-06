@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Nav,
-  NavItem,
-  Modal,
-  ModalHeader,
-  ModalBody,
-} from "reactstrap";
+import { Button, Nav, NavItem, Modal, ModalHeader, ModalBody } from "reactstrap";
 import Logo from "./Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ModifyProfile from "../components/main/ModifyProfile";
