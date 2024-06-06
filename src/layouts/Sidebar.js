@@ -10,7 +10,7 @@ import {
 import Logo from "./Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ModifyProfile from "../components/main/ModifyProfile";
-import "../assets/scss/layout/_modi_profile.scss";
+import "../assets/scss/layout/_sidebar.scss"; // 스타일 추가
 
 const navigation = [
   {
@@ -27,11 +27,8 @@ const navigation = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showMobilemenu = () => {
-    document.getElementById("sidebarArea").classList.toggle("showSidebar");
-  };
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,7 +54,7 @@ const Sidebar = () => {
       window.localStorage.clear();
       navigate("/login");
     } else {
-      console.error("Logout failed");
+      alert("로그아웃에 실패했습니다");
     }
   };
 
@@ -70,54 +67,56 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="p-3">
-      <div className="d-flex align-items-center">
-        <NavItem>
-          <Logo />
-        </NavItem>
-        <span className="ms-auto d-lg-none">
-          <Button
-            close
-            size="sm"
-            className="ms-auto d-lg-none"
-            onClick={() => showMobilemenu()}
-          ></Button>
-        </span>
+    <div className={`sidebar ${isOpen ? "active" : ""}`}>
+      <div className="p-3">
+        <div className="d-flex align-items-center">
+          <NavItem>
+            <Logo />
+          </NavItem>
+          <span className="ms-auto d-lg-none">
+            <Button
+              close
+              size="sm"
+              className="ms-auto d-lg-none"
+              onClick={toggleSidebar}
+            ></Button>
+          </span>
+        </div>
+        <div className="pt-4 mt-2">
+          <Nav vertical className="sidebarNav">
+            {navigation.map((navi, index) => (
+              <NavItem key={index} className="sidenav-bg">
+                <Link
+                  to={navi.href}
+                  className={
+                    location.pathname === navi.href
+                      ? "text-primary nav-link py-3"
+                      : "nav-link text-secondary py-3"
+                  }
+                  onClick={navi.title === "프로필 수정" ? toggleModal : null}
+                >
+                  <span className="ms-3 d-inline-block">{navi.title}</span>
+                </Link>
+              </NavItem>
+            ))}
+            <Button
+              color="danger"
+              tag="a"
+              target="_blank"
+              className="mt-3"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>
+          </Nav>
+        </div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
+          <ModalHeader toggle={toggleModal}>프로필 수정</ModalHeader>
+          <ModalBody>
+            <ModifyProfile onProfileUpdate={handleProfileUpdate} />
+          </ModalBody>
+        </Modal>
       </div>
-      <div className="pt-4 mt-2">
-        <Nav vertical className="sidebarNav">
-          {navigation.map((navi, index) => (
-            <NavItem key={index} className="sidenav-bg">
-              <Link
-                to={navi.href}
-                className={
-                  location.pathname === navi.href
-                    ? "text-primary nav-link py-3"
-                    : "nav-link text-secondary py-3"
-                }
-                onClick={navi.title === "프로필 수정" ? toggleModal : null}
-              >
-                <span className="ms-3 d-inline-block">{navi.title}</span>
-              </Link>
-            </NavItem>
-          ))}
-          <Button
-            color="danger"
-            tag="a"
-            target="_blank"
-            className="mt-3"
-            onClick={handleLogout}
-          >
-            로그아웃
-          </Button>
-        </Nav>
-      </div>
-      <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
-        <ModalHeader toggle={toggleModal}>프로필 수정</ModalHeader>
-        <ModalBody>
-          <ModifyProfile onProfileUpdate={handleProfileUpdate} />
-        </ModalBody>
-      </Modal>
     </div>
   );
 };

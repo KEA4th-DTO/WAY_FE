@@ -92,19 +92,19 @@ function Login() {
             axios.defaults.headers.common[
               "Authorization"
             ] = `${grantType} ${accessToken}`;
-            console.log(data);
+            // console.log(data);
             navigate("/localmap");
           } else {
             alert("아이디나 비밀번호를 확인해주세요");
           }
         } else {
-          console.error("서버 응답 오류: ", response.status);
+          // console.error("서버 응답 오류: ", response.status);
         }
       })
       .catch((error) => {
-        console.error("서버 통신 오류: ", error);
+        // console.error("서버 통신 오류: ", error);
       });
-    console.log(data);
+    // console.log(data);
     // console.log("Remember Me:", rememberMe); // 만약 사용한다면
   };
 

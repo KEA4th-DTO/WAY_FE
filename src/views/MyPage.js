@@ -38,7 +38,6 @@ function ProfilePage() {
           }
         );
         const data = response.data.result;
-        console.log(data);
         setProfile({
           imageUrl: data.profileImageUrl,
           name: data.name,
@@ -50,10 +49,7 @@ function ProfilePage() {
           followingsCount: data.followingCount,
           tags: data.wayTags.slice(0, 3),
         });
-        console.log(profile.imageUrl);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
+      } catch (error) {}
     };
     fetchProfile();
   }, []);
@@ -88,7 +84,6 @@ function ProfilePage() {
 
   return (
     <div className="mypage-container">
-      {/* left panel */}
       <div className="myPage-leftpanel">
         <div
           className="profile-background"

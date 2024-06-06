@@ -10,7 +10,7 @@ const Auth = () => {
     const kakaoLogin = async () => {
       const Server_IP = process.env.REACT_APP_Server_IP;
       const url = `${Server_IP}/auth-service/oauth/kakao/callback`;
-      console.log("kakao", KAKAO_CODE);
+      // console.log("kakao", KAKAO_CODE);
 
       try {
         const response = await axios.get(url, {
@@ -19,17 +19,17 @@ const Auth = () => {
           },
         });
 
-        console.log(response);
+        // console.log(response);
 
         if (response.status === 200) {
           localStorage.setItem("name", response.data.account.kakaoName);
           navigate("/localmap");
         } else {
-          console.error("로그인 실패:", response);
+          // console.error("로그인 실패:", response);
           alert("로그인에 실패했습니다.");
         }
       } catch (error) {
-        console.error("로그인 요청 중 에러 발생:", error);
+        // console.error("로그인 요청 중 에러 발생:", error);
         alert("로그인 요청 중 에러가 발생했습니다.");
       }
     };

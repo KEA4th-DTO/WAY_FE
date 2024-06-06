@@ -1,0 +1,24 @@
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.contentArea {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.wrapper {
+    flex-grow: 1;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    text-align: center;
+    border-top: 1px solid #e7e7e7;
+    margin-top: auto;
+    width: 100%;
+}

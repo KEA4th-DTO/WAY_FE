@@ -35,13 +35,12 @@ const ModifyProfile = ({ onProfileUpdate }) => {
           }
         );
         const profile = response.data.result;
-        console.log(profile);
         setProfileData(profile);
         setNickname(profile.nickname);
         setOnelineIntro(profile.introduce);
         setProfileImg(profile.profileImageUrl);
       } catch (error) {
-        console.error("프로필 정보를 가져오는 중 오류 발생:", error);
+        // console.error("프로필 정보를 가져오는 중 오류 발생:", error);
       }
     };
 
@@ -113,7 +112,7 @@ const ModifyProfile = ({ onProfileUpdate }) => {
       if (response.status === 200 || response.status === 201) {
         const isSuccess = response.data.isSuccess;
         if (isSuccess) {
-          console.log("Profile updated successfully:", response.data);
+          // console.log("Profile updated successfully:", response.data);
           localStorage.setItem("userNickname", nickname);
           alert("프로필 수정에 성공했습니다");
           onProfileUpdate(); // Call the function to close the modal
@@ -124,20 +123,20 @@ const ModifyProfile = ({ onProfileUpdate }) => {
         }
       } else {
         // Handle unsuccessful response
-        console.error("Error updating profile:", response.data);
+        // console.error("Error updating profile:", response.data);
         alert(
           "프로필 수정에 실패했습니다. 오류 내용: " + response.data.message
         ); // Display error message from backend (if provided)
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      alert("프로필 수정에 실패했습니다.\n오류 내용: " + error.message);
     }
   };
 
   return (
     <div className="Modi-profile-container">
       <Form onSubmit={handleSubmit}>
-        <div className="profile-content">
+        <div className="profile-contents">
           <div className="profile-img-container" onClick={triggerFileInput}>
             <img src={profileImg} alt="프로필 이미지" className="profile-img" />
             <div className="profile-img-overlay">프로필사진 수정하기</div>

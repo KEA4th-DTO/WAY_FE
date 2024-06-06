@@ -28,7 +28,7 @@ const NotificationItem = ({ notification, onDelete }) => {
   if (isDeleting) notificationClass += " deleting";
 
   const message = notification.message;
-  if (/대댓글을 남겼습니다/.test(message)) {
+  if (/답글을 남겼습니다/.test(message)) {
     notificationClass += " notification-reply";
   } else if (/댓글을 남겼습니다/.test(message)) {
     notificationClass += " notification-comment";
@@ -55,7 +55,7 @@ const NotificationItem = ({ notification, onDelete }) => {
         );
         onDelete(notification.id);
       } catch (error) {
-        console.error("Error deleting notification:", error);
+        // console.error("Error deleting notification:", error);
       }
     }, 500); // 500ms 후 삭제 API 호출 및 상태 업데이트
   };

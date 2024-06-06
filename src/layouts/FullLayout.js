@@ -20,6 +20,14 @@ const FullLayout = () => {
           <Container className="p-4 wrapper" fluid>
             <Outlet />
           </Container>
+          {/********Footer**********/}
+          <footer className="footer">
+            <Container fluid className="text-center p-3">
+              <span>
+                © {new Date().getFullYear()} DTO. All rights reserved.
+              </span>
+            </Container>
+          </footer>
         </div>
       </div>
     </main>
