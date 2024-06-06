@@ -156,7 +156,7 @@ const Header = () => {
     <header className="header">
       <nav className="navbar">
         <div className="navbar-brand">
-          <NavLink to="/">
+          <NavLink to="/localmap">
             <img src={wayLogo} alt="Way Logo" className="logo" />
           </NavLink>
         </div>
