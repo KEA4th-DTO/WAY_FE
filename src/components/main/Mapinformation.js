@@ -147,7 +147,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 11,
+                minZoom: 7,
                 maxZoom: 16,
                 zoomControl: true,
                 zoomControlOptions: {
@@ -328,13 +328,16 @@ const MapInformation = ({ active, dailybound, historybound }) => {
 
     return (
         <div>
+        <div className="map-header-button">
             <button className="refresh-button" onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
             </button>
-            <div style={{ display: 'inline-block', marginLeft: '280px', marginTop:"5%"}}>
-                <span style={{ fontSize: '10px', margin:"5px" }}>all pin</span>
-                <span style={{ fontSize: '10px', margin:"7px" }}>daily pin</span>
-                <span style={{ fontSize: '10px', margin:"5px" }}>history pin</span>
+            <button className="research-button" onClick={onHistoryBound}>이 위치에서 재검색</button>
+            
+            <div className="pin-buttons">
+                <span style={{ fontSize: '10px', marginLeft:'8px' }}>all pin</span>
+                <span style={{ fontSize: '10px', marginLeft: "23px" }}>daily pin</span>
+                <span style={{ fontSize: '10px', marginLeft:"15px" }}>history pin</span>
                 <br />
                 <button onClick={onClickAllPin} className="basic-button" >
                     <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px'}} />
@@ -346,15 +349,10 @@ const MapInformation = ({ active, dailybound, historybound }) => {
                     <img src={historyPinState ? full_historyPin : historyPin} alt="historyPin" style={{ width: '30px', height: '30px' }} />
                 </button> 
             </div>
-            <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
-            <div>
-                {/* <h4>Map Bounds:</h4>
-                <p>North-East Latitude: {historyBounds.ne.lat}, Longitude: {historyBounds.ne.lng}</p>
-                <p>South-West Latitude: {historyBounds.sw.lat}, Longitude: {historyBounds.sw.lng}</p>
-                <br /> */}
-                <button className="research-button" onClick={onHistoryBound}>이 위치에서 재검색</button>
-            </div>
         </div>
+        <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
+    </div>
+    
     );
 };
 

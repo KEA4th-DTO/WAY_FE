@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_historypost.scss";
-
-import { Viewer } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
 import {
   DropdownToggle,
   DropdownMenu,
@@ -40,6 +36,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
      const [editMode, setEditMode] = useState(false);
      const [reportMode, setReportMode] = useState(false);
      const [commentState, setCommentState] = useState(false);
+     const [isSubmitting, setIsSubmitting] = useState(false);  // 추가된 상태 변수
 
      const token = localStorage.getItem("accessToken");
      const Server_IP = process.env.REACT_APP_Server_IP;
@@ -47,19 +44,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
      const [dropdownOpen, setDropdownOpen] = React.useState(false);
      const navigate = useNavigate();
 
-
      const toggle = () => setDropdownOpen((prevState) => !prevState);
-    //  "postId": 4,
-    //  "writerNickname": null,
-    //  "writerProfileImageUrl": null,
-    //  "title": "인천 바닷가",
-    //  "bodyHtmlUrl": "https://way-bucket-s3.s3.ap-northeast-2.amazonaws.com/history_body/a72d9141-2d92-457f-b0b2-ea962638963a",
-    //  "bodyPreview": "여기 넘 좋네요.\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n어쩌고 저쩌고 어쩌고 저쩌고 어쩌고 저쩌고\n\n어쩌고 저쩌고\n\n\n강아지 귀엽네요",
-    //  "isLiked": false,
-    //  "likesCount": 4,
-    //  "commentsCount": 0,
-    //  "isOwned": true,
-    //  "createdAt": "2024-05-27T03:06:41.334138"
 
   useEffect(() => {
     if (postId) {
@@ -79,7 +64,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
       .then(data => {
         if (data.isSuccess) {
           console.log('성공; ', data.result);
-          console.log('썸네일이미지', thumbnail);
+          // console.log('썸네일이미지', thumbnail);
           setPost(data.result);
           setLikeNum(data.result.likesCount);
           setLiked(data.result.isLiked);
@@ -110,7 +95,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
     })
     .then(data => {
       if (data.isSuccess) {
-        console.log("팔로우 상태:", data.result.isFollowing);
+        // console.log("팔로우 상태:", data.result.isFollowing);
         setFollowed(data.result.isFollowing);
       } else {
         console.error("Error in API response:", data.message);
@@ -316,7 +301,7 @@ const ClickComment = async () => {
 
     if (data.isSuccess) {
       setComments(data.result.commentResultDtoList);
-      console.log('댓글:', data.result.commentResultDtoList);
+      // console.log('댓글:', data.result.commentResultDtoList);
     } else {
       console.error("Error in API response:", data.message);
     }
@@ -330,35 +315,43 @@ const ClickComment = async () => {
 
   const SaveComment = async () => {
     try {
+      if (commentBody.trim() === '' || isSubmitting) {
+        return;
+      }
+      setIsSubmitting(true);  // 제출 시작
       const url = `${Server_IP}/post-service/comment/${postId}`;
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'accept': '*/*',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ body: commentBody })
-        });
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'accept': '*/*',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ body: commentBody })
+      });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
+      if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+      }
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.isSuccess) {
-            alert('댓글이 생성되었습니다.');
-            console.log('댓글이 생성되었습니다:', data.result);
-            setCommentBody(''); // Clear the comment input
-            setCommentNum(commentNum + 1);
-            ClickComment();
-        } else {
-            console.error("Error in API response:", data.message);
-        }
+      if (data.isSuccess) {
+          console.log('댓글이 생성되었습니다:', data.result);
+          setCommentBody(''); // Clear the comment input
+          setCommentNum(commentNum + 1);
+          ClickComment();
+          alert('댓글이 생성되었습니다.');
+      } else {
+          console.error("Error in API response:", data.message);
+      }
+      setIsSubmitting(false);  // 제출 완료
+
     } catch (error) {
         console.error("Error posting comment:", error);
+        setIsSubmitting(false);  // 오류 발생 시 제출 상태 초기화
+
     }
 };
 
@@ -521,9 +514,9 @@ const handleMapClick = () => {
               value={commentBody}
               onChange={(e) => setCommentBody(e.target.value)} 
                 />
-             <button className="comment-post-save" onClick={SaveComment}>
+             <button className="comment-post-save" onClick={SaveComment} disabled={isSubmitting}>
               <span className="comment-post-save-text">
-                  등록
+              {isSubmitting ? '등록 중' : '등록'}
               </span>
               </button>
         </div>}

@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import html2canvas from "html2canvas"; // html2canvas를 import
 
 import currentPin from "../../assets/images/icons/currentPin.png";
 import allPin from "../../assets/images/icons/allPin.png";
@@ -12,7 +11,7 @@ import refresh from "../../assets/images/icons/refresh.png";
 // import MarkerClustering from "../../utils/MarkerClustering.js";
 // import $ from "jquery"; // Import jQuery
 
-const UserMapinfo = ({ userNickname, capture, active }) => {
+const UserMapinfo = ({ userNickname, active }) => {
     const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const mapRef = useRef(null);
@@ -228,14 +227,6 @@ const UserMapinfo = ({ userNickname, capture, active }) => {
                 createMarker(item, index);
             });
 
-            if(capture){
-            const tilesloadedListener = naver.maps.Event.addListener(map, 'tilesloaded', () => {
-                // 지도 타일이 모두 로드된 후에 캡처를 실행
-                captureMap();
-                // 이벤트 리스너 제거
-                naver.maps.Event.removeListener(tilesloadedListener);
-            });
-         };
 
         }
     }, [currentMyLocation, userPost, activePin, mapState, activeMarker, clickedMarkers]); // `activePin` 및 `mapState`를 의존성 목록에 추가
@@ -310,58 +301,29 @@ const UserMapinfo = ({ userNickname, capture, active }) => {
     //     return cluster;
     // })
 
-    
-
-    const captureMap = () => {
-        const target = document.getElementById("download");
-        if (!target) {
-          return alert("사진이 없다는디?");
-        }
-    
-        html2canvas(target, {
-          useCORS: true,
-          proxy: "http://localhost:3002" // 프록시 서버 주소
-        }).then((canvas) => {
-          const link = document.createElement("a");
-          document.body.appendChild(link);
-          link.href = canvas.toDataURL("image/png");
-          link.download = "map.png";
-          link.click();
-          document.body.removeChild(link);
-        }).catch(error => {
-          console.error("Error capturing map:", error);
-          alert("사진 저장에 실패했습니다.");
-        });
-      };
-
-    //   console.log("cap: ", capture);
-    //   if(capture){
-    //     // captureMap();
-    //     console.log("캡처되었습니다.");
-    //   }
-
     return (
         <div>
+            <div className="map-header-button">
             <button className="refresh-button" onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
             </button>
             
-            <div style={{ display: 'inline-block', marginLeft: '280px', marginTop:"7%" }}>
-                <span style={{ fontSize: '10px', margin: "3px" }}>all pin</span>
-                <span style={{ fontSize: '10px', margin: "3px" }}>daily pin</span>
-                <span style={{ fontSize: '10px', margin: "3px" }}>history pin</span>
+            <div className="pin-buttons" style={{marginLeft:"290px"}}>
+                <span style={{ fontSize: '10px', marginLeft:'8px' }}>all pin</span>
+                <span style={{ fontSize: '10px', marginLeft: "23px" }}>daily pin</span>
+                <span style={{ fontSize: '10px', marginLeft:"15px" }}>history pin</span>
                 <br />
-                <button onClick={onClickAllPin} className="basic-button">
-                    <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px' }} />
+                <button onClick={onClickAllPin} className="basic-button" >
+                    <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px'}} />
                 </button>
-                <button onClick={onClickDailyPin} className="basic-button">
+                <button onClick={onClickDailyPin} className="basic-button" >
                     <img src={dailyPinState ? full_dailyPin : dailyPin} alt="dailyPin" style={{ width: '30px', height: '30px' }} />
                 </button>
-                <button onClick={onClickHistoryPin} className="basic-button">
+                <button onClick={onClickHistoryPin} className="basic-button" >
                     <img src={historyPinState ? full_historyPin : historyPin} alt="historyPin" style={{ width: '30px', height: '30px' }} />
-                </button>
+                </button> 
             </div>
-
+            </div>
             <div id="download" ref={mapRef} style={{ width: "500px", height: "500px" }}></div> 
         </div>
     );
