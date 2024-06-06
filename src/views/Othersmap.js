@@ -1,82 +1,132 @@
 import React, { useState, useEffect } from "react";
-
-import user_img from "../assets/images/users/user6.png";
-import DailyList from "../components/main/DailyPost";
-import HistoryList from "../components/main/HistoryPost";
+import DailyList from "../components/main/DailyList";
+import HistoryList from "../components/main/HistoryList";
 import UserMapinfo from "../components/main/UserMapinfo";
+import back from "../assets/images/logos/back.png";
+import HistoryPost from "../components/main/HistoryPost";
+import DailyPost from "../components/main/DailyPost";
+import { useLocation } from 'react-router-dom';
+
 
 const Othersmap = () => {
   //데이터 가져오기
-  const [user, setUser] = useState({}); 
+  const location = useLocation();
+  const userNickname = location.state;
+  console.log('state: ', userNickname);
+
   const [userPost, setUserPost] = useState([]);
-  const userId = "id_1234"; //임시로 아이디 지정
+  const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
+  const token = localStorage.getItem("accessToken");
+  const Server_IP = process.env.REACT_APP_Server_IP;
 
-  // useEffect(()=>{
-  //     fetch('http://localhost:3001/member') //유저 정보 가져오기
-  //     .then(res => {
-  //         return res.json() //json으로 변환됨
-  //     })
-  //     .then(data => {
-  //         const userInfos = data.find(mem => mem.memberId === userId);
-  //         setUser(userInfos);
-  //     })
-  //     .catch(error => console.error("Error fetching data:", error));
-  // }, []);
+  const [active, setActive] = useState(null);
+  const [activeId, setActiveId] = useState(null);
 
-//   useEffect(()=>{
-//     fetch('http://localhost:3001/post') //유저 게시글 가져오기
-//     .then(res => {
-//         return res.json() //json으로 변환됨
-//     })
-//     .then(data => {
-//         // memberId가 userId와 일치하는 경우에만 해당 게시물을 저장
-//         const userPosts = data.filter(post => post.memberId === userId);
-//         setUserPost(userPosts);
-//     })
-//     .catch(error => console.error("Error fetching data:", error));
-// }, []);
-  
+  useEffect(() => {
+    if (active && active.item) {
+      console.log("active: ", active);
+      setActiveId(active.item.postId);
+    }
+  }, [active]);
+
+  useEffect(() => {
+    if (userNickname) {
+      const url = `${Server_IP}/post-service/posts/list/${userNickname}`;
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok ' + res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.isSuccess) {
+          setUserPost(data.result.postResultDtoList);
+        } else {
+          console.error("Error in API response:", data.message);
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+    }
+  }, [userNickname, token, selectedPost]);
+
+  console.log('userPost: ', userPost);
+
+  // 포스트 클릭 시 선택된 포스트 업데이트
+  const handlePostClick = (selectedItem) => {
+    setSelectedPost(selectedItem);
+  };
+
+  // 뒤로가기 버튼 클릭 시
+  const handleBackClick = () => {
+    setSelectedPost(null); // 선택된 포스트 초기화
+  };
+
+  const handleDelete = (deletedPostId) => {
+    setUserPost(userPost.filter(post => post.postId !== deletedPostId));
+    setSelectedPost(null);
+  };
+
+   // Order posts so that the active post appears first
+   const orderedPosts = activeId
+   ? [userPost.find((item) => item.postId === activeId), ...userPost.filter((item) => item.postId !== activeId)]
+   : userPost;
+
 
   return ( 
-    <div id="local-con" style={{border: "5px solid red", display: "flex", width: "950px"}}>
-      {/* 지도 & 핀*/}
-      {/* <div id="map-con" style={{ position: "relative", border: "3px solid blue"}}>
-        <div style={{ position: "relative", border: "3px solid orange", margin: "5px 5px 0"}}> 
-        <img
-            src={user_img} // 사용자 프로필 이미지
-            alt="사용자 프로필 이미지"
-            className="other-user-profileimage"
-        />
-        <span className="other-user-text">
-            {user.nickname}님의 맵
-        </span>
-        <button className="other-user-button">
-            정보보기
-        </button>
+    <div style={{ display: "flex", width: "950px"}}>
+    {/* 지도 & 핀 */}
+    <div id="map-con">
+      <div>
+        <span className="initial-main-page-text">"{userNickname}"의 맵</span>
+        <div>
+          <UserMapinfo userNickname={userNickname} capture={false} active={setActive}/>
         </div>
-        <UserMapinfo userId={userId} />
-        </div> */}
-
-        
-        {/* 게시글*/}
-        {/* <div className="initial-main-page-frame" style={{border: "3px solid green", marginLeft: "20px"}}>
-          <span className="initial-main-page-text" >
-            게시글  {userPost.length}
-          </span>
-      
-          <div style={{border: "3px solid yellow", overflow: "auto", marginTop: "10%", width: "410px", height: "640px"}}>
-            {userPost.map(item => {
-                if (item.postType === 'daily') { 
-                    return <DailyList key={item.id} data={item} />;
-                } else if (item.postType === 'history') { 
-                    return <HistoryList key={item.id} data={item} />;
-                }
-                return null;
-            })}
-          </div>
-        </div> */}
+      </div>
     </div>
-  );
+      
+    {/* 게시글 */}
+    <div className="initial-main-page-frame" style={{ marginLeft: "20px"}}>
+      <span className="initial-main-page-text">게시글 {userPost.length}개</span>
+    
+      <button style={{display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none"}} className="dailypost-frame8" onClick={handleBackClick}>
+        {selectedPost && selectedPost.postType === 'DAILY' &&
+          <img alt="뒤로가기" src={back} className="dailypost-vector3" />
+        }
+      </button>
+      <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
+      </div>
+
+      <div className="list-con" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+        {orderedPosts && orderedPosts.length > 0 ? (
+          orderedPosts.map((item) => (
+            <div key={item.postId} onClick={() => handlePostClick(item)}>
+              {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
+            </div>
+          ))
+        ) : (
+          <div>No posts available</div>
+        )}
+      </div>
+    </div>
+    {selectedPost && selectedPost.postType === 'HISTORY' && (
+      <div className="historyPost-con">
+        <HistoryPost 
+          postId={selectedPost.postId}  
+          thumbnail={selectedPost.imageUrl} 
+          writerNickname={selectedPost.writerNickname} 
+          writerProfileImageUrl={selectedPost.writerProfileImageUrl} 
+          onClose={handleBackClick} />
+      </div>
+    )}
+  </div>
+);
 };
 export default Othersmap;
 

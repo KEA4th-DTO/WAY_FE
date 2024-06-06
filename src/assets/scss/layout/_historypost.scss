@@ -4,39 +4,70 @@
     display: flex;
     align-items: center;
   }
+  .history-icon {
+    margin-right: 10px;
+    width: 120px;
+    position: fixed;
+    top:0px;
+}
+
+.more-img {
+  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    opacity: 0.20;
+    cursor: pointer;
+    position: fixed;
+    top: 15px; /* 원하는 위치 */
+    right: 45px; /* 원하는 위치 */
+}
+
+.close-img {
+  margin-right: 10px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: fixed;
+    top: 16px; /* 원하는 위치 */
+    right: 10px; /* 원하는 위치 */
+}
+
+.report-his {
+  position: absolute;
+  top: 7%;
+  right: 10%;
+  z-index: 999;
+  background-color: rgb(255, 255, 255);
+  width: 270px;
+  height: 340px;
+  padding: 10px; 
+  border: 1px solid rgb(53, 53, 53);
+  border-radius: 10px;
+}
+
   .history-frame { //O
-    top: 0px;
+    top: -10px;
     left: 0px;
-    width: 100%;
+    width: 90%;
     height: 100%;
     position: relative;
     background-color: rgba(255, 255, 255, 1);
   }
   .intro-createAt {//O
-    top: 127px;
-    left: 250px;
+    margin-top: 5px;
+    margin-left: 10px;
     color: rgba(142, 142, 142, 1);
-    height: auto;
-    position: absolute;
     font-size: 13px;
     font-style: Medium;
-    text-align: center;
     font-family: Inter;
     font-weight: 500;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
   }
   .intro-follow {//O
-    top: 9px;
-    left: 95px;
-    color: rgba(0, 0, 0, 1);
+    margin-left: 10px;
     width: 50px;
     height: auto;
-    position: absolute;
     font-size: 12px;
     font-style: Bold;
-    text-align: center;
     font-family: Inter;
     font-weight: 700;
     border: none;
@@ -44,56 +75,38 @@
   .intro-writer {//O
     top: 116px;
     left: 88px;
-    width: 150px;
-    height: 35.20000076293945px;
+    width: 500px;
+    height: 35.2px;
     display: flex;
     position: absolute;
-    align-items: flex-start;
-    flex-shrink: 1;
+    align-items: center;
   }
   .intro-writer-profileimg {//O
-    top: 0px;
     left: 0px;
-    width: 35.20000076293945px;
-    height: 35.20000076293945px;
-    display: flex;
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background-color: #fff;
   }
   .profileimg {//O
-    top: 0px;
-    left: 0px;
-    width: 37px;
-    height: 37px;
-    position: absolute;
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
     object-fit: cover;
     object-position: center;
+    border-radius: 12px;
+    border: 1px solid #ccc;
   }
   .intro-writer-nickname {//O
-    top: 8px;
-    left: 45px;
+    margin-left: 10px;
     color: rgba(0, 0, 0, 1);
-    height: auto;
-    position: absolute;
     font-size: 17px;
     font-style: Regular;
-    text-align: center;
     font-family: Inter;
     font-weight: 400;
     line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
   }
-  .more-img {//O
-    top: 15px;
-    right: 40px;
-    width: 30px;
-    height: 30px;
-    opacity: 0.20;
-    position: absolute;
-  }
+ 
+
   .frame-hashtag {//O
     width: 200px;
     height: 20px;
@@ -124,18 +137,12 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .close-img { //O
-    top: 16px;
-    right: 0px;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-  }
+  
   .intro-title {//O
     top: 77px;
     left: 88px;
     color: rgba(0, 0, 0, 1);
-    width: 423px;
+    width: 90%;
     height: auto;
     position: absolute;
     font-size: 32px;
@@ -143,30 +150,31 @@
     text-align: left;
     font-family: Inter;
     font-weight: 400;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
   }
   .frame-content {//O
     top: 164px;
-    left: 14px;
+    left: 0px;
     color: rgba(0, 0, 0, 1);
-    width: 740px;
+    width: 710px;
     align-content: center;
     height: auto;
     position: relative;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
   }
   .frame-like-and-comment {
-
     position: relative;
   }
   .frame-like {//O
+    top: 10px;
     left: 0px;
     width: 51px;
     height: 20px;
     position: absolute;
   }
   .frame-comment {//O
+    top: 10px;
     left: 50px;
     width: 51px;
     height: 20px;
@@ -193,13 +201,16 @@
     font-weight: 500;
   }
 .comment-container{
-  margin-top: 400px;
+  margin-top: 28%;
+  margin-left: 10%;
+  width: 60%;
+  height: auto;
 }
 
 .intro-thumbnail {
-  margin-top: 170px;
-  margin-left: 30px;
+  margin-left: 175px;
   position: relative;
+  margin-bottom: 15px;
 }
 
 .intro-thumbnail-text {
@@ -212,109 +223,54 @@
 }
 
 .thumbnail-img {
-  width: 200px;
-  height: 200px;
+  width: 350px;
+  height: 250px;
   object-fit: cover;
   object-position: center;
   display: block; /* 이미지를 블록 요소로 만들어서 줄 바꿈 되도록 함 */
 }
-
-
-
+.intro-title-input{
+  width: 75%;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+}
 .edit-save {
-  top: 0px;
-  right: 10px;
-  width: 110px;
-  height: 45px;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  flex-shrink: 1;
-  background-color: rgba(64, 77, 242, 1);
+  margin-top: -5px;
+  margin-right: 55px;
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  position: fixed;
+  background-color: rgb(90, 99, 219);
   border-radius: 20px; /* 10px 둥근 경계 적용 */
+  top: 16px; /* 원하는 위치 */
+  right: 10px; /* 원하는 위치 */
   border: none;
 }
 .edit-save-text {
-  left: 0px;
   color: rgba(255, 255, 255, 1);
-  width: 116px;
-  height: auto;
-  position: absolute;
-  font-size: 18px;
+  font-size: 17px;
   font-style: Extra Bold;
   text-align: center;
   font-family: Inter;
-  font-weight: 700;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
+  font-weight: 600;
 }
 
 
-
-.floating-history-comment-frame14 {//O
-  top: 18px;
-  left: 346px;
-  width: 31.190000534057617px;
-  height: 13.470000267028809px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-image3 {//O
-  top: 0.21547049283981323px;
-  left: 4.547473508864641e-13px;
-  width: 13px;
-  height: 13px;
-  position: absolute;
-}
-.floating-history-comment-text034 {//O
-  left: 14.88614273071289px;
-  color: rgba(0, 0, 0, 1);
-  width: 16px;
-  height: auto;
-  position: absolute;
-  font-size: 10.97599983215332px;
-  font-style: Medium;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-frame19 {//O
-  top: 1928px;
-  left: 207px;
-  width: 410px;
-  height: 114px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  background-color: rgba(238, 238, 238, 1);
-}
-.floating-history-comment-group45 {//O
-  top: 2437px;
-  left: 183px;
+.comment-post-con {//O
+  margin-top: 2%;
   width: 434px;
-  height: 183px;
+  height: 120px;
   display: flex;
   position: absolute;
   align-items: flex-start;
   flex-shrink: 1;
+  border: 2px solid  rgb(97, 157, 116);
+  border-radius: 10px;
 }
-.floating-history-comment-rectangle39 {//O
-  top: 0px;
-  left: 0px;
-  width: 434px;
-  height: 183px;
-  position: absolute;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) ;
-}
-.floating-history-comment-group36 {//O
-  top: 21px;
+
+.comment-post-frame {//O
+  top: 10px;
   left: 32px;
   width: 91px;
   height: 35.20000076293945px;
@@ -323,7 +279,7 @@
   align-items: flex-start;
   flex-shrink: 1;
 }
-.floating-history-comment-group27 {//O
+.comment-post-writer {//O
   top: 11px;
   left: 48px;
   width: 43px;
@@ -333,7 +289,7 @@
   align-items: flex-start;
   flex-shrink: 1;
 }
-.floating-history-comment-text059 {//O
+.comment-post-writer-nickname {//O
   color: rgba(0, 0, 0, 1);
   height: auto;
   position: absolute;
@@ -346,279 +302,46 @@
   font-stretch: normal;
   text-decoration: none;
 }
-.floating-history-comment-freeiconuser14907112 {//O
+.comment-post-writer-profileimg {//O
   top: 0px;
   left: 0px;
   width: 35px;
   height: 35px;
   position: absolute;
+  border-radius: 10px;
 }
-.floating-history-comment-rectangle40 {//O
-  top: 68px;
-  left: 31px;
-  width: 372px;
-  height: 92px;
-  position: absolute;
-  border-radius: 20px;
-}
-.floating-history-comment-frame25 {//O
-  top: 131px;
+.comment-post-save {//O
+  top: 87px;
   left: 340px;
-  width: 51.660888671875px;
-  height: 19.711240768432617px;
-  display: flex;
+  width: 60px;
+  height: 25px;
   position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  background-color: rgba(130, 130, 130, 1);
+  background-color: rgb(97, 157, 116);
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
-.floating-history-comment-text061 {//O
-  top: 4.491206169128418px;
-  left: 11.016557693481445px;
+.comment-post-save-text {//O
   color: rgba(255, 255, 255, 1);
-  width: 30px;
-  height: auto;
-  position: absolute;
-  font-size: 7.884496212005615px;
+  text-align: center;
+  font-size: 14px;
   font-style: Extra Bold;
   text-align: center;
   font-family: Inter;
   font-weight: 700;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
 }
-.floating-history-comment-text063 {//O
-  top: 88px;
+.comment-post-text {//O
+  top: 57px;
   left: 50px;
   color: rgba(152, 152, 152, 1);
-  width: 316px;
-  height: auto;
+  width: 350px;
+  height: 22px;
   position: absolute;
   font-size: 13px;
   font-style: Medium;
   text-align: left;
   font-family: Inter;
   font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
+  border: 1px solid #ccc;
 }
 
-.floating-history-comment-image-history-image {//O
-  top: 233px;
-  left: 183px;
-  width: 434px;
-  height: 579px;
-  position: absolute;
-}
-
-.floating-history-comment-frame27 {//O
-  top: 1744.7001953125px;
-  left: 255.164306640625px;
-  width: 48.114837646484375px;
-  height: 20.653202056884766px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-text109 {//O
-  top: 1.907349087559851e-7px;
-  left: 9.600003242492676px;
-  color: rgba(28, 27, 31, 1);
-  width: 39px;
-  height: auto;
-  position: absolute;
-  font-size: 21.600000381469727px;
-  font-style: Extra Bold;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 700;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-comment {//O
-  top: 1.3195314407348633px;
-  left: 0.00000534057608092553px;
-  width: 19.200000762939453px;
-  height: 19.200000762939453px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-vector { //O
-  top: 0px;
-  left: 0px;
-  width: 19px;
-  height: 19px;
-  position: absolute;
-}
-
-.floating-history-comment-frame08 {//O
-  top: 31px;
-  left: 363px;
-  width: 51px;
-  height: 66px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-frame09 {//O
-  top: 32px;
-  left: 0px;
-  width: 51px;
-  height: 34px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  background-color: rgba(255, 255, 255, 1);
-}
-.floating-history-comment-text024 {//O
-  top: 11px;
-  left: 8px;
-  color: rgba(0, 0, 0, 1);
-  height: auto;
-  position: absolute;
-  font-size: 10px;
-  font-style: Medium;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-frame10 {//O
-  top: 0px;
-  left: 0px;
-  width: 51px;
-  height: 34px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  background-color: rgba(255, 255, 255, 1);
-}
-.floating-history-comment-text026 {//O
-  top: 11px;
-  left: 6px;
-  color: rgba(0, 0, 0, 1);
-  height: auto;
-  position: absolute;
-  font-size: 10px;
-  font-style: Medium;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-frame12 {//O
-  top: 17px;
-  left: 12px;
-  width: 381.3599853515625px;
-  height: 83px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-image2 {//O
-  top: 0px;
-  left: 366px;
-  width: 15px;
-  height: 15px;
-  position: absolute;
-}
-.floating-history-comment-text028 {//O
-  top: 41px;
-  left: 12px;
-  color: rgba(0, 0, 0, 1);
-  width: 279px;
-  height: auto;
-  position: absolute;
-  font-size: 14.40000057220459px;
-  font-style: Regular;
-  text-align: left;
-  font-family: Inter;
-  font-weight: 400;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-text030 {//O
-  top: 68px;
-  color: rgba(123, 123, 123, 1);
-  width: 153px;
-  height: auto;
-  position: absolute;
-  font-size: 12px;
-  font-style: Medium;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-frame13 {//O
-  top: 0px;
-  left: 12px;
-  width: 91px;
-  height: 35.20000076293945px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-}
-.floating-history-comment-text032 {//O
-  top: 11px;
-  left: 48px;
-  color: rgba(0, 0, 0, 1);
-  height: auto;
-  position: absolute;
-  font-size: 14.40000057220459px;
-  font-style: Regular;
-  text-align: center;
-  font-family: Inter;
-  font-weight: 400;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-
-.floating-history-comment-text002 {//O
-  left: 43px;
-  color: rgba(169, 169, 169, 1);
-  height: auto;
-  position: absolute;
-  font-size: 15px;
-  font-style: Medium;
-  text-align: left;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.floating-history-comment-text004 {//O
-  left: 99px;
-  color: rgba(169, 169, 169, 1);
-  height: auto;
-  position: absolute;
-  font-size: 15px;
-  font-style: Medium;
-  text-align: left;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
 

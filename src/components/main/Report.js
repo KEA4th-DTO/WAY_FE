@@ -57,8 +57,8 @@ const Report = ({ targetId, type, onClose }) => {
     };
 
     return (
-        <div className="report-con">
-            <div style={{ border: "3px solid yellow" }} className="report-frame">
+        <div>
+            <div className="report-frame">
                 <img
                     src={close}
                     alt="닫기"

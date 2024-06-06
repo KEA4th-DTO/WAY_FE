@@ -18,6 +18,7 @@ const Auth = lazy(() => import("../pages/Auth.jsx"));
 /***** Views ****/
 const Localmap = lazy(() => import("../views/Localmap.js"));
 const Mymap = lazy(() => import("../views/Mymap.js"));
+const Othersmap = lazy(() => import("../views/Othersmap.js"));
 const Upload = lazy(() => import("../views/Upload.js"));
 const Chatting = lazy(() => import("../views/Chatting.js"));
 const Search = lazy(() => import("../views/Search.js"));
@@ -62,6 +63,7 @@ const ThemeRoutes = [
     children: [
       { path: "localmap", exact: true, element: <Localmap /> },
       { path: "/mymap", exact: true, element: <Mymap /> },
+      { path: "/othersmap", exact: true, element: <Othersmap /> },
       { path: "/uptomy", exact: true, element: <UptoMy /> },
       { path: "/upload", exact: true, element: <Upload /> },
       { path: "/chatting", exact: true, element: <Chatting /> },

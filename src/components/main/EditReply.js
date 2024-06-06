@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import "../../assets/scss/layout/_comment.scss";
+import "../../assets/scss/layout/_reply.scss";
 import comment_more from "../../assets/images/logos/comment_more.png";
 import like from "../../assets/images/logos/like.png";
 import { formatDate_time } from '../../utils/changeFormat';
 
-const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
+const EditReply = ({ reply, userProfileimg, onsave }) => {
     const [body, setBody] = useState('');
-    const commentId = comment.commentId;
+    const replyId = reply.replyId;
     const token = localStorage.getItem("accessToken");
     const userNickname = localStorage.getItem("userNickname");
     const Server_IP = process.env.REACT_APP_Server_IP;
       
     useEffect(() => {
       // Component mount 시 post로부터 초기값을 설정
-      setBody(comment.body);
-  }, [comment]);
+      setBody(reply.body);
+    }, [reply]);
 
- console.log(comment);
+    console.log(reply);
 
     const saveEditClick = async () => {
         try {
@@ -24,7 +24,7 @@ const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
                 body: body
             };
 
-            const url = `${Server_IP}/post-service/comment/${commentId}`;
+            const url = `${Server_IP}/post-service/reply/${replyId}`;
             const response = await fetch(url, {
                 method: 'PATCH',
                 headers: {
@@ -38,54 +38,52 @@ const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
     
             if (response.ok) {
                 console.log('Success:', data);
-                alert('댓글이 성공적으로 수정되었습니다.');
+                alert('답글이 성공적으로 수정되었습니다.');
                 onsave();
             } else {
                 console.error('Error:', data);
-                alert('댓글 수정에 실패했습니다.');
+                alert('답글 수정에 실패했습니다.');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('댓글 수정 중 오류가 발생했습니다.');
+            alert('답글 수정 중 오류가 발생했습니다.');
         }
     };
 
     return(
-    <div className="comment-con">
-        <div className="comment-frame">
-              <div className="comment-save">
-                <button onClick={saveEditClick} className="comment-edit-save">
+    <div className="reply-con">
+        <div className="reply-frame">
+              <div className="reply-save">
+                <button onClick={saveEditClick} className="reply-edit-save">
                     <span>
                     저장
                     </span>
                 </button>
               </div>
              
-              <div className="comment-writer">
+              <div className="reply-writer">
               <img
-                  src={writerProfileImageUrl}
+                  src={userProfileimg}
                   alt="댓글 작성자 프로필이미지"
-                  className="comment-writer-profileimg"
+                  className="reply-writer-profileimg"
                 />
-                <span className="comment-writer-nickname">
+                <span className="reply-writer-nickname">
                   {userNickname}
                 </span>
               </div>
-              <span className="comment-content">
+              <span className="reply-content">
             <input 
-              style={{ width: "350px"}} 
+              style={{ width: "300px"}} 
               type="text" 
-              defaultValue={comment.body}
+              defaultValue={reply.body}
               onChange={(e) => setBody(e.target.value)} 
                 />
               </span>
-              <span className="comment-content-time">
-                {formatDate_time(comment.createdAt)}
-              </span>
+             
             </div> 
     </div>
     );
     
 };
 
-export default EditComment;
+export default EditReply;

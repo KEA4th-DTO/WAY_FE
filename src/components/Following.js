@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../assets/style/_follower.scss";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function Following({ name, nickName, image, isFollow, onFollowChange }) {
+  const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(isFollow);
 
   // 아래 useEffect는 디버깅을 위해 추가했습니다. 초깃값 설정 확인을 위해 추가하였습니다.
@@ -37,6 +39,10 @@ function Following({ name, nickName, image, isFollow, onFollowChange }) {
       });
   };
 
+  const handleMapClick = () => {
+    navigate('/othersmap', { state: nickName });
+  };
+
   return (
     <div className="follower-container">
       <img src={image} alt={name} className="follower-image" />
@@ -51,7 +57,7 @@ function Following({ name, nickName, image, isFollow, onFollowChange }) {
         >
           {isFollowing ? "언팔로우" : "팔로우"}
         </button>
-        <button className="btn-visit">지도 방문</button>
+        <button className="btn-visit" onClick={handleMapClick}>지도 방문</button>
       </div>
     </div>
   );

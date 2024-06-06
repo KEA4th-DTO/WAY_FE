@@ -3,6 +3,7 @@ import "../../assets/scss/layout/_localmap.scss";
 
 import sky from "../../assets/images/bg/sky.png";
 import like from "../../assets/images/logos/like.png";
+import full_like from "../../assets/images/logos/full_like.png";
 import dailyPin from "../../assets/images/icons/dailyPin.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import user1 from "../../assets/images/users/user1.jpg";
@@ -14,7 +15,7 @@ const DailyList = ({ data, isActive }) => {
         currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
 
   const [activeId, setActiveId] = useState(null);
-  
+
   useEffect(() => { 
     if (isActive && isActive.item) {
       setActiveId(isActive.item.postId);
@@ -67,7 +68,10 @@ const DailyList = ({ data, isActive }) => {
             </span>
 
             <div className="frame4-frame1">
-              <img src={like} alt="좋아요" className="frame4-svg" />
+              <img 
+                 src={data.isLiked === true ? full_like : like}
+                alt="좋아요" 
+                className="frame4-svg" />
               <span className="frame4-text">
                 <span>{data.likesCount || 0}</span>
               </span>

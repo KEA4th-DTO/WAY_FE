@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/scss/layout/_localmap.scss";
-
-import bg1 from "../../assets/images/bg/bg1.jpg";
 import like from "../../assets/images/logos/like.png";
+import full_like from "../../assets/images/logos/full_like.png";
 import comment from "../../assets/images/logos/comment.png";
 import historyPin from "../../assets/images/icons/historyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
@@ -13,6 +12,7 @@ import { formatDate } from "../../utils/changeFormat";
 const HistoryList = ({ data, isActive }) => {
   const [activeId, setActiveId] = useState(null);
 
+  console.log('data: ', data);
   useEffect(() => { 
     if (isActive && isActive.item) {
       // console.log('isActive: ', isActive);
@@ -34,13 +34,13 @@ const HistoryList = ({ data, isActive }) => {
       <button className={data.postId === activeId ? "frame4-frame4-active" :"frame4-frame4"}>
         <div className="frame4-post1full">
           <img
-            src={data.imageUrl || bg1} // 게시글 이미지가 없을 때 기본 이미지 사용
+            src={data.imageUrl || data.thumbnailImageUrl} // 게시글 이미지가 없을 때 기본 이미지 사용
             alt="게시글 이미지"
             className="frame4-image"
           />
           <div className="frame4-frame">
             <img
-              src={data.writerProfileImageUrl || basic_profile} // 사용자 프로필 이미지, 순환 사용
+              src={data.writerProfileImageUrl} // 사용자 프로필 이미지, 순환 사용
               alt="사용자 프로필 이미지"
               className="frame4-profileimage"
             />
@@ -62,7 +62,10 @@ const HistoryList = ({ data, isActive }) => {
               <span>{formatDate(data.createdAt)}</span>
             </span>
             <div className="frame4-frame1">
-              <img src={like} alt="좋아요" className="frame4-svg" />
+              <img 
+                 src={data.isLiked === true ? full_like : like}
+                 alt="좋아요" 
+                className="frame4-svg" />
               <span className="frame4-text">
                 <span>{data.likesCount || 0}</span>
               </span>

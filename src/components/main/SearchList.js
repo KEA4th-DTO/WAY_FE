@@ -1,53 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/scss/layout/_search.scss";
-import img from "../../assets/images/bg/bg5.png";
-import user3 from "../../assets/images/users/user3.jpg";
+import { formatDate_time } from '../../utils/changeFormat';
 
 const SearchList = ({ data }) => { 
   if (!data) return null;
-  
+
   return (
-    <div>
-    <div className="group98-history-post1"></div>
-    <div className="group98-group3">
-      <div className="group98-group4">
-        <span className="group98-text04">
-          <span>{data.title}</span>
+    <div className="searchlist-con">
+    <div className="searchlist-frame">
+      <div className="searchlist-title">
+        <span className="searchlist-title-text">
+          {data.title}
         </span>
       </div>
-      <span className="group98-text06">
-        <span>{data.hashTag}</span>
+      <span className="searchlist-body">
+        {data.bodyPreview}
       </span>
     </div>
     <img
-      src={img}
+      src={data.thumbnailImageUrl}
       alt="게시글 썸네일 이미지"
-      className="group98-image1"
+      className="searchlist-thumbnail"
     />
-    <div className="group98-post">
-      <span className="group98-text12">
-        <span>{data.memberId}</span>
+    <div className="searchlist-date">
+      <span className="searchlist-date-text">
+        {formatDate_time(data.createdAt)}
       </span>
-      <div
-        className="group98-svg02"
-      />
-      <span className="group98-text10">
-        <span>{data.nickname}</span>
-      <div
-        className="group98-svg03"
-      />
-      </span>
-      <span className="group98-text08">
-        <span>{data.createdAt}</span>
-      </span>
-     
-      <img
-        src={user3}
-        alt="작성자 프로필이미지"
-        className="group98-profileimage"
-      />
     </div>
     </div>
+
   );
 }   
 export default SearchList;

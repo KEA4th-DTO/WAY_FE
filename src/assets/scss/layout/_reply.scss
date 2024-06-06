@@ -1,0 +1,116 @@
+.reply-con {//O
+    width: 420px;
+    height: 90px;
+    display: flex;
+    background-color: rgb(235, 234, 228);
+    // overflow: auto;
+    margin: 7px 0;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  .reply-frame {//O
+    top: 12px;
+    left: 10px;
+    width: 340px;
+    height: 86px;
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .reply-more-img {//O
+    top: 2px;
+    left: 383px;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+  }
+  .reply-drop{
+    height: 20px;
+  }
+  .reply-writer {//O
+    top: 0px;
+    left: 13px;
+    width: 103px;
+    height: 35px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .reply-writer-profileimg {//O
+    top: -5px;
+    left: 0px;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center;
+  }
+  .reply-writer-nickname {//O
+    top: 6px;
+    left: 50px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14.5px;
+    font-style: Regular;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  .reply-content {//O
+    top: 40px;
+    margin-left: 32px;
+    color: rgba(0, 0, 0, 1);
+    width: 300px;
+    height: auto;
+    position: absolute;
+    font-size: 14.40000057220459px;
+    font-style: Regular;
+    text-align: left;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  .reply-content-time {//O
+    top: 53px;
+    left: 200px;
+    color: rgba(123, 123, 123, 1);
+    width: 200px;
+    height: auto;
+    position: absolute;
+    font-size: 12px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  
+  .reply-save {//O
+    top: 6px;
+    left: 340px;
+    width: 35x;
+    height: 23px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+  }
+  .reply-edit-save{
+    background-color: #727272;
+    color: #fff;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-style: Medium;
+    font-family: Inter;
+    font-weight: 400;
+    border: none;
+    border-radius: 5px;
+  }

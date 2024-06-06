@@ -22,6 +22,8 @@ import Comment from './Comment';
 import basic_profile from "../../assets/images/users/basic_profile.png";
 import Report from './Report.js';
 import EditHistoryPost from './EditHistoryPost';
+import { useNavigate } from 'react-router-dom';
+
 
 const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl, onClose }) => {
      // null 체크를 위해 미리 초기화
@@ -29,6 +31,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
      const [commentBody, setCommentBody] = useState('');
      const [likeNum, setLikeNum] = useState(0);
      const [liked, setLiked] = useState(false);
+     const [commentNum, setCommentNum] = useState(0);
      const [followed, setFollowed] = useState(false);
      const [comments, setComments] = useState([]);
      const [userProfileimg, setUserprofileimg] = useState(false);
@@ -36,11 +39,14 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
 
      const [editMode, setEditMode] = useState(false);
      const [reportMode, setReportMode] = useState(false);
+     const [commentState, setCommentState] = useState(false);
 
      const token = localStorage.getItem("accessToken");
      const Server_IP = process.env.REACT_APP_Server_IP;
      const userNickname = localStorage.getItem("userNickname");
      const [dropdownOpen, setDropdownOpen] = React.useState(false);
+     const navigate = useNavigate();
+
 
      const toggle = () => setDropdownOpen((prevState) => !prevState);
     //  "postId": 4,
@@ -77,13 +83,14 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
           setPost(data.result);
           setLikeNum(data.result.likesCount);
           setLiked(data.result.isLiked);
+          setCommentNum(data.result.commentsCount);
         } else {
           console.error("Error in API response:", data.message);
         }
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [postId]);
+  }, [postId, editMode]);
 
   useEffect(() => {
 
@@ -284,6 +291,10 @@ useEffect(() => {
   }
 }, [userNickname]);
 
+const handleDelete = (deletedId) => {
+  setComments(comments.filter(item => item.commentId !== deletedId));
+  setCommentNum(commentNum - 1);
+};
 
 const ClickComment = async () => {
   try {
@@ -305,6 +316,7 @@ const ClickComment = async () => {
 
     if (data.isSuccess) {
       setComments(data.result.commentResultDtoList);
+      console.log('댓글:', data.result.commentResultDtoList);
     } else {
       console.error("Error in API response:", data.message);
     }
@@ -340,6 +352,8 @@ const ClickComment = async () => {
             alert('댓글이 생성되었습니다.');
             console.log('댓글이 생성되었습니다:', data.result);
             setCommentBody(''); // Clear the comment input
+            setCommentNum(commentNum + 1);
+            ClickComment();
         } else {
             console.error("Error in API response:", data.message);
         }
@@ -348,14 +362,17 @@ const ClickComment = async () => {
     }
 };
 
+const handleMapClick = () => {
+  navigate('/othersmap', { state: writerNickname });
+};
 
   return (
     <>
     {editMode ? <EditHistoryPost post={post} writerProfileImageUrl={writerProfileImageUrl} onsave={handleSaveClick} thumbnail={thumbnail} />
     : 
-<div style={{border: "3px solid red"}}className="history-con">
+<div className="history-con">
   {reportMode === true && (
-    <div>
+    <div className='report-his'>
       <Report 
         targetId = {postId}
         type = "POST"
@@ -363,75 +380,79 @@ const ClickComment = async () => {
       />
     </div>
   )}
-  <div style={{border: "3px solid yellow"}} className="history-frame">
-    <img
+    <div>   
+      <img
       src={close}
       alt="닫기"
       className="close-img"
       onClick={handleCloseClick} // 닫기 버튼 클릭 시 handleCloseClick 함수 호출
     />
-      {/* -------------게시글------------ */}
-      <div>
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle
+     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle
             style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-              boxShadow: 'none',
-              padding: 0,
+                backgroundColor: 'transparent',
+                border: 'none',
+                boxShadow: 'none',
+                padding: 0,
+                position: 'fixed', // 고정 위치
+                top: '15px', // 원하는 위치
+                right: '40px' // 원하는 위치
             }}
-          >
+        >
             <img src={more} alt="profile" className="more-img" />
-          </DropdownToggle>
-              {post.isOwned 
-              ?(<DropdownMenu style={{marginLeft:"570px", marginTop:"30px"}}>
-                <DropdownItem header>Edit</DropdownItem>
-                <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
-                <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
-                {/* <DropdownItem divider />
-                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem> */}
-              </DropdownMenu>)
-              :(<DropdownMenu>
-                <DropdownItem header>Report</DropdownItem>
-                <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
-              </DropdownMenu>)}
-              
-            </Dropdown>
-        <span style={{border: "3px solid green"}} className="intro-postType">
+        </DropdownToggle>
+        {post.isOwned 
+            ? (
+                <DropdownMenu style={{ position: 'fixed', top: '60px', right: '40px', marginRight:"40px", marginTop:"20px" }}>
+                    <DropdownItem header>Edit</DropdownItem>
+                    <DropdownItem onClick={handleEditClick}>수정하기</DropdownItem>
+                    <DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
+                </DropdownMenu>
+              )
+            : (
+                <DropdownMenu style={{ position: 'fixed', top: '45px', right: '40px' }}>
+                    <DropdownItem header>Report</DropdownItem>
+                    <DropdownItem onClick={handleReportClick}>신고하기</DropdownItem>
+                </DropdownMenu>
+              )}
+    </Dropdown>
+    </div>
+      {/* -------------게시글------------ */}
+     
+      <div className="history-frame">
+        <span className="intro-postType">
           <span>History</span>
         </span>
         <span className="intro-title">
           {post.title}
         </span>
-        {/* <div className="intro-thumbnail">
-          <img
-            src={thumbnail}
-            alt="썸네일 이미지"
-            className="thumbnail-img"
-          />
-        </div> */}
-        <span className="intro-createAt">
-            {formattedTime}
-        </span>
-          <div style={{border: "3px solid red"}} id='작성자 정보' className="intro-writer">
-            <div className="intro-writer-profileimg">
+          <div id='작성자 정보' className="intro-writer">
+            <button className="intro-writer-profileimg" onClick={handleMapClick}>
               <img
                 src={writerProfileImageUrl || user3}
                 className="profileimg"
               />
-            </div>
+            </button>
             <span className="intro-writer-nickname">
               <span>{writerNickname}</span>
             </span>
             <button className="intro-follow"  onClick={followed ? handleUnfollowClick : handleFollowClick} >
               <span style={{ color: followed ? "#404DF2" : "#000" }}> {followed ? "팔로잉" : "팔로우"}</span>
             </button>
-            
+            <span className="intro-createAt">
+              {formattedTime}
+            </span>
           </div>
 
         {/* -------------게시글 내용------------ */}    
-        <div style={{border: "3px solid red"}} className="frame-content">
-        
+        <div className="frame-content">
+        <div className="intro-thumbnail">
+          <img
+            src={thumbnail}
+            alt="썸네일 이미지"
+            className="thumbnail-img"
+          />
+        </div>
         {post.body ? <EditorViewer contents={post.body} /> : <div>Loading...</div>}
            
           
@@ -442,7 +463,7 @@ const ClickComment = async () => {
 
           {/* -------------게시글 좋아요수, 댓글수------------ */}
           <div className='frame-like-and-comment'>
-            <div style={{border: "3px solid red"}} className="frame-like">
+            <div className="frame-like">
               <button style={{ border: "none" }} onClick={handleLikeClick}>
                 <img
                     alt="좋아요"
@@ -455,8 +476,8 @@ const ClickComment = async () => {
                 {likeNum}
               </span>
             </div>
-            <div style={{border: "3px solid red"}} className="frame-comment">
-              <button onClick={ClickComment} style={{border:"none"}}>
+            <div className="frame-comment">
+            <button onClick={() => { ClickComment(); setCommentState(!commentState); }} style={{border:"none", backgroundColor:"#fff"}}>
               <img
                 src={comment}
                 alt="게시글 댓글"
@@ -464,49 +485,47 @@ const ClickComment = async () => {
               />
               </button>
               <span id='댓글 수' className="frame-like-text">
-                {post.commentsCount}
+                {commentNum}
               </span>
             </div>
           </div>
         </div>
-      </div>
+      
 
-      <div className='comment-container' style={{border:"3px solid red"}}>
-      {comments && comments.length > 0 && (
+      <div className='comment-container'>
+      {commentState === true && comments.length > 0 && (
             comments.map((item) => (
               <div>
-                <Comment data={item}></Comment>
+                <Comment data={item} onDelete={handleDelete} userProfileimg={userProfileimg}></Comment>
               </div>
             ))
           )}
       {comments &&
-      <div style={{border: "3px solid green"}} className="floating-history-comment-group45">
-        
-          <div style={{border: "3px solid green"}} className="floating-history-comment-group36">
-            <div className="floating-history-comment-group27">
-              <span className="floating-history-comment-text059">
+      <div className="comment-post-con">
+          <div className="comment-post-frame">
+            <div className="comment-post-writer">
+              <span className="comment-post-writer-nickname">
                 {userNickname}
               </span>
             </div>
             <img
               src={userProfileimg || basic_profile}
-              className="floating-history-comment-freeiconuser14907112"
+              className="comment-post-writer-profileimg"
+              
             />
           </div>
-            <span className="floating-history-comment-text063">
             <input 
-              style={{border: "3px solid yellow", width: "350px"}} 
+            className="comment-post-text"
               type="text" 
               placeholder="댓글을 입력하세요." 
               value={commentBody}
               onChange={(e) => setCommentBody(e.target.value)} 
                 />
-            </span>
-             <div style={{border: "3px solid green"}} className="floating-history-comment-frame25">
-              <span className="floating-history-comment-text061">
-                  <button onClick={SaveComment} style={{border:'none'}}>등록</button>
+             <button className="comment-post-save" onClick={SaveComment}>
+              <span className="comment-post-save-text">
+                  등록
               </span>
-              </div>
+              </button>
         </div>}
     </div>
       

@@ -224,7 +224,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             // // Combine post and historypost arrays
             // const combinedPosts = [...post, ...historypost];
         
-            console.log('combinePost:', combinePost);
+            // console.log('combinePost:', combinePost);
             const markers = combinePost.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
                 // console.log('정보: ', item);
@@ -328,31 +328,31 @@ const MapInformation = ({ active, dailybound, historybound }) => {
 
     return (
         <div>
-            <button onClick={onRefreshClick}>
+            <button className="refresh-button" onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block' }} />
             </button>
-            <div style={{ display: 'inline-block', marginLeft: '280px', border:"3px solid red" }}>
-                <span style={{ fontSize: '10px', margin:"3px" }}>all pin</span>
-                <span style={{ fontSize: '10px', margin:"3px" }}>daily pin</span>
-                <span style={{ fontSize: '10px', margin:"3px" }}>history pin</span>
+            <div style={{ display: 'inline-block', marginLeft: '280px', marginTop:"5%"}}>
+                <span style={{ fontSize: '10px', margin:"5px" }}>all pin</span>
+                <span style={{ fontSize: '10px', margin:"7px" }}>daily pin</span>
+                <span style={{ fontSize: '10px', margin:"5px" }}>history pin</span>
                 <br />
-                <button onClick={onClickAllPin} style={{ border: "none" }}>
-                    <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px' }} />
+                <button onClick={onClickAllPin} className="basic-button" >
+                    <img src={allPinState ? full_allPin : allPin} alt="allPin" style={{ width: '30px', height: '30px'}} />
                 </button>
-                <button onClick={onClickDailyPin} style={{ border: "none"}}>
+                <button onClick={onClickDailyPin} className="basic-button" >
                     <img src={dailyPinState ? full_dailyPin : dailyPin} alt="dailyPin" style={{ width: '30px', height: '30px' }} />
                 </button>
-                <button onClick={onClickHistoryPin} style={{ border: "none" }}>
+                <button onClick={onClickHistoryPin} className="basic-button" >
                     <img src={historyPinState ? full_historyPin : historyPin} alt="historyPin" style={{ width: '30px', height: '30px' }} />
                 </button> 
             </div>
             <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
             <div>
-                <h4>Map Bounds:</h4>
+                {/* <h4>Map Bounds:</h4>
                 <p>North-East Latitude: {historyBounds.ne.lat}, Longitude: {historyBounds.ne.lng}</p>
                 <p>South-West Latitude: {historyBounds.sw.lat}, Longitude: {historyBounds.sw.lng}</p>
-                <br />
-                <button onClick={onHistoryBound}>이 위치에서 재검색</button>
+                <br /> */}
+                <button className="research-button" onClick={onHistoryBound}>이 위치에서 재검색</button>
             </div>
         </div>
     );
