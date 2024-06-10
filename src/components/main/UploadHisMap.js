@@ -110,6 +110,10 @@ const UploadHisMap = ({ setPostPosition }) => {
                 
                 const handleAddressSearch = (e) => {
                     e.preventDefault();
+                    if (!addressInput.value.trim()) {
+                        alert('검색어를 입력해주세요.');
+                        return;
+                    }
                     searchAddressToCoordinate(addressInput.value);
                 };
 

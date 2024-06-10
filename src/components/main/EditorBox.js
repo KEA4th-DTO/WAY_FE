@@ -27,6 +27,7 @@ const EditorBox = () => {
     const [latitude, setLatitude] = useState(''); // [위도, 경도
     const [longitude, setLongitude] = useState('');
     const [showMap, setShowMap] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);  // 추가된 상태 변수
 
     const { naver } = window;
     
@@ -53,6 +54,11 @@ const EditorBox = () => {
                 alert("모든 필드를 채워주세요.");
                 return;
             }
+
+            if (title.trim() === '' || isSubmitting) {
+                return;
+              }
+            setIsSubmitting(true);  // 제출 시작
     
             const formData = new FormData();
             formData.append('thumbnailImage', image); // 썸네일 이미지 추가
@@ -85,9 +91,13 @@ const EditorBox = () => {
                 console.error('Error:', data);
                 alert('저장에 실패했습니다.');
             }
+            setIsSubmitting(false);  // 제출 완료
+
         } catch (error) {
             console.error('Error:', error);
             alert('저장 중 오류가 발생했습니다.');
+            setIsSubmitting(false);  // 오류 발생 시 제출 상태 초기화
+
         }
     };
     
@@ -230,7 +240,9 @@ const EditorBox = () => {
                 </div>
                 
             </div>
-            <button className='save' onClick={onSave}>저장</button>
+            <button className='save' onClick={onSave} disabled={isSubmitting}>
+            {isSubmitting ? '저장 중' : '저장'}
+            </button>
             <span>썸네일 이미지 :
                 <input type="file" onChange={handleImageUpload} accept="image/*" />
                     {imagePreview && (
