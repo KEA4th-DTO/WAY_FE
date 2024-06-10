@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Follower from "./Following";
 import "../assets/style/_follower.scss";
+import { useNavigate } from "react-router-dom";
 
 function Followings() {
   const [followings, setFollowings] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const Server_IP = process.env.REACT_APP_Server_IP;
@@ -50,6 +52,10 @@ function Followings() {
     fetchFollowings();
   }, []);
 
+  const handleFollowingClick = (nickName) => {
+    navigate(`/profile/${nickName}`);
+  };
+
   return (
     <div className="post-title">
       <p className="follower-label">팔로잉 목록</p>
@@ -61,6 +67,7 @@ function Followings() {
             nickName={following.nickname}
             image={following.image}
             isFollow={following.isFollow}
+            onClick={handleFollowingClick}
           />
         ))}
       </div>

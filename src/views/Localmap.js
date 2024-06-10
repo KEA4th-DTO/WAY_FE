@@ -4,6 +4,7 @@ import DailyList from "../components/main/DailyList";
 import HistoryList from "../components/main/HistoryList";
 import DailyPost from "../components/main/DailyPost";
 import HistoryPost from "../components/main/HistoryPost";
+import Loader from "../layouts/loader/Loader"
 import "../assets/scss/layout/_localmap.scss";
 import back from "../assets/images/logos/back.png";
 
@@ -21,7 +22,8 @@ const Localmap = () => {
   const Server_IP = process.env.REACT_APP_Server_IP;
 
   const [active, setActive] = useState(null);
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState(null);  
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
 
   useEffect(() => {
     if (active && active.item) {
@@ -39,6 +41,8 @@ const Localmap = () => {
     if (dailyBounds) {
       const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;     
       const url = `${Server_IP}/post-service/posts/list/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+      
+      setLoading(true); // 로딩 시작
 
       fetch(url, {
         method: "GET",
@@ -63,7 +67,8 @@ const Localmap = () => {
             console.error("Error in API response:", data.message);
           }
         })
-        .catch((error) => console.error("Error fetching pin data:", error));
+        .catch((error) => console.error("Error fetching pin data:", error))
+        .finally(() => setLoading(false)); // 로딩 종료
     }
   }, [dailyBounds, selectedPost]);
 
@@ -116,6 +121,10 @@ const Localmap = () => {
   const orderedPosts = activeId
     ? [combinePost.find((item) => item.postId === activeId), ...combinePost.filter((item) => item.postId !== activeId)]
     : combinePost;
+
+    // if(loading){
+    //   return <Loader />;
+    // }
 
   return (
     <div id="local-con" style={{ display: "flex", width: "950px" }}>

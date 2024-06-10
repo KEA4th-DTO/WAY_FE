@@ -22,7 +22,8 @@ const Othersmap = lazy(() => import("../views/Othersmap.js"));
 const Upload = lazy(() => import("../views/Upload.js"));
 const Chatting = lazy(() => import("../views/Chatting.js"));
 const Search = lazy(() => import("../views/Search.js"));
-const MyPage = lazy(() => import("../views/MyPage"));
+const MyPage = lazy(() => import("../views/MyPage.js"));
+const OtherPage = lazy(() => import("../views/OtherPage.js"));
 
 const Modi_profile = lazy(() => import("../components/main/ModifyProfile.js"));
 const BlockList = lazy(() => import("../views/ui/BlockList"));
@@ -69,6 +70,7 @@ const ThemeRoutes = [
       { path: "/chatting", exact: true, element: <Chatting /> },
       { path: "/search", exact: true, element: <Search /> },
       { path: "/mypage", exact: true, element: <MyPage /> },
+      { path: "/profile/:nickname", exact: true, element: <OtherPage /> },
 
       { path: "/modify_profile", exact: true, element: <Modi_profile /> },
       { path: "/blocklist", exact: true, element: <BlockList /> },

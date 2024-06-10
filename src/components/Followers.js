@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Follower from "./Follower";
 import "../assets/style/_follower.scss";
+import { useNavigate } from "react-router-dom";
 
 function Followers() {
   const [followers, setFollowers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const Server_IP = process.env.REACT_APP_Server_IP;
@@ -35,17 +37,22 @@ function Followers() {
             }));
             setFollowers(followersData); // result 배열을 상태에 저장
           } else {
-            // console.log(response.status);
             throw new Error("Unexpected response structure");
           }
         } else {
           throw new Error(`Unexpected response status: ${response.status}`);
         }
-      } catch (error) {}
+      } catch (error) {
+        // Handle error
+      }
     };
 
     fetchFollowers();
   }, []);
+
+  const handleFollowerClick = (nickName) => {
+    navigate(`/profile/${nickName}`);
+  };
 
   return (
     <div className="post-title">
@@ -58,6 +65,7 @@ function Followers() {
             nickName={follower.nickname}
             image={follower.image}
             initialFollowState={follower.isFollow}
+            onClick={handleFollowerClick}
           />
         ))}
       </div>

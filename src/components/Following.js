@@ -3,13 +3,10 @@ import "../assets/style/_follower.scss";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-function Following({ name, nickName, image, isFollow, onFollowChange }) {
+function Following({ name, nickName, image, isFollow, onFollowChange, onClick }) {
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(isFollow);
-
-  // 아래 useEffect는 디버깅을 위해 추가했습니다. 초깃값 설정 확인을 위해 추가하였습니다.
   useEffect(() => {
-    // console.log(`Initial isFollowing state for ${nickName}:`, isFollowing);
   }, [isFollowing, nickName]);
 
   const handleFollowClick = () => {
@@ -44,7 +41,7 @@ function Following({ name, nickName, image, isFollow, onFollowChange }) {
   };
 
   return (
-    <div className="follower-container">
+    <div className="follower-container" onClick={() => onClick(nickName)}>
       <img src={image} alt={name} className="follower-image" />
       <div className="follower-info">
         <h3 className="follower-name">{name}</h3>

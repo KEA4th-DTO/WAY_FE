@@ -3,7 +3,7 @@ import "../assets/style/_follower.scss";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-function Follower({ name, nickName, image, initialFollowState }) {
+function Follower({ name, nickName, image, initialFollowState, onClick }) {
 
   const navigate = useNavigate();
   const [isFollow, setIsFollow] = useState(initialFollowState);
@@ -48,7 +48,7 @@ function Follower({ name, nickName, image, initialFollowState }) {
 
 
   return (
-    <div className="follower-container">
+    <div className="follower-container" onClick={() => onClick(nickName)}>
       <img src={image} alt={name} className="follower-image" />
       <div className="follower-info">
         <h3 className="follower-name">{name}</h3>
