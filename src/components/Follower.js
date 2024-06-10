@@ -39,10 +39,9 @@ function Follower({ name, nickName, image, initialFollowState, onClick }) {
       .catch((error) => {});
   };
 
-
   const handleMapClick = (event) => {
     event.stopPropagation();
-    navigate('/othersmap', {state: nickName});
+    navigate('/othersmap', { state: { nickname: nickName } });
   };
 
   return (

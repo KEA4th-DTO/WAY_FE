@@ -10,8 +10,6 @@ import { useLocation } from 'react-router-dom';
 const OthersMap = () => {
   const location = useLocation();
   const { nickname } = location.state || {};
-  console.log('state: ', nickname);
-
   const [userPost, setUserPost] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");
@@ -22,7 +20,6 @@ const OthersMap = () => {
 
   useEffect(() => {
     if (active && active.item) {
-      console.log("active: ", active);
       setActiveId(active.item.postId);
     }
   }, [active]);
