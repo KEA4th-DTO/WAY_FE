@@ -4,13 +4,11 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 function Follower({ name, nickName, image, initialFollowState, onClick }) {
-
   const navigate = useNavigate();
   const [isFollow, setIsFollow] = useState(initialFollowState);
 
-  console.log(initialFollowState);
-
-  const handleFollowClick = () => {
+  const handleFollowClick = (e) => {
+    e.stopPropagation();
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
     const url = isFollow
@@ -23,24 +21,23 @@ function Follower({ name, nickName, image, initialFollowState, onClick }) {
       },
     };
 
-    const request = axios({
+    axios({
       method: isFollow ? "DELETE" : "POST",
       url: url,
       ...config,
-    });
-
-    request
+    })
       .then((response) => {
         if (response.status === 200) {
           setIsFollow(!isFollow);
-        } else {
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(`Error ${isFollow ? "unfollowing" : "following"}: ${error}`);
+      });
   };
 
-  const handleMapClick = (event) => {
-    event.stopPropagation();
+  const handleMapClick = (e) => {
+    e.stopPropagation();
     navigate('/othersmap', { state: { nickname: nickName } });
   };
 
@@ -49,7 +46,7 @@ function Follower({ name, nickName, image, initialFollowState, onClick }) {
       <img src={image} alt={name} className="follower-image" />
       <div className="follower-info">
         <h3 className="follower-name">{name}</h3>
-        <p className="follower-nickname">{nickName}</p>
+        <p className="follower-nickname">@{nickName}</p>
       </div>
       <div className="follower-actions">
         <button
