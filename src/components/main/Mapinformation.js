@@ -8,18 +8,16 @@ import full_allPin from "../../assets/images/icons/full_allPin.png";
 import full_dailyPin from "../../assets/images/icons/full_dailyPin.png";
 import full_historyPin from "../../assets/images/icons/full_historyPin.png";
 import refresh from "../../assets/images/icons/refresh.png";
+import DailyPost from "./DailyPost";
 
-const MapInformation = ({ active, dailybound, historybound }) => {
+const MapInformation = ({ active, dailybound, historybound, setLoading, researchmode }) => {
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const [post, setPost] = useState([]);
     const [dailyPost, setDailyPost] = useState([]);
-    const [combinePost, setCombinePost] = useState([]);
-    const [isIn, setIsIn] = useState([]);
 
     const mapRef = useRef(null);
     const [activePin, setActivePin] = useState("ALL");
-    const [mapState, setMapState] = useState({ zoom: 16, center: null });
-    const [activeMarker, setActiveMarker] = useState(null);
+    const [mapState, setMapState] = useState({ zoom: 13, center: null });
     const [clickedMarker, setClickedMarker] = useState(null);
     const [dailyBounds, setDailyBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
     const [historyBounds, setHistoryBounds] = useState({ ne: { lat: '', lng: '' }, sw: { lat: '', lng: '' } });
@@ -52,8 +50,9 @@ const MapInformation = ({ active, dailybound, historybound }) => {
     };
 
     const onRefreshClick = () => {
-        setMapState({ zoom: 16, center: currentMyLocation });
-        setCombinePost(post);
+        setMapState({ zoom: 13, center: currentMyLocation });
+        setPost(dailyPost);
+        researchmode(false);
     };
 
     useEffect(() => {
@@ -100,6 +99,8 @@ const MapInformation = ({ active, dailybound, historybound }) => {
         if (dailyBounds) {
             const { latitude1, longitude1, latitude2, longitude2 } = dailyBounds;
             const url = `${Server_IP}/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
+            
+            setLoading(true); // Start loading
 
             fetch(url, {
                 method: "GET",
@@ -116,15 +117,14 @@ const MapInformation = ({ active, dailybound, historybound }) => {
                 .then(data => {
                     if (data.isSuccess) {
                         // console.log("success_pin", data.result.pinResultDtoList);
-                        const daily_p = data.result.pinResultDtoList.filter(item => item.postType === 'DAILY');
-                        setDailyPost(daily_p);
-                        setCombinePost(data.result.pinResultDtoList);
+                        setDailyPost(data.result.pinResultDtoList);
                         setPost(data.result.pinResultDtoList);
                     } else {
                         console.error("Error in API response:", data.message);
                     }
                 })
-                .catch(error => console.error("Error fetching pin data:", error));
+                .catch(error => console.error("Error fetching pin data:", error))
+                .finally(() => setLoading(false)); // Stop loading
         }
     }, [dailyBounds]);
 
@@ -147,7 +147,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             const map = new naver.maps.Map(mapRef.current, {
                 center: mapState.center,
                 zoom: mapState.zoom,
-                minZoom: 7,
+                minZoom: 12,
                 maxZoom: 16,
                 zoomControl: true,
                 zoomControlOptions: {
@@ -197,7 +197,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
                         size: new naver.maps.Size(43, 43),
                         scaledSize: new naver.maps.Size(43, 43),
                     });
-                    setActiveMarker(null);
+                    active(null);
                     setClickedMarker(null);
                     return;
                 } 
@@ -216,7 +216,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
                     size: new naver.maps.Size(50, 50),
                     scaledSize: new naver.maps.Size(50, 50),
                 });
-                setActiveMarker({ item });
+                active({ item });
                 setClickedMarker({ marker, item });
                
             };
@@ -225,7 +225,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             // const combinedPosts = [...post, ...historypost];
         
             // console.log('combinePost:', combinePost);
-            const markers = combinePost.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
+            const markers = post.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
                 // console.log('정보: ', item);
                 let iconUrl = getNormalPin(item);
@@ -262,7 +262,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
                 })); 
             });
         }
-    }, [currentMyLocation, combinePost, activePin, mapState, clickedMarker, activeMarker]);
+    }, [currentMyLocation, post, activePin, mapState, clickedMarker]);
 
     useEffect(() => {
         if (currentMyLocation && mapRef.current) {
@@ -273,7 +273,6 @@ const MapInformation = ({ active, dailybound, historybound }) => {
         }
     }, [currentMyLocation]);
 
-    active(activeMarker);
 
     const onHistoryBound = async () => {
         if (!historyBounds) {
@@ -293,6 +292,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             longitude2:  longitude2
         });
     
+        researchmode(true);
         const url = `${Server_IP}/post-service/posts/pin/range?latitude1=${latitude1}&longitude1=${longitude1}&latitude2=${latitude2}&longitude2=${longitude2}`;
     
         try {
@@ -313,7 +313,7 @@ const MapInformation = ({ active, dailybound, historybound }) => {
             if (data.isSuccess) {
                 // console.log("범위의 히스토리 불러오기 성공", data.result.pinResultDtoList);
                 const history_p = data.result.pinResultDtoList.filter(item => item.postType === 'HISTORY');
-                setCombinePost([...dailyPost, ...history_p]);
+                setPost(history_p);
                 if(history_p.length === 0) {
                     alert("해당 위치에 히스토리가 없습니다.");
                 }
