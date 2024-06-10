@@ -7,7 +7,7 @@ import axios from "axios";
 import WayTag from "../components/main/Waytag";
 import { useNavigate } from "react-router-dom";
 
-function OtherPage() {
+function ProfilePage() {
   const { nickname } = useParams();
   const [activeTab, setActiveTab] = useState("followers");
   const [profile, setProfile] = useState({
@@ -49,7 +49,9 @@ function OtherPage() {
           followingsCount: data.followingCount,
           tags: data.wayTags.slice(0, 3),
         });
-      } catch (error) {}
+      } catch (error) {
+        console.error(`Error fetching profile: ${error}`);
+      }
     };
     fetchProfile();
   }, [nickname]);
@@ -63,6 +65,11 @@ function OtherPage() {
       ...prevProfile,
       [`${type}Count`]: prevProfile[`${type}Count`] + (increment ? 1 : -1),
     }));
+  };
+
+  const handleMapClick = (event) => {
+    event.stopPropagation();
+    navigate('/othersmap', { state: { nickname } });
   };
 
   const renderTags = () => {
@@ -101,12 +108,12 @@ function OtherPage() {
             <p className="nickName">{profile.nickName}</p>
             <p className="bio">{profile.bio}</p>
             <div className="btn-container">
-              <button className="btn-post" onClick={() => navigate("/mymap")}>
+              <button className="btn-post" onClick={handleMapClick}>
                 <span className="tab-count">
                   {profile.dailyCount + profile.historyCount}
                 </span>
                 <span className="tab-label">게시글</span>
-                <span className="hover-text">마이맵으로 이동</span>
+                <span className="hover-text">맵으로 이동</span>
               </button>
               <button
                 className="btn-followers"
@@ -129,14 +136,14 @@ function OtherPage() {
       </div>
       <div className="myPage-rightpanel">
         {activeTab === "followers" && (
-          <Followers onFollowChange={handleFollowChange} />
+          <Followers nickname={nickname} onFollowChange={handleFollowChange} />
         )}
         {activeTab === "followings" && (
-          <Followings onFollowChange={handleFollowChange} />
+          <Followings nickname={nickname} onFollowChange={handleFollowChange} />
         )}
       </div>
     </div>
   );
 }
 
-export default OtherPage;
+export default ProfilePage;

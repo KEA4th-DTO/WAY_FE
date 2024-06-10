@@ -4,12 +4,14 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 function Following({ name, nickName, image, isFollow, onFollowChange, onClick }) {
+  
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(isFollow);
-  useEffect(() => {
-  }, [isFollowing, nickName]);
 
-  const handleFollowClick = () => {
+  useEffect(() => {}, [isFollowing, nickName]);
+
+  const handleFollowClick = (event) => {
+    event.stopPropagation();
     const token = localStorage.getItem("accessToken");
     const Server_IP = process.env.REACT_APP_Server_IP;
     const url = isFollowing
@@ -28,16 +30,17 @@ function Following({ name, nickName, image, isFollow, onFollowChange, onClick })
           setIsFollowing(!isFollowing);
           onFollowChange("followings", !isFollowing);
         } else {
-          // console.error(`Follow ${name} failed: ${response.status}`);
+          console.error(`Follow ${name} failed: ${response.status}`);
         }
       })
       .catch((error) => {
-        // console.error(`Error: ${error}`);
+        console.error(`Error: ${error}`);
       });
   };
 
-  const handleMapClick = () => {
-    navigate('/othersmap', { state: nickName });
+  const handleMapClick = (event) => {
+    event.stopPropagation();
+    navigate('/othersmap', {state: nickName});
   };
 
   return (

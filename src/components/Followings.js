@@ -4,14 +4,14 @@ import Follower from "./Following";
 import "../assets/style/_follower.scss";
 import { useNavigate } from "react-router-dom";
 
-function Followings() {
+function Followings({nickname}) {
   const [followings, setFollowings] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!nickname) return;
     const Server_IP = process.env.REACT_APP_Server_IP;
-    const nickName = localStorage.getItem("userNickname");
-    const url = `${Server_IP}/member-service/follow/${nickName}/following-list`;
+    const url = `${Server_IP}/member-service/follow/${nickname}/following-list`;
 
     const fetchFollowings = async () => {
       const token = localStorage.getItem("accessToken");
@@ -36,9 +36,7 @@ function Followings() {
               daily: following.memberInfoResponseDTO.dailyCount,
             }));
             setFollowings(followingsData); // result 배열을 상태에 저장
-            // console.log(followingsData);
           } else {
-            // console.log(response.status);
             throw new Error("Unexpected response structure");
           }
         } else {
@@ -50,7 +48,7 @@ function Followings() {
     };
 
     fetchFollowings();
-  }, []);
+  }, [nickname]);
 
   const handleFollowingClick = (nickName) => {
     navigate(`/profile/${nickName}`);

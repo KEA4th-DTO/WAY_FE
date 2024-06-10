@@ -7,15 +7,13 @@ import HistoryPost from "../components/main/HistoryPost";
 import DailyPost from "../components/main/DailyPost";
 import { useLocation } from 'react-router-dom';
 
-
-const Othersmap = () => {
-  //데이터 가져오기
+const OthersMap = () => {
   const location = useLocation();
-  const userNickname = location.state;
-  console.log('state: ', userNickname);
+  const { nickname } = location.state || {};
+  console.log('state: ', nickname);
 
   const [userPost, setUserPost] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null); // 추가: 선택된 게시글 상태
+  const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
   const token = localStorage.getItem("accessToken");
   const Server_IP = process.env.REACT_APP_Server_IP;
 
@@ -30,8 +28,8 @@ const Othersmap = () => {
   }, [active]);
 
   useEffect(() => {
-    if (userNickname) {
-      const url = `${Server_IP}/post-service/posts/list/${userNickname}`;
+    if (nickname) {
+      const url = `${Server_IP}/post-service/posts/list/${nickname}`;
       fetch(url, {
         method: "GET",
         headers: {
@@ -53,7 +51,7 @@ const Othersmap = () => {
       })
       .catch(error => console.error("Error fetching data:", error));
     }
-  }, [userNickname, token, selectedPost]);
+  }, [nickname, token, selectedPost]);
 
   console.log('userPost: ', userPost);
 
@@ -72,60 +70,59 @@ const Othersmap = () => {
     setSelectedPost(null);
   };
 
-   // Order posts so that the active post appears first
-   const orderedPosts = activeId
-   ? [userPost.find((item) => item.postId === activeId), ...userPost.filter((item) => item.postId !== activeId)]
-   : userPost;
+  // Order posts so that the active post appears first
+  const orderedPosts = activeId
+    ? [userPost.find((item) => item.postId === activeId), ...userPost.filter((item) => item.postId !== activeId)]
+    : userPost;
 
-
-  return ( 
-    <div style={{ display: "flex", width: "950px"}}>
-    {/* 지도 & 핀 */}
-    <div id="map-con">
-        <span className="initial-main-page-text">"{userNickname}"의 맵</span>
+  return (
+    <div style={{ display: "flex", width: "950px" }}>
+      {/* 지도 & 핀 */}
+      <div id="map-con">
+        <span className="initial-main-page-text">"{nickname}"의 맵</span>
         <div>
-          <UserMapinfo userNickname={userNickname} active={setActive}/>
+          <UserMapinfo userNickname={nickname} active={setActive} />
         </div>
-    </div>
-      
-    {/* 게시글 */}
-    <div className="initial-main-page-frame">
-      <span className="initial-main-page-text">게시글 {userPost.length}개</span>
-    
-      <button style={{display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none"}} className="dailypost-frame8" onClick={handleBackClick}>
-        {selectedPost && selectedPost.postType === 'DAILY' &&
-          <img alt="뒤로가기" src={back} className="dailypost-vector3" />
-        }
-      </button>
-      <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-        {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
       </div>
 
-      <div className="list-con" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
-        {orderedPosts && orderedPosts.length > 0 ? (
-          orderedPosts.map((item) => (
-            <div key={item.postId} onClick={() => handlePostClick(item)}>
-              {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
-            </div>
-          ))
-        ) : (
-          <div>No posts available</div>
-        )}
+      {/* 게시글 */}
+      <div className="initial-main-page-frame">
+        <span className="initial-main-page-text">게시글 {userPost.length}개</span>
+
+        <button style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none" }} className="dailypost-frame8" onClick={handleBackClick}>
+          {selectedPost && selectedPost.postType === 'DAILY' &&
+            <img alt="뒤로가기" src={back} className="dailypost-vector3" />
+          }
+        </button>
+        <div style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "block" : "none", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+          {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete} />}
+        </div>
+
+        <div className="list-con" style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
+          {orderedPosts && orderedPosts.length > 0 ? (
+            orderedPosts.map((item) => (
+              <div key={item.postId} onClick={() => handlePostClick(item)}>
+                {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
+              </div>
+            ))
+          ) : (
+            <div>No posts available</div>
+          )}
+        </div>
       </div>
+      {selectedPost && selectedPost.postType === 'HISTORY' && (
+        <div className="historyPost-con">
+          <HistoryPost
+            postId={selectedPost.postId}
+            thumbnail={selectedPost.imageUrl}
+            writerNickname={selectedPost.writerNickname}
+            writerProfileImageUrl={selectedPost.writerProfileImageUrl}
+            onClose={handleBackClick}
+          />
+        </div>
+      )}
     </div>
-    {selectedPost && selectedPost.postType === 'HISTORY' && (
-      <div className="historyPost-con">
-        <HistoryPost 
-          postId={selectedPost.postId}  
-          thumbnail={selectedPost.imageUrl} 
-          writerNickname={selectedPost.writerNickname} 
-          writerProfileImageUrl={selectedPost.writerProfileImageUrl} 
-          onClose={handleBackClick} />
-      </div>
-    )}
-  </div>
-);
+  );
 };
-export default Othersmap;
 
-
+export default OthersMap;

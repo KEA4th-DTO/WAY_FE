@@ -4,14 +4,15 @@ import Follower from "./Follower";
 import "../assets/style/_follower.scss";
 import { useNavigate } from "react-router-dom";
 
-function Followers() {
+function Followers({ nickname }) {
   const [followers, setFollowers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!nickname) return;
+
     const Server_IP = process.env.REACT_APP_Server_IP;
-    const nickName = localStorage.getItem("userNickname");
-    const url = `${Server_IP}/member-service/follow/${nickName}/follower-list`;
+    const url = `${Server_IP}/member-service/follow/${nickname}/follower-list`;
 
     const fetchFollowers = async () => {
       const token = localStorage.getItem("accessToken");
@@ -35,7 +36,7 @@ function Followers() {
               history: follower.memberInfoResponseDTO.historyCount,
               daily: follower.memberInfoResponseDTO.dailyCount,
             }));
-            setFollowers(followersData); // result 배열을 상태에 저장
+            setFollowers(followersData);
           } else {
             throw new Error("Unexpected response structure");
           }
@@ -43,12 +44,12 @@ function Followers() {
           throw new Error(`Unexpected response status: ${response.status}`);
         }
       } catch (error) {
-        // Handle error
+        console.error(`Error fetching followers: ${error}`);
       }
     };
 
     fetchFollowers();
-  }, []);
+  }, [nickname]);
 
   const handleFollowerClick = (nickName) => {
     navigate(`/profile/${nickName}`);

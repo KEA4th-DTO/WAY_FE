@@ -40,12 +40,10 @@ function Follower({ name, nickName, image, initialFollowState, onClick }) {
   };
 
 
-  const handleMapClick = () => {
-    navigate('/othersmap', { state: nickName });
+  const handleMapClick = (event) => {
+    event.stopPropagation();
+    navigate('/othersmap', {state: nickName});
   };
-
-  
-
 
   return (
     <div className="follower-container" onClick={() => onClick(nickName)}>

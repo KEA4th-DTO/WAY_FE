@@ -33,7 +33,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/mypage"); // 프로필 페이지로 이동
+    const userNickname = localStorage.getItem("userNickname");
+    navigate(`/profile/${userNickname}`); // 프로필 페이지로 이동
   };
 
   const isValidJson = (str) => {
