@@ -72,10 +72,12 @@
 
 .profile-img {
     width: 80%;
+    max-width: 400px;
     margin-top : 10%;
-    height: auto;
+    height: 350px;
     border-radius: 13px;
     margin-bottom: 20px;
+    object-fit: cover;
 }
 
 .userName {
