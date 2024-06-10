@@ -7,10 +7,12 @@ import SearchList2 from "../components/main/SearchList2";
 import localmap_img from "../assets/images/bg/localmap_img.png";
 import mymap_img from "../assets/images/bg/mymap_img.png";
 import HistoryPost from "../components/main/HistoryPost";
+import RecommendUser from '../components/main/RecommendUser';
 
 const Search = () => {
   const token = localStorage.getItem("accessToken");
   const Server_IP = process.env.REACT_APP_Server_IP;
+  const userNickname = localStorage.getItem("userNickname");
 
   const [word, setWord] = useState("");
   const [page, setPage] = useState(1);
@@ -23,6 +25,7 @@ const Search = () => {
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
   const [filterToggle, setFilterToggle] = useState(false); // 토글 상태
   
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     handleSearch();
@@ -40,6 +43,8 @@ const Search = () => {
     }
 
     setCheck(selectedCate);
+    setPost([]); // 검색 결과 초기화
+
     const url = `${Server_IP}/${selectedUrl}?keyword=${word}&page=${page}`;
     // console.log("url", url);
     fetch(url, {
@@ -111,6 +116,32 @@ const Search = () => {
     }
   };
   
+  useEffect(() => {
+      const url = `${Server_IP}/member-service/search/recommend`;
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok ' + res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.isSuccess) {
+          console.log("유저 추천 목록 불러오기 성공", data.result);
+          setUsers(data.result);
+        } else {
+          console.error("Error in API response:", data.message);
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+
+  }, [userNickname]);
 
   
   return (
@@ -158,9 +189,14 @@ const Search = () => {
             <span className='post-span'>검색 결과가 {totalElements}건 조회되었습니다.</span>
             <div className='post-br'/>
             {post.map(item => (
-              <button style={{ border: "none", backgroundColor:"#fff" }} key={item.id} onClick={() => handlePostClick(item) }>
-                {check === '닉네임' ? <SearchList2 data={item} />: <SearchList data={item} />}
-              </button>
+              check === '닉네임' ?
+              (<button style={{ border: "none", backgroundColor:"#fff" }} key={item.id}>
+                <SearchList2 data={item} />
+              </button>)
+              :
+               (<button style={{ border: "none", backgroundColor:"#fff" }} key={item.id} onClick={() => handlePostClick(item) }>
+               <SearchList data={item} />
+             </button>)
             ))}
             {/* Pagination Controls */}
             <div className="pagination-controls">
@@ -187,33 +223,18 @@ const Search = () => {
         </div>
       )}
 
-      {/* 로컬맵, 마이맵 이동 버튼 */}
-      <div className="search-move">
-        <Link to="/localmap" style={{ textDecoration: "none", color: "inherit" }}>
-          <button style={{ border: "none" }}>
-            <img
-              src={localmap_img}
-              alt="localmap"
-              className="search-move-localmap"
-            />
-            <span className="search-move-localmap-text">
-              로컬맵으로 돌아가기
-            </span>
-          </button>
-        </Link>
-
-        <Link to="/mymap" style={{ textDecoration: "none", color: "inherit" }}>
-          <button style={{ border: "none" }}>
-            <img
-              src={mymap_img}
-              alt="mymap"
-              className="search-move-mymap"
-            />
-            <span className="search-move-mymap-text">
-              마이맵으로 이동하기
-            </span>
-          </button>
-        </Link>
+      {/* 유저 추천 목록 */}
+      <div className="search-users">
+      <span className="search-users-text">
+        유저 추천 목록
+      </span>
+      <br />
+      <br />
+      {users.map(item => (
+              <button style={{ border: "none", backgroundColor:"#fff" }} key={item.id}>
+               <RecommendUser data={item} />
+              </button>
+            ))}
       </div>
     </div>
   );
