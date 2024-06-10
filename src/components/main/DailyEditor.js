@@ -25,6 +25,7 @@ const DailyEditor = () => {
   const [latitude, setLatitude] = useState(""); // [위도, 경도
   const [longitude, setLongitude] = useState("");
   const [showMap, setShowMap] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);  // 추가된 상태 변수
 
   const navigate = useNavigate();
   const { naver } = window;
@@ -50,6 +51,11 @@ const DailyEditor = () => {
         alert("이미지를 선택해주세요.");
         return;
       }
+
+      if (title.trim() === '' || isSubmitting) {
+        return;
+      }
+      setIsSubmitting(true);  // 제출 시작
 
       const formData = new FormData();
       formData.append("image", image); // Add the image file
@@ -92,8 +98,11 @@ const DailyEditor = () => {
         console.error("Error:", data);
         alert("저장에 실패했습니다.");
       }
+      setIsSubmitting(false);  // 제출 완료
+
     } catch (error) {
       console.error("Error:", error);
+      setIsSubmitting(false);  // 제출 완료
       alert("저장 중 오류가 발생했습니다.");
     }
   };
@@ -238,8 +247,8 @@ const DailyEditor = () => {
         />
       </div>
       <br />
-      <button className="save" onClick={onSave}>
-        저장
+      <button className="save" onClick={onSave} disabled={isSubmitting}>
+      {isSubmitting ? '저장 중' : '저장'}
       </button>
     </div>
   );

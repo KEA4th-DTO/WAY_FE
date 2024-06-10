@@ -11,7 +11,7 @@ import refresh from "../../assets/images/icons/refresh.png";
 // import MarkerClustering from "../../utils/MarkerClustering.js";
 // import $ from "jquery"; // Import jQuery
 
-const UserMapinfo = ({ userNickname, active }) => {
+const UserMapinfo = ({ userNickname, active, setLoading, }) => {
     const [userPost, setUserPost] = useState([]);
     const [currentMyLocation, setCurrentMyLocation] = useState();
     const mapRef = useRef(null);
@@ -62,6 +62,8 @@ const UserMapinfo = ({ userNickname, active }) => {
         if (userNickname) {
             const url = `${Server_IP}/post-service/posts/pin/${userNickname}`;
 
+            setLoading(true); // Start loading
+
             fetch(url, {
                 method: "GET",
                 headers: {
@@ -81,7 +83,9 @@ const UserMapinfo = ({ userNickname, active }) => {
                         console.error("Error in API response:", data.message);
                     }
                 })
-                .catch(error => console.error("Error fetching pin data:", error));
+                .catch(error => console.error("Error fetching pin data:", error))
+                .finally(() => setLoading(false)); // Stop loading
+                
         }
     }, [userNickname, token]);
 

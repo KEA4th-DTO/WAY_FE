@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "../assets/scss/layout/_search.scss";
 import magnifier from "../assets/images/logos/magnifier.png";
-import arrow from "../assets/images/logos/arrow.png";
 import SearchList from "../components/main/SearchList"; 
 import SearchList2 from "../components/main/SearchList2"; 
-
 import localmap_img from "../assets/images/bg/localmap_img.png";
 import mymap_img from "../assets/images/bg/mymap_img.png";
 import HistoryPost from "../components/main/HistoryPost";
@@ -24,6 +22,7 @@ const Search = () => {
   const [selectedUrl, setSelectedUrl] = useState('post-service/history/search/title');
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태
   const [filterToggle, setFilterToggle] = useState(false); // 토글 상태
+  
 
   useEffect(() => {
     handleSearch();
@@ -34,6 +33,12 @@ const Search = () => {
       // alert('필터를 선택해주세요.');
       return;
     }
+
+    if(!word.trim()) {
+      alert('검색어를 입력해주세요.');
+      return;
+    }
+
     setCheck(selectedCate);
     const url = `${Server_IP}/${selectedUrl}?keyword=${word}&page=${page}`;
     // console.log("url", url);
@@ -130,6 +135,11 @@ const Search = () => {
             placeholder="검색할 내용을 입력하세요."
             value={word}
             onChange={(e) => setWord(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
           />
           <button style={{ border: "none" }} onClick={handleSearch}>  
             <img
@@ -168,7 +178,12 @@ const Search = () => {
 
       {selectedPost && (
         <div className="historyPost-con">
-          <HistoryPost data={selectedPost} onClose={handleBackClick} />
+          <HistoryPost 
+            postId={selectedPost.postId}
+            thumbnail={selectedPost.imageUrl || selectedPost.thumbnailImageUrl}
+            writerNickname={selectedPost.writerNickname}
+            writerProfileImageUrl={selectedPost.writerProfileImageUrl}
+            onClose={handleBackClick} />
         </div>
       )}
 

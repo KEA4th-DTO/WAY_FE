@@ -143,6 +143,7 @@ const Localmap = () => {
     ? [post.find((item) => item.postId === activeId), ...post.filter((item) => item.postId !== activeId)]
     : post;
 
+  
     // if(loading){
     //   return <Loader />;
     // }

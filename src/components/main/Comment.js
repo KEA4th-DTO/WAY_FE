@@ -31,6 +31,7 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
   const [reportMode, setReportMode] = useState(false);
   const [replyState, setReplyState] = useState(false);
   const [createReplyState, setCreateReplyState] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);  // 추가된 상태 변수
 
   const commentId = data.commentId;
   const [replys, setReplys] = useState([]);
@@ -182,6 +183,11 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
 
   const SaveReply = async () => {
     try {
+      if (replyBody.trim() === '' || isSubmitting) {
+        return;
+      }
+      setIsSubmitting(true);  // 제출 시작
+
       const url = `${Server_IP}/post-service/reply/${commentId}`;
 
         const response = await fetch(url, {
@@ -210,8 +216,12 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
         } else {
             console.error("Error in API response:", data.message);
         }
+        setIsSubmitting(false);  // 제출 완료
+
     } catch (error) {
         console.error("Error posting comment:", error);
+        setIsSubmitting(false);  // 오류 발생 시 제출 상태 초기화
+
     }
 };
 
@@ -313,9 +323,9 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
      (<div className="create-reply-con">
      <div className="create-reply-frame">
            <div className="create-reply-save">
-             <button className="create-reply-edit-save" onClick={SaveReply}>
+             <button className="create-reply-edit-save" onClick={SaveReply} disabled={isSubmitting}>
                  <span>
-                 등록
+                 {isSubmitting ? '등록 중' : '등록'}
                  </span>
              </button>
              <button className="create-reply-edit-save2" onClick={() => {setCreateReplyState(false)}}>

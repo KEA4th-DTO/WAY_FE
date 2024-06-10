@@ -5,7 +5,8 @@ import UserMapinfo from "../components/main/UserMapinfo";
 import back from "../assets/images/logos/back.png";
 import HistoryPost from "../components/main/HistoryPost";
 import DailyPost from "../components/main/DailyPost";
-import html2canvas from "html2canvas";
+import Loader from "../layouts/loader/Loader"
+import no_post from "../assets/images/icons/no_post.png";
 
 const Mymap = () => {
   // 데이터 가져오기
@@ -19,6 +20,7 @@ const Mymap = () => {
 
   const [active, setActive] = useState(null);
   const [activeId, setActiveId] = useState(null);
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
 
   useEffect(() => {
     if (active && active.item) {
@@ -30,6 +32,8 @@ const Mymap = () => {
   useEffect(() => {
     if (userNickname) {
       const url = `${Server_IP}/post-service/posts/list/${userNickname}`;
+      setLoading(true); // 로딩 시작
+
       fetch(url, {
         method: "GET",
         headers: {
@@ -49,7 +53,9 @@ const Mymap = () => {
           console.error("Error in API response:", data.message);
         }
       })
-      .catch(error => console.error("Error fetching data:", error));
+      .catch(error => console.error("Error fetching data:", error))
+      .finally(() => setLoading(false)); // Stop loading
+
     }
   }, [userNickname, token, selectedPost]);
 
@@ -81,7 +87,7 @@ const Mymap = () => {
       <div id="map-con" >
           <span className="initial-main-page-text">마이맵</span>
           <div>
-            <UserMapinfo userNickname={userNickname} active={setActive}/>
+            <UserMapinfo userNickname={userNickname} active={setActive} setLoading={setLoading}/>
           </div>
       </div>
         
@@ -98,15 +104,26 @@ const Mymap = () => {
           {selectedPost && selectedPost.postType === 'DAILY' && <DailyPost postId={selectedPost.postId} writerNickname={selectedPost.writerNickname} writerProfileImageUrl={selectedPost.writerProfileImageUrl} onDelete={handleDelete}  />}
         </div>
         <div id="list"  className='list-con' style={{ display: selectedPost && selectedPost.postType === 'DAILY' ? "none" : "block" }}>
-          {orderedPosts && orderedPosts.length > 0 ? (
+        {loading ? (
+            <Loader />
+          ) : (
+          orderedPosts && orderedPosts.length > 0 ? (
             orderedPosts.map((item) => (
               <div key={item.postId} onClick={() => handlePostClick(item)}>
                 {item.postType === "DAILY" ? <DailyList data={item} isActive={active} /> : <HistoryList data={item} isActive={active} />}
               </div>
             ))
           ) : (
-            <div>No posts available</div>
-          )}
+            <div>
+            <img 
+              src={no_post} 
+              alt="no_post" 
+              className="no-post-img"
+             />
+            <span className="no-post-text">게시글이 없습니다.</span>
+            </div>
+          )
+        )}
         </div>
       </div>
       {selectedPost && selectedPost.postType === 'HISTORY' && (

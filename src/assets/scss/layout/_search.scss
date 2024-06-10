@@ -169,7 +169,7 @@
   .historyPost-con {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 20%;
     transform: translate(-50%, -50%);
     z-index: 9999;
     background-color: white;
@@ -179,6 +179,7 @@
     border: 1px solid black;
     border-radius: 10px;
     overflow: auto;
+    
 }
 .filter-buttons {
   position: absolute;

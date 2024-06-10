@@ -82,7 +82,7 @@ const UptoMy = () => {
             ? <div style={{ display: "block", overflow: "auto", marginTop: "10%", width: "410px", height: "640px" }}>
                 <PreviewDaily postId={postId} userProfileimg={userProfileimg} />
                 </div> 
-            : <div className="historyPost-con" style={{marginLeft:"45%"}}>
+            : <div className="historyPost-con" style={{marginLeft:"70%"}}>
                 <PreviewHistory postId={postId} userProfileimg={userProfileimg}/>
                 </div>
         }
