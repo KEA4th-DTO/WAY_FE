@@ -76,7 +76,7 @@
   }
   .search-post {
     top: 120px;
-    left: 12px;
+    left: 0px;
     width: 592px;
     height: 142px;
     display: flex;
@@ -107,19 +107,16 @@
     margin-left: 220px;
   }
 
-  .search-move {
-    top: 133px;
-    left: 749px;
-    width: 296px;
-    height: 606px;
-    display: flex;
+  .search-users {
+    top: 200px;
+    left: 50%;
+    // width: 296px;
     position: absolute;
     align-items: flex-start;
-    flex-shrink: 1;
   }
-  .search-move-localmap-text {
+  .search-users-text {
     top: 0px;
-    left: 1px;
+    left: 40%;
     color: rgba(64, 77, 242, 1);
     width: 188px;
     height: auto;
@@ -133,39 +130,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .search-move-mymap-text {
-    top: 338px;
-    left: 1px;
-    color: rgba(64, 77, 242, 1);
-    width: 188px;
-    height: auto;
-    position: absolute;
-    font-size: 20px;
-    font-style: Semi Bold;
-    text-align: center;
-    font-family: Inter;
-    font-weight: 700;
-    line-height: normal;
-    font-stretch: normal;
-    text-decoration: none;
-  }
-  .search-move-localmap {
-    top: 30px;
-    left: 9px;
-    width: 287px;
-    height: 233px;
-    position: absolute;
-    border-radius: 3px;
-    object-fit: cover;
-    object-position: center;
-  }
-  .search-move-mymap {
-    top: 368px;
-    left: 9px;
-    width: 287px;
-    height: 233px;
-    position: absolute;
-  }
+
   .historyPost-con {
     position: absolute;
     top: 50%;
