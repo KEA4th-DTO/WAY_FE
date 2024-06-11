@@ -4,7 +4,6 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 function Following({ name, nickName, image, isFollow, onFollowChange, onClick }) {
-  
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(isFollow);
 
