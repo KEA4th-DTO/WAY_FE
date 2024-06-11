@@ -26,6 +26,7 @@ function ProfilePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Nickname from useParams:", nickname); // 닉네임 로그 추가
     const fetchProfile = async () => {
       const Server_IP = process.env.REACT_APP_Server_IP;
       try {
@@ -69,7 +70,15 @@ function ProfilePage() {
 
   const handleMapClick = (event) => {
     event.stopPropagation();
-    navigate('/othersmap', { state: { nickname } });
+    const storedNickname = localStorage.getItem("userNickname");
+    console.log("Stored Nickname:", storedNickname);
+    console.log("Profile Nickname:", nickname);
+    console.log(storedNickname === nickname);
+    if (storedNickname === nickname) {
+      navigate('/mymap');
+    } else {
+      navigate('/othersmap', { state: { nickname } });
+    }
   };
 
   const renderTags = () => {
@@ -85,7 +94,6 @@ function ProfilePage() {
         </div>
       );
     }
-
     return profile.tags.map((tag, index) => <WayTag key={index} value={tag} />);
   };
 
