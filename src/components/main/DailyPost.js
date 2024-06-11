@@ -12,13 +12,13 @@ import {
   DropdownItem,
   Dropdown,
 } from "reactstrap";
-
 import { shareKakao } from '../../utils/shareKakaoLink';
 import { formatDate2, formatPeriod } from '../../utils/changeFormat';
-
 import EditDailyPost from './EditDailyPost';
 import Report from './Report';
 import { useNavigate } from 'react-router-dom';
+import ChatContent from '../../components/main/ChatContent';
+
 
 const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) => {
         // null 체크를 위해 미리 초기화
@@ -27,6 +27,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         const [liked, setLiked] = useState(false); //좋아요 상태인지 아닌지
         const [followed, setFollowed] = useState(false);
         const [editMode, setEditMode] = useState(false);
+        const [chatMode, setChatMode] = useState(false);
         const [reportMode, setReportMode] = useState(false);
         const friendNickname = writerNickname;
         const token = localStorage.getItem("accessToken");
@@ -41,7 +42,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
 
         const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-        console.log('시간: ', currentTime);
+        // console.log('시간: ', currentTime);
         
         useEffect(() => {
           if (postId) {
@@ -61,6 +62,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             })
             .then(data => {
               if (data.isSuccess) {
+                console.log("게시글 정보:", data.result);
                 setPost(data.result);
                 setLikeNum(data.result.likesCount);
                 setLiked(data.result.isLiked);
@@ -72,8 +74,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           }
         }, [userNickname, token, editMode]);
       
-        console.log(post);
-        console.log('만료: ',post.expiredAt);
+        // console.log('만료: ',post.expiredAt);
 
         // useEffect(() => {
         //     // 데이터의 초기 좋아요 상태에 따라 liked 상태 설정
@@ -198,13 +199,6 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             console.error("Error following user:", error);
         }
     };
-        // useEffect(() => {
-        //     const script = document.createElement("script");
-        //     script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        //     script.async = true;
-        //     document.body.appendChild(script);
-        //     return () => document.body.removeChild(script);
-        //     }, []);
 
         const handleEditClick = () => {
           setEditMode(true);
@@ -220,9 +214,15 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           setReportMode(true);
         };
 
+         // 채팅버튼 클릭 시
+         const handleChatClick = () => {
+          setChatMode(true);
+        };
+
         // 뒤로가기 버튼 클릭 처리
         const handleBackClick = () => {
           setReportMode(false);
+          setChatMode(false);
         };
 
         const handleDeleteClick = () => {
@@ -271,8 +271,18 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             />
           </div>
         )}
+         {chatMode === true && (
+          <div className='chat-daily'>
+            <ChatContent
+              postId = {post.postId}
+              title = {post.title}
+              period =  {formatDate2(post.createdAt, post.expiredAt)}
+              nickname = {writerNickname}
+              onClose={handleBackClick}
+            />
+          </div>
+        )}
       <div className="dailypost-frame1"> 
-
       <div className="dailypost-frame3">
           <button className="dailypost-frame4" onClick={handleMapClick}>
             <img 
@@ -370,9 +380,9 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             className="dailypost-vector"
           />
         </button>
-        <button className="dailypost-frame5">
+        <button className="dailypost-frame5"  onClick={handleChatClick}>
           <span className="dailypost-text14">
-            채팅하기
+            쪽지하기
           </span>
         </button>
       </div>

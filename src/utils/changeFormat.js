@@ -18,7 +18,6 @@ export const formatDate_time = (dateString) => {
     return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
 };
 
-
 export function addHours(dateTimeString) {
     const date = new Date(dateTimeString);
     date.setHours(date.getHours() + 9);

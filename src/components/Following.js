@@ -37,7 +37,7 @@ function Following({ name, nickName, image, isFollow, onFollowChange, onClick })
 
   const handleMapClick = (event) => {
     event.stopPropagation();
-    navigate('/othersmap', { state: { nickname: nickName } });
+    navigate('/othersmap', { state: nickName });
   };
 
   return (

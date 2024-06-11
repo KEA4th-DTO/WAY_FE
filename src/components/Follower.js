@@ -36,9 +36,11 @@ function Follower({ name, nickName, image, initialFollowState, onClick }) {
       });
   };
 
-  const handleMapClick = (e) => {
-    e.stopPropagation();
-    navigate('/othersmap', { state: { nickname: nickName } });
+
+  const handleMapClick = (event) => {
+    event.stopPropagation();
+    navigate('/othersmap', { state: nickName });
+
   };
 
   return (
