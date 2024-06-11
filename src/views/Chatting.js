@@ -13,14 +13,14 @@ const Chatting= () => {
   const [checkedItems, setCheckedItems] = useState([]); // 추가: 체크된 아이템 배열
   const [isAllChecked, setIsAllChecked] = useState(false); // 추가: 모든 아이템 선택 상태
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/chatroom') // API 경로 적어주기
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setChatRoom(data);
-  //     })
-  //     .catch(error => console.error("Error fetching data:", error));
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:3001/chatroom') // API 경로 적어주기
+      .then(res => res.json())
+      .then(data => {
+        setChatRoom(data);
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
 
   // 포스트 클릭 시 선택된 포스트 업데이트
   const handleRoomClick = (selectedItem) => {
@@ -48,51 +48,51 @@ const Chatting= () => {
   };
 
   // '읽음' 버튼 클릭 시 체크된 아이템들의 alarmNum을 0으로 설정하고 체크 해제
-  // const handleReadClick = () => {
-  //   checkedItems.forEach(id => {
-  //     fetch(`http://localhost:3001/days/${id}`, {
-  //       method: 'PATCH', // 데이터 수정을 위해 PATCH 요청 사용
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ alarmNum: 0 }) // alarmNum을 0으로 설정
-  //     })
-  //     .then(res => {
-  //       if (res.ok) {
-  //         setChatRoom(prevState => prevState.map(item => {
-  //           if (item.id === id) {
-  //             return { ...item, alarmNum: 0 }; // 변경된 alarmNum으로 업데이트
-  //           }
-  //           return item;
-  //         }));
-  //       }
-  //     })
-  //     .catch(error => console.error("Error updating data:", error));
-  //   });
-  //   setCheckedItems([]); // 체크 해제
-  // };
+  const handleReadClick = () => {
+    checkedItems.forEach(id => {
+      fetch(`http://localhost:3001/days/${id}`, {
+        method: 'PATCH', // 데이터 수정을 위해 PATCH 요청 사용
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ alarmNum: 0 }) // alarmNum을 0으로 설정
+      })
+      .then(res => {
+        if (res.ok) {
+          setChatRoom(prevState => prevState.map(item => {
+            if (item.id === id) {
+              return { ...item, alarmNum: 0 }; // 변경된 alarmNum으로 업데이트
+            }
+            return item;
+          }));
+        }
+      })
+      .catch(error => console.error("Error updating data:", error));
+    });
+    setCheckedItems([]); // 체크 해제
+  };
 
   // '나가기' 버튼 클릭 시 체크된 아이템들을 제거
-  // const handleLeaveClick = () => {
-  //   checkedItems.forEach(id => {
-  //     fetch(`http://localhost:3001/days/${id}`, {
-  //       method: 'DELETE'
-  //     })
-  //     .then(res => {
-  //       if (res.ok) {
-  //         setChatRoom(prevState => prevState.filter(item => item.id !== id)); // 해당 아이템 제거
-  //       }
-  //     })
-  //     .catch(error => console.error("Error deleting data:", error));
-  //   });
-  //   setCheckedItems([]); // 체크 해제
-  // };
+  const handleLeaveClick = () => {
+    checkedItems.forEach(id => {
+      fetch(`http://localhost:3001/days/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.ok) {
+          setChatRoom(prevState => prevState.filter(item => item.id !== id)); // 해당 아이템 제거
+        }
+      })
+      .catch(error => console.error("Error deleting data:", error));
+    });
+    setCheckedItems([]); // 체크 해제
+  };
 
   return (
     <div style={{ position: "relative" }}>
       <div style={{ border: "3px solid red" }} className="frame-container">
         {/* 채팅 상단 메뉴 */}
-        {/* <div className="frame1-frame">
+        <div className="frame1-frame">
           <button style={{ border: "none" }} onClick={handleAllCheckboxToggle}>
             <img src={isAllChecked ? full_checkbox : checkbox} alt="Checkbox2251" className="frame1-checkbox" />
           </button>
@@ -102,10 +102,10 @@ const Chatting= () => {
           <span className="frame1-text2">
             <button style={{ border: "none" }} onClick={handleReadClick}>읽음</button>
           </span>
-        </div> */}
+        </div>
 
         {/* 채팅 제목 */}
-        {/* <div className="chatting">
+        <div className="chatting">
           <span className="text">
             채팅
           </span>
@@ -114,10 +114,10 @@ const Chatting= () => {
               15
             </span>
           </div>
-        </div> */}
+        </div>
 
         {/* 대화방 */}
-        {/* <div id='list' style={{ border: "3px solid yellow", overflow: "auto", marginTop: "10px", }} className="frame2-frame">
+        <div id='list' style={{ border: "3px solid yellow", overflow: "auto", marginTop: "10px", }} className="frame2-frame">
           {chatRoom.map((item) => (
             <div key={item.id}>
               <img
@@ -131,14 +131,14 @@ const Chatting= () => {
               </button>
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
 
-      {/* {selectedRoom && (
+      {selectedRoom && (
         <div className='frame3-container'>
           <ChatContent data={selectedRoom} onClose={() => setSelectedRoom(null)} />
         </div>
-      )} */}
+      )}
     </div>
   );
 };

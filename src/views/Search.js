@@ -224,6 +224,7 @@ const Search = () => {
       )}
 
       {/* 유저 추천 목록 */}
+      {users && users.length > 0 && (
       <div className="search-users">
       <span className="search-users-text">
         유저 추천 목록
@@ -235,7 +236,8 @@ const Search = () => {
                <RecommendUser data={item} />
               </button>
             ))}
-      </div>
+      </div>)}
+      
     </div>
   );
 };

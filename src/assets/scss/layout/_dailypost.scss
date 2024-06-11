@@ -280,6 +280,24 @@
     position: absolute;
   }
   
+.chat-daily {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 500px;
+  height: 787px;
+  padding: 20px; 
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  // display: flex;
+  background-color: white;
+  
+  border: 1px solid black;
+  border-radius: 10px;
+  // overflow: auto;
+
+}
+
 .report-daily {
   position: absolute;
   top: 7%;

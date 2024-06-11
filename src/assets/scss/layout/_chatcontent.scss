@@ -1,21 +1,22 @@
-.frame-container {
-    right: 0;
-    width: 40%;
-    height: 80vh;
-    min-height: 100vh;
-    align-items: flex-end;
-    position: absolute;
-  }
-  .frame-frame {
-    width: 500px;
-    height: 787px;
+
+  .chat-container {
+    top: 65px;
+    left: 20px;
+    width: 460px;
+    height: 75%;
     display: flex;
-    position: relative;
+    position: absolute;
     align-items: flex-start;
     flex-shrink: 1;
+  }
+  .chatcontent-frame {
+    width: 500px;
+    height: 787px;
+    position: relative;
+    display: flex;
     background-color: rgba(255, 255, 255, 1);
   }
-  .frame-image {
+  .send-window {
     top: 708px;
     left: 0px;
     width: 500px;
@@ -27,7 +28,7 @@
     border-width: 1px;
     border-radius: 0 0 20px 20px;
   }
-  .frame-text {
+  .send-text {
     top: 741px;
     left: 32px;
     color: rgba(152, 152, 152, 1);
@@ -42,7 +43,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-frame1 {
+  .send-frame1 {
     top: 728px;
     left: 373px;
     width: 103.32177734375px;
@@ -52,7 +53,7 @@
     align-items: flex-start;
     flex-shrink: 1;
   }
-  .frame-group55 {
+  .send-group {
     top: 0px;
     left: 0px;
     width: 103.32177734375px;
@@ -63,7 +64,7 @@
     flex-shrink: 1;
     background-color: rgba(64, 77, 242, 1);
   }
-  .frame-text02 {
+  .send-text02 {
     top: 8.982421875px;
     left: 22.033111572265625px;
     color: rgba(255, 255, 255, 1);
@@ -79,17 +80,14 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-frame2 {
-    top: 118px;
-    left: 247px;
-    width: 233px;
-    height: 66px;
-    display: flex;
-    position: absolute;
-    align-items: flex-start;
-    flex-shrink: 1;
+
+  .mychat-container {
+    right: -10%;
+    height: 80vh;
+    // min-height: 100vh;
+    position: relative;
   }
-  .frame-rectangle46 {
+  .mychat-rectangle {
     top: 0px;
     left: 50px;
     width: 190px;
@@ -98,7 +96,7 @@
     border-radius: 20px;
     background-color: #8D95FF;
   }
-  .frame-frame3 {
+  .mychat-frame {
     top: 5px;
     left: 66px;
     width: 159px;
@@ -108,7 +106,7 @@
     align-items: flex-start;
     flex-shrink: 1;
   }
-  .frame-text04 {
+  .mychat-text {
     right: 3px;
     color: rgba(0, 0, 0, 1);
     height: auto;
@@ -137,7 +135,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-text08 {
+  .mychat-time {
     top: 51px;
     color: rgba(0, 0, 0, 1);
     width: 59px;
@@ -296,7 +294,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-frame8 {
+  .top-window {
     top: 31px;
     left: 20px;
     width: 458.7217102050781px;
@@ -306,14 +304,15 @@
     align-items: flex-start;
     flex-shrink: 1;
   }
-  .frame-sv-gx-button {
+  .close-button {
     top: 4px;
     left: 428px;
     width: 31px;
     height: 31px;
     position: absolute;
+
   }
-  .frame-line11 {
+  .frame-line {
     top: 67px;
     left: 3px;
     width: 452px;
@@ -321,7 +320,7 @@
     position: absolute;
     background-color: #404df2;
   }
-  .frame-text22 {
+  .top-period {
     top: 32px;
     left: 3px;
     color: rgba(156, 142, 245, 1);
@@ -336,7 +335,7 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-text24 {
+  .top-title {
     color: rgba(0, 0, 0, 1);
     height: auto;
     position: absolute;
@@ -349,16 +348,16 @@
     font-stretch: normal;
     text-decoration: none;
   }
-  .frame-svg {
+  .members-icon {
     top: 24px;
-    left: 330px;
+    left: 260px;
     width: 36px;
     height: 36px;
     position: absolute;
   }
-  .frame-svg2 {
+  .top-member-num {
     top: 32px;
-    left: 373px;
+    left: 303px;
     width: 36px;
     height: 36px;
     position: absolute;

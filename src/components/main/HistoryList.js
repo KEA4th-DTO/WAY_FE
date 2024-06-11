@@ -12,7 +12,7 @@ import { formatDate } from "../../utils/changeFormat";
 const HistoryList = ({ data, isActive }) => {
   const [activeId, setActiveId] = useState(null);
 
-  console.log('data: ', data);
+  // console.log('data: ', data);
   useEffect(() => { 
     if (isActive && isActive.item) {
       // console.log('isActive: ', isActive);

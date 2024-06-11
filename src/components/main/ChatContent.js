@@ -5,102 +5,181 @@ import members from "../../assets/images/logos/members.png";
 import ChatFromMe from './ChatFromMe';  
 import ChatFromOther from './ChatFromOther';
 
-const ChatContent = ({ onClose }) => {
-    const memberId = "id_222"; // 임시 사용자 아이디
-    const nickname = "ShinHyungMan"; // 임시 사용자 닉네임
-    const [chat, setChat] = useState([]);
-    const [newChatContent, setNewChatContent] = useState(""); // 새로 입력한 채팅 내용
+const ChatContent = ({ postId, title, period, nickname, onClose }) => {
+  const [comments, setComments] = useState([]);
+  const [commentBody, setCommentBody] = useState('');
+  const [commentNum, setCommentNum] = useState(0);
+  const [commentState, setCommentState] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);  // 추가된 상태 변수
+  const [userProfileimg, setUserprofileimg] = useState(false);
+
+  const token = localStorage.getItem("accessToken");
+  const Server_IP = process.env.REACT_APP_Server_IP;
+  const userNickname = localStorage.getItem("userNickname");
+
+  const handleCloseClick = () => {
+    onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
+  };
+
+      // 수정창에서 신고버튼 클릭 시
+    // const handleReportClick = () => {
+    //   setReportMode(true);
+    // };
+
+    useEffect(() => {
+      ClickComment();
+    }, [postId]);
+
+    const ClickComment = async () => {
+      try {
+        if (!postId) return;
+        const url = `${Server_IP}/post-service/comment/list/${postId}`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "accept": "*/*"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const data = await response.json();
+
+        if (data.isSuccess) {
+          setComments(data.result.commentResultDtoList);
+          console.log('채팅:', data.result.commentResultDtoList);
+        } else {
+          console.error("Error in API response:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
 
-    // useEffect(()=>{
-    //     fetch('http://localhost:3001/chatcontent') //API경로 적어주기
-    //     .then(res => {
-    //         return res.json() //json으로 변환됨
-    //     })
-    //     .then(data => {
-    //         setChat(data);
-    //     })
-    //     .catch(error => console.error("Error fetching data:", error));
-    // }, []);
+useEffect(() => {
+  if (userNickname) {
+    // console.log('유저 닉네임', userNickname);
+    const url = `${Server_IP}/member-service/profile/${userNickname}`;
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'accept': '*/*',
+              'Authorization': `Bearer ${token}`
+          }
+      })
+      .then(res => {
+          if (!res.ok) {
+              throw new Error('Network response was not ok ' + res.statusText);
+          }
+          return res.json();
+      })
+      .then(data => {
+          if (data.isSuccess) {
+            // console.log('사진', data.result.profileImageUrl);
+              setUserprofileimg(data.result.profileImageUrl);
+          } else {
+              console.error("Error in API response:", data.message);
+          }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }
+}, [userNickname]);
 
-    const handleCloseClick = () => {
-        onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
-      };
+    const SaveComment = async () => {
+      try {
+        if (commentBody.trim() === '' || isSubmitting) {
+          return;
+        }
+        setIsSubmitting(true);  // 제출 시작
+        const url = `${Server_IP}/post-service/comment/${postId}`;
 
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ body: commentBody })
+        });
 
-  //   const handleSubmit = () => {
-  //     // 서버로 새로운 채팅 내용을 POST 요청으로 보냄
-  //     fetch('http://localhost:3001/chatcontent', {
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //             memberId: memberId,
-  //             nickname: nickname,
-  //             content: newChatContent,
-  //             time: new Date().toLocaleTimeString(), // 현재 시간을 채팅 시간으로 설정
-  //         }),
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //         console.log('Success:', data);
-  //         // 채팅 내용을 전송한 후 입력창을 초기화
-  //         setNewChatContent("");
-  //     })
-  //     .catch((error) => {
-  //         console.error('Error:', error);
-  //     });
-  // };
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
 
+        const data = await response.json();
+
+        if (data.isSuccess) {
+            console.log('댓글이 생성되었습니다:', data.result);
+            setCommentBody(''); // Clear the comment input
+            setCommentNum(commentNum + 1);
+            ClickComment();
+            alert('댓글이 생성되었습니다.');
+        } else {
+            console.error("Error in API response:", data.message);
+        }
+        setIsSubmitting(false);  // 제출 완료
+
+      } catch (error) {
+          console.error("Error posting comment:", error);
+          setIsSubmitting(false);  // 오류 발생 시 제출 상태 초기화
+
+      }
+    };
+
+  
   return (
-      <div style={{border:"3px solid red"}}  className="frame">
+      <div style={{border:"3px solid red"}}  className="chatcontent-frame">
         {/* 상단창 */}
          <div className="top-window">
           <img
             src={close}
             alt="닫기"
             className="close-button"
-            // onClick={handleCloseClick} // 닫기 버튼 클릭 시 handleCloseClick 함수 호출
+            onClick={handleCloseClick}
           />
           <div className="frame-line"></div>
           
           <span className="top-title">
-            <span>title</span>
+            <span>{title}</span>
           </span>
           <span className="top-period">
-            <span>period</span>
+            <span>{period}</span>
           </span>
           <img
             src={members}
             alt="사람 아이콘"
             className="members-icon"
           />
-         <span className="top-member-num" >memberNum</span>
+         <span className="top-member-num" >{nickname}</span>
         </div>
 
         {/* 채팅창 */}
         <div id="list" className='chat-container' style={{ border: "3px solid yellow", overflow: "auto", marginTop: "10%" }}>
-          {/* {chat.map((item) => (
+          {comments.map((item) => (
             <div key={item.id}>
-              {item.memberId === memberId ? <ChatFromMe content={item} /> : <ChatFromOther content={item} />}
+              {item.isOwned ? <ChatFromMe data={item}/> : <ChatFromOther data={item} />}
             </div>
-          ))} */}
+          ))}
         </div>
     
         {/*  전송창  */}
         <div className="send-window" />
         <input
-                type="text"
-                value={newChatContent}
-                // onChange={(e) => setNewChatContent(e.target.value)}
-                className='send-text'
-                placeholder="메시지를 입력하세요."
-            />
+            type="text"
+            value={commentBody}
+            onChange={(e) => setCommentBody(e.target.value)}
+            className='send-text'
+            placeholder="메시지를 입력하세요."
+         />
         <div className="send-frame1">
           <div className="send-group">
             <span className="send-text02">
-            {/* <button onClick={handleSubmit}>전송</button> */}
+            <button onClick={SaveComment} disabled={isSubmitting}> {isSubmitting ? '전송 중' : '전송'}</button>
             </span>
           </div>
         </div>
