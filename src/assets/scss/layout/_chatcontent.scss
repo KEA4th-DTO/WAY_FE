@@ -16,17 +16,17 @@
   }
 
   .mychat-container {
-    right: inherit;
     height: 50px;
     position: relative;
-    // border: 3px solid red;
+
+    // width: 100%;
   }
   .mychat-rectangle,
   .otherchat-rectangle {
     top: 0px;
     right: 0px;
     padding: 0 10px;
-    width: 200px;
+    // width: 600px;
     height: 45px;
     position: absolute;
     border-radius: 20px;

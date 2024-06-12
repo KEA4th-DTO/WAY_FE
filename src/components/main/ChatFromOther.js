@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import "../../assets/scss/layout/_chatcontent.scss";
 import { formatDate_time2 } from '../../utils/changeFormat';
 
-const ChatFromMe = ({ data }) => {
+const ChatFromOther = ({ data }) => {
   const textRef = useRef(null);
   const [textWidth, setTextWidth] = useState(0);
 
@@ -28,17 +28,24 @@ const ChatFromMe = ({ data }) => {
     return null;
   }
 
+  // 최소 너비 설정
+  const minRectangleWidth = 60;
+  // 왼쪽과 오른쪽 마진 설정
+  const margin = 5;
+  // 실제 너비 계산
+  const rectangleWidth = Math.max(textWidth + margin * 2, minRectangleWidth);
+
     return (
      <div className="otherchat-container">
-          <div className="otherchat-rectangle" style={{ width: textWidth + 20 + 'px'}} />
-            <span className="otherchat-nickname" ref={textRef}>{data.writerNickname}</span>
+          <div className="otherchat-rectangle" style={{ width: rectangleWidth  + 'px'}}  />
+            <span className="otherchat-nickname">{data.writerNickname}</span>
      
-            <span className="otherchat-body">{data.body}</span>
-            <div className="otherchat-time" style={{left: textWidth - 50 + 'px'}}>
+            <span className="otherchat-body" ref={textRef}>{data.body}</span>
+            <div className="otherchat-time"  style={{left: rectangleWidth - 70 +'px'}}>
           <span>{formatDate_time2(data.createdAt)}</span>
           </div>
 
         </div>
     );
   }   
-  export default ChatFromMe;
+  export default ChatFromOther;
