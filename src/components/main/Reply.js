@@ -12,7 +12,7 @@ import Report from "./Report";
 import EditReply from "./EditReply";
 
 const Reply = ({ data, onDelete, userProfileimg }) => {
-  console.log('답글정보: ', data);
+  // console.log('답글정보: ', data);
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
   const Server_IP = process.env.REACT_APP_Server_IP;
@@ -93,7 +93,7 @@ const Reply = ({ data, onDelete, userProfileimg }) => {
       })
       .then(data => {
         if (data.isSuccess) {
-          console.log("Successfully deleted post:", data);
+          // console.log("Successfully deleted post:", data);
           onDelete(replyId);
         } else {
           console.error("Error deleting post:", data.message);

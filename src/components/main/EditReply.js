@@ -16,7 +16,7 @@ const EditReply = ({ reply, userProfileimg, onsave }) => {
       setBody(reply.body);
     }, [reply]);
 
-    console.log(reply);
+    // console.log(reply);
 
     const saveEditClick = async () => {
         try {
@@ -37,7 +37,7 @@ const EditReply = ({ reply, userProfileimg, onsave }) => {
             const data = await response.json();
     
             if (response.ok) {
-                console.log('Success:', data);
+                // console.log('Success:', data);
                 alert('답글이 성공적으로 수정되었습니다.');
                 onsave();
             } else {

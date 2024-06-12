@@ -3,7 +3,7 @@ import React from "react";
 import "../assets/style/block.css";
 function Block({ name, nickName, history, daily, image, isBlock }) {
   const handleUnblockClick = () => {
-    console.log(`Current follow state for ${name}: ${isBlock}`); // 현재 팔로우 상태 로그 출력
+    // console.log(`Current follow state for ${name}: ${isBlock}`); // 현재 팔로우 상태 로그 출력
   };
 
   return (

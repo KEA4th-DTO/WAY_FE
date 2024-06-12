@@ -93,7 +93,7 @@ const DailyEditor = () => {
         alert("저장되었습니다.");
         // 페이지 이동
         navigate("/uptomy", { state: data });
-        console.log("Success:", data);
+        // console.log("Success:", data);
       } else {
         console.error("Error:", data);
         alert("저장에 실패했습니다.");
@@ -106,9 +106,6 @@ const DailyEditor = () => {
       alert("저장 중 오류가 발생했습니다.");
     }
   };
-
-  console.log("생성: ", createdAt);
-  console.log("만료: ", expiredAt);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];

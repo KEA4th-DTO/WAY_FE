@@ -13,7 +13,7 @@ const Report = ({ targetId, type, onClose }) => {
     const handleCloseClick = () => {
         onClose(); // 부모 컴포넌트에 닫기 이벤트 전달
     };
-    console.log('targetId: ', targetId, type);
+    // console.log('targetId: ', targetId, type);
 
     const onSave = async () => {
         try {

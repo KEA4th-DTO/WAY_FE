@@ -19,7 +19,7 @@ const DailyList = ({ data, isActive }) => {
   useEffect(() => { 
     if (isActive && isActive.item) {
       setActiveId(isActive.item.postId);
-      console.log('액티브 ', isActive.item.postId);
+      // console.log('액티브 ', isActive.item.postId);
     }
   }, [isActive]);
 

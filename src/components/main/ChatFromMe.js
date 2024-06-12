@@ -24,7 +24,7 @@ const ChatFromMe = ({ data }) => {
   }, [data.body]);
 
   if (!data) {
-    console.log("content is null");
+    // console.log("content is null");
     return null;
   }
 

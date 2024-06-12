@@ -75,7 +75,7 @@
     position: absolute;
   }
   .search-post {
-    top: 120px;
+    top: 80px;
     left: 0px;
     width: 592px;
     height: 142px;
@@ -198,7 +198,7 @@
   flex-shrink: 1;
 }
 .searchlist-title {
-  top: 0px;
+  top: -5px;
   left: 0px;
   width: 300px;
   height: 22px;
@@ -219,7 +219,7 @@
 }
 .searchlist-body {
   left: 0px;
-  top: 28px;
+  top: 30px;
   color: rgb(92, 90, 90);
   width: 300px;
   height: auto;
@@ -241,7 +241,7 @@
   object-position: center;
 }
 .searchlist-date {
-  top: 81px;
+  top: 90px;
   left: 90px;
   width: 300px;
   display: flex;

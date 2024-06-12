@@ -21,7 +21,7 @@ const PreviewDaily = ({ postId, userProfileimg }) => {
         const currentTime = new Date();
         currentTime.setHours(currentTime.getHours()); // 현재 시간에서 3시간을 빼기
 
-        console.log('시간: ', currentTime);
+        // console.log('시간: ', currentTime);
         
         useEffect(() => {
           if (postId) {

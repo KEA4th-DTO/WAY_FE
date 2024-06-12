@@ -16,7 +16,7 @@ const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
       setBody(comment.body);
   }, [comment]);
 
- console.log(comment);
+//  console.log(comment);
 
     const saveEditClick = async () => {
         try {
@@ -37,7 +37,7 @@ const EditComment = ({ comment, writerProfileImageUrl, onsave }) => {
             const data = await response.json();
     
             if (response.ok) {
-                console.log('Success:', data);
+                // console.log('Success:', data);
                 alert('댓글이 성공적으로 수정되었습니다.');
                 onsave();
             } else {

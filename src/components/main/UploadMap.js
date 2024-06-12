@@ -49,7 +49,7 @@ const UploadMap = ({ setPostPosition }) => {
                     position: naver.maps.Position.TOP_RIGHT
                 }
             });
-            console.log(location);
+            // console.log(location);
 
             // Define the bounds
             const minBound = new naver.maps.LatLngBounds(
@@ -95,12 +95,11 @@ const UploadMap = ({ setPostPosition }) => {
     
     return (
 
-        <div>
-            <br />
-            <button className="upload-refresh-button2"  onClick={onRefreshClick}>
-                <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block', border: 'none'}} />
+        <div style={{position: "relative" }}>
+            <button className="upload-refresh-button"  onClick={onRefreshClick}>
+                <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', border: 'none'}} />
             </button>
-            
+            <br /> <br />
             <div ref={mapRef} style={{ width: "300px", height: "300px" }}></div>
         </div>
     );

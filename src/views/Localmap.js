@@ -61,7 +61,7 @@ const Localmap = () => {
         const data = await res.json();
   
         if (data.isSuccess) {
-          console.log("success_post", data.result.postResultDtoList);
+          // console.log("success_post", data.result.postResultDtoList);
           setPost(data.result.postResultDtoList); // API 응답 형식에 맞게 데이터 설정
         } else {
           console.error("Error in API response:", data.message);
@@ -100,7 +100,7 @@ const Localmap = () => {
         const data = await res.json();
   
         if (data.isSuccess) {
-          console.log("범위의 히스토리 게시글 불러오기 성공", data.result.historyResultDtoList);
+          // console.log("범위의 히스토리 게시글 불러오기 성공", data.result.historyResultDtoList);
           setPost(data.result.historyResultDtoList);
         } else {
           console.error("Error in API response:", data.message);
@@ -130,7 +130,7 @@ const Localmap = () => {
   // 게시글 클릭 처리
   const handlePostClick = (selectedItem) => {
     setSelectedPost(selectedItem);
-    console.log('selectedItem:', selectedItem);
+    // console.log('selectedItem:', selectedItem);
   };
 
   // 뒤로가기 버튼 클릭 처리

@@ -85,10 +85,10 @@ const saveEditClick = async () => {
     });
 
     const data = await response.json();
-    console.log('formData:', formData);
+    // console.log('formData:', formData);
     
     if (response.ok) {
-      console.log('Success:', data);
+      // console.log('Success:', data);
       alert('게시글이 성공적으로 수정되었습니다.');
       onsave();
     } else {
@@ -103,7 +103,7 @@ const saveEditClick = async () => {
 
   const onChange = () => {
     const data = editorRef.current.getInstance().getHTML();
-    console.log("에디터내용:", data);
+    // console.log("에디터내용:", data);
   
     const markdown = editorRef.current.getInstance().getMarkdown();
     // 마크다운에서 이미지 구문 제거
@@ -117,7 +117,7 @@ const saveEditClick = async () => {
     setBodyPreview(textContent.slice(0, 35)); // 제한된 길이로 본문 미리보기 설정
     setBodyPlainText(textContent);
     // 저장할 textContent를 사용합니다.
-    console.log('텍스트 내용:', textContent);
+    // console.log('텍스트 내용:', textContent);
   };
 
   const onUploadImage = async (blob, callback) => {

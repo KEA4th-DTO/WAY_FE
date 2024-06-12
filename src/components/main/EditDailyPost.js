@@ -15,7 +15,7 @@ const EditDailyPost = ({ post, writerProfileImageUrl, onsave }) => {
     const userNickname = localStorage.getItem("userNickname");
     const Server_IP = process.env.REACT_APP_Server_IP;
       
-    console.log(post);
+    // console.log(post);
 
     useEffect(() => {
       // Component mount 시 post로부터 초기값을 설정
@@ -44,7 +44,7 @@ const EditDailyPost = ({ post, writerProfileImageUrl, onsave }) => {
             const data = await response.json();
     
             if (response.ok) {
-                console.log('Success:', data);
+                // console.log('Success:', data);
                 alert('게시글이 성공적으로 수정되었습니다.');
                 onsave();
             } else {

@@ -62,7 +62,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             })
             .then(data => {
               if (data.isSuccess) {
-                console.log("게시글 정보:", data.result);
+                // console.log("게시글 정보:", data.result);
                 setPost(data.result);
                 setLikeNum(data.result.likesCount);
                 setLiked(data.result.isLiked);
@@ -99,7 +99,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
           })
           .then(data => {
             if (data.isSuccess) {
-              console.log("팔로우 상태:", data.result.isFollowing);
+              // console.log("팔로우 상태:", data.result.isFollowing);
               setFollowed(data.result.isFollowing);
             } else {
               console.error("Error in API response:", data.message);
@@ -129,7 +129,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
                   setLikeNum(data.result.likesCount);
                   alert(data.message);
                   setLiked(!liked);
-                  console.log("Successfully liked post:", data);
+                  // console.log("Successfully liked post:", data);
               } else {
                   console.error("Error liking post:", data.message);
               }
@@ -244,7 +244,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
             })
             .then(data => {
               if (data.isSuccess) {
-                console.log("Successfully deleted post:", data);
+                // console.log("Successfully deleted post:", data);
                 onDelete(postId);
               } else {
                 console.error("Error deleting post:", data.message);

@@ -63,7 +63,7 @@ const HistoryPost = ({ postId, thumbnail, writerNickname, writerProfileImageUrl,
       })
       .then(data => {
         if (data.isSuccess) {
-          console.log('성공; ', data.result);
+          // console.log('성공; ', data.result);
           // console.log('썸네일이미지', thumbnail);
           setPost(data.result);
           setLikeNum(data.result.likesCount);
@@ -186,7 +186,7 @@ const handleUnfollowClick = async () => {
             setLikeNum(data.result.likesCount);
             alert(data.message);
             setLiked(!liked);
-            console.log("Successfully liked post:", data);
+            // console.log("Successfully liked post:", data);
         } else {
             console.error("Error liking post:", data.message);
         }
@@ -236,7 +236,7 @@ const handleDeleteClick = () => {
     })
     .then(data => {
       if (data.isSuccess) {
-        console.log("Successfully deleted post:", data);
+        // console.log("Successfully deleted post:", data);
         onClose();
       } else {
         console.error("Error deleting post:", data.message);
@@ -338,7 +338,7 @@ const ClickComment = async () => {
       const data = await response.json();
 
       if (data.isSuccess) {
-          console.log('댓글이 생성되었습니다:', data.result);
+          // console.log('댓글이 생성되었습니다:', data.result);
           setCommentBody(''); // Clear the comment input
           setCommentNum(commentNum + 1);
           ClickComment();

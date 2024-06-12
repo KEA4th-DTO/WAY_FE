@@ -50,7 +50,7 @@ const ChatContent = ({ postId, title, period, nickname, onClose }) => {
 
         if (data.isSuccess) {
           setComments(data.result.commentResultDtoList);
-          console.log('채팅:', data.result.commentResultDtoList);
+          // console.log('채팅:', data.result.commentResultDtoList);
         } else {
           console.error("Error in API response:", data.message);
         }
@@ -114,11 +114,11 @@ useEffect(() => {
         const data = await response.json();
 
         if (data.isSuccess) {
-            console.log('댓글이 생성되었습니다:', data.result);
+            // console.log('댓글이 생성되었습니다:', data.result);
             setCommentBody(''); // Clear the comment input
             setCommentNum(commentNum + 1);
             ClickComment();
-            alert('댓글이 생성되었습니다.');
+            // alert('댓글이 생성되었습니다.');
         } else {
             console.error("Error in API response:", data.message);
         }

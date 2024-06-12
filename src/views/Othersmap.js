@@ -57,7 +57,7 @@ const OthersMap = () => {
     }
   }, [nickname, token, selectedPost]);
 
-  console.log('userPost: ', userPost);
+  // console.log('userPost: ', userPost);
 
   // 포스트 클릭 시 선택된 포스트 업데이트
   const handlePostClick = (selectedItem) => {

@@ -142,14 +142,17 @@ const UploadHisMap = ({ setPostPosition }) => {
     }, [currentMyLocation]);
 
     return (
-        <div className="upload-map-div">
+        <div style={{position:"relative"}}>
             <br />
-            <button className="upload-refresh-button" onClick={onRefreshClick}>
+            <div style={{top:"0", left:"0", position:"absolute"}}>
+            <button className="upload-refresh-button2" onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block', border: 'none' }} />
             </button>
 
             <input id="address" type="text" placeholder="주소를 입력하세요" />
             <button className="upload-map" id="submit">주소 검색</button>
+            </div>
+            <br />
             <div ref={mapRef} style={{ width: "300px", height: "300px" }}></div>
         </div>
     );

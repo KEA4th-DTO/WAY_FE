@@ -15,7 +15,7 @@ const UptoMy = () => {
     const userNickname = localStorage.getItem("userNickname");
     
     const state = useLocation().state;
-    console.log('state: ', state.result);
+    // console.log('state: ', state.result);
 
     const postId = state.result.postId;
     const capture = state.result.capture;
@@ -26,7 +26,7 @@ const UptoMy = () => {
 
     // const postType = 'DAILY';
 
-    console.log('post: ', postId, capture);
+    // console.log('post: ', postId, capture);
 
     useEffect(() => {
       if (userNickname) {

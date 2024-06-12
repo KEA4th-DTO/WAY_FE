@@ -62,7 +62,7 @@ const Search = () => {
       })
       .then((data) => {
         if (data.isSuccess) {
-          console.log("search post, user: ", data);
+          // console.log("search post, user: ", data);
           if(!data.result){alert(data.message);}
           setPost(data.result.list); // API 응답 형식에 맞게 데이터 설정
           setTotalPage(data.result.totalPage);
@@ -133,7 +133,7 @@ const Search = () => {
       })
       .then(data => {
         if (data.isSuccess) {
-          console.log("유저 추천 목록 불러오기 성공", data.result);
+          // console.log("유저 추천 목록 불러오기 성공", data.result);
           setUsers(data.result);
         } else {
           console.error("Error in API response:", data.message);

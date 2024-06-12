@@ -34,7 +34,7 @@ const PreviewHistory = ({ postId, userProfileimg }) => {
       })
       .then(data => {
         if (data.isSuccess) {
-          console.log('성공; ', data.result);
+          // console.log('성공; ', data.result);
           setPost(data.result);
         } else {
           console.error("Error in API response:", data.message);

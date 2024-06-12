@@ -17,7 +17,7 @@ import Reply from "./Reply";
 import basic_profile from "../../assets/images/users/basic_profile.png";
 
 const Comment = ({ data, onDelete, userProfileimg }) => {
-  console.log('댓정보: ', data);
+  // console.log('댓정보: ', data);
   const token = localStorage.getItem("accessToken");
   const userNickname = localStorage.getItem("userNickname");
   const Server_IP = process.env.REACT_APP_Server_IP;
@@ -87,7 +87,7 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
             setLikeNum(data.result.commentLikesCount);
             alert(data.message);
             setLiked(!liked);
-            console.log("Successfully liked post:", data);
+            // console.log("Successfully liked post:", data);
         } else {
             console.error("Error liking post:", data.message);
         }
@@ -137,7 +137,7 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
       })
       .then(data => {
         if (data.isSuccess) {
-          console.log("Successfully deleted post:", data);
+          // console.log("Successfully deleted post:", data);
           onDelete(commentId);
         } else {
           console.error("Error deleting post:", data.message);
@@ -167,7 +167,7 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
   
       if (data.isSuccess) {
         setReplys(data.result.replyResultDtoList);
-        console.log('답글:', data.result.replyResultDtoList);
+        // console.log('답글:', data.result.replyResultDtoList);
       } else {
         console.error("Error in API response:", data.message);
       }
@@ -208,7 +208,7 @@ const Comment = ({ data, onDelete, userProfileimg }) => {
 
         if (data.isSuccess) {
             alert('답글이 생성되었습니다.');
-            console.log('답글이 생성되었습니다:', data.result);
+            // console.log('답글이 생성되었습니다:', data.result);
             setReplyBody(''); // Clear the comment input
             setReplyNum(replyNum + 1);
             ClickComment();

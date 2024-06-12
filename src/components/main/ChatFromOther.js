@@ -24,17 +24,17 @@ const ChatFromMe = ({ data }) => {
   }, [data.body]);
 
   if (!data) {
-    console.log("content is null");
+    // console.log("content is null");
     return null;
   }
 
     return (
      <div className="otherchat-container">
-          <div className="otherchat-rectangle" style={{ width: textWidth + 10 + 'px'}} />
+          <div className="otherchat-rectangle" style={{ width: textWidth + 20 + 'px'}} />
             <span className="otherchat-nickname" ref={textRef}>{data.writerNickname}</span>
      
             <span className="otherchat-body">{data.body}</span>
-            <div className="otherchat-time" style={{left: textWidth - 60 + 'px'}}>
+            <div className="otherchat-time" style={{left: textWidth - 50 + 'px'}}>
           <span>{formatDate_time2(data.createdAt)}</span>
           </div>
 
