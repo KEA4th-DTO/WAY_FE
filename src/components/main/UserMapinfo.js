@@ -18,8 +18,7 @@ const UserMapinfo = ({ userNickname, active, setLoading, }) => {
     const [activePin, setActivePin] = useState("ALL"); // 현재 활성화된 핀 타입을 관리
     const k_center = { lat: 36.358949, lng: 127.7646949 };
     const [mapState, setMapState] = useState({ zoom: 7, center: k_center }); // 지도의 확대/축소 및 중심 좌표 상태 관리
-    const [activeMarker, setActiveMarker] = useState(null);
-    const clickedMarkers = {}; // 클릭된 마커를 저장할 객체
+    const [clickedMarker, setClickedMarker] = useState(null);
     // const [markers, setMarkers] = useState([]); // 마커 목록을 관리
 
     // allPin 을 누르면 allPin 이미지가 full_allPin으로 바뀌고 dailyPin, historyPin 이미지는 원래 이미지로 바뀌는 함수
@@ -105,6 +104,14 @@ const UserMapinfo = ({ userNickname, active, setLoading, }) => {
         }
     }, []);
 
+    const getNormalPin = (item) => {
+        return item.postType === 'DAILY' ? dailyPin : item.postType === 'HISTORY' ? historyPin : allPin;
+    };
+
+    const getFullPin = (item) => {
+        return item.postType === 'DAILY' ? full_dailyPin : item.postType === 'HISTORY' ? full_historyPin : full_allPin;
+    };
+    
     //지도 그리기
     useEffect(() => {
         const { naver } = window;
@@ -134,10 +141,48 @@ const UserMapinfo = ({ userNickname, active, setLoading, }) => {
                 zIndex: 999,
             });
 
-            // 게시글 마커 생성 시 클릭 이벤트 핸들러를 설정합니다.
-            const createMarker = (item, index) => {
+            const handleMarkerClick = (item, marker) => {
+                // console.log('clicked marker:', item, marker);
+                // console.log('클릭햇던 마커:', clickedMarker);
+                if(clickedMarker && clickedMarker.item === item) {
+                    // console.log('같은거 클릭해서 원래대로');
+                    marker.setIcon({
+                        url: getNormalPin(item),
+                        size: new naver.maps.Size(40, 40),
+                        scaledSize: new naver.maps.Size(40, 4),
+                    });
+                    active(null);
+                    setClickedMarker(null);
+                    return;
+                } 
+                else if(clickedMarker && clickedMarker.item !== item) {
+                    // console.log('다른거 클릭해서 원래거 원래대로');
+                    clickedMarker.marker.setIcon({
+                        url: getNormalPin(clickedMarker.item),
+                        size: new naver.maps.Size(40, 40),
+                        scaledSize: new naver.maps.Size(40, 40),
+                    });
+                }
+                // console.log('다른거 클릭햇거나 처음 클릭');
+
+                marker.setIcon({
+                    url: getFullPin(item),
+                    size: new naver.maps.Size(46, 46),
+                    scaledSize: new naver.maps.Size(46, 46),
+                });
+                active({ item });
+                setClickedMarker({ marker, item });
+               
+            };
+
+            // // Combine post and historypost arrays
+            // const combinedPosts = [...post, ...historypost];
+        
+            // console.log('combinePost:', combinePost);
+            const markers = userPost.filter(item => activePin === 'ALL' || item.postType === activePin).map((item, index) => {
                 const postLocation = new naver.maps.LatLng(parseFloat(item.latitude), parseFloat(item.longitude));
-                let iconUrl = item.postType === "DAILY" ? dailyPin : item.postType === "HISTORY" ? historyPin : allPin;
+                // console.log('정보: ', item);
+                let iconUrl = getNormalPin(item);
                 const marker = new naver.maps.Marker({
                     position: postLocation,
                     map,
@@ -149,162 +194,31 @@ const UserMapinfo = ({ userNickname, active, setLoading, }) => {
                     zIndex: index,
                 });
 
-                // setMarkers(prevMarkers => [...prevMarkers, marker]);
-
-                // 마커에 클릭 이벤트를 추가합니다.
                 naver.maps.Event.addListener(marker, 'click', () => {
-                    handleMarkerClick(item.postId, marker);
+                    handleMarkerClick(item, marker);
+                   
                 });
-                
-                return marker;
-            };
 
-            // postId에 따라 정상 아이콘을 반환합니다.
-            const getNormalPin = (postId) => {
-                const item = userPost.find(item => item.postId === postId);
-                // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
-                if (!item) return allPin;
-                return item.postType === 'DAILY' ? dailyPin : item.postType === 'HISTORY' ? historyPin : allPin;
-            };
-
-            const getFullPin = (postId) => {
-                const item = userPost.find(item => item.postId === postId);
-                // postId에 해당하는 게시물이 없을 경우 기본 아이콘 반환
-                if (!item) return allPin;
-                return item.postType === 'DAILY' ? full_dailyPin : full_historyPin;
-            };
-
-            // 마커 클릭 이벤트 핸들러
-            const handleMarkerClick = (postId, marker) => {
-                // postId에 해당하는 게시물을 찾습니다.
-                const item = userPost.find(item => item.postId === postId);
-                console.log("클릭한 마커:", item, marker);
-                console.log("클릭햇엇던 마커 clickedMarkers:", clickedMarkers);
-                console.log("활성화 마커 activeMarker:", activeMarker);
-                //활성화된 마커가 잇으면 1, 없으면 0
-                var ok = (activeMarker) ? 1 : 0;
-
-                if (!item) return;
-
-                // 클릭된 마커가 이미 클릭된 상태인지 확인합니다.
-                if (activeMarker === postId) {
-                    // 클릭된 마커를 다시 클릭하면 원래 아이콘으로 변경하고 상태를 비활성화합니다.
-                    console.log("클릭한거 또 클릭, 원래로 돌아가", marker);
-                    marker.setIcon({
-                        url: getNormalPin(postId),
-                        size: new naver.maps.Size(40, 40),
-                        scaledSize: new naver.maps.Size(40, 40),
-                    });
-                    setActiveMarker(null);
-                    ok = 0;
-                } else {
-                    if(ok === 1){
-                        console.log("예전에 클릭햇던거 잇음. 지울게");
-                        //예전에 클릭한 마커 지우기
-                        Object.values(clickedMarkers).forEach((clickedMarker) => {
-                            clickedMarker.setIcon({
-                                url: getNormalPin(clickedMarker.get("postId")),
-                                size: new naver.maps.Size(40, 40),
-                                scaledSize: new naver.maps.Size(40, 40),
-                            });
-                            });
-                    }
-                    // 현재 클릭된 마커의 상태를 변경합니다.
-                    ok = 0;
-                    console.log("새로클릭한거 키워");
-                    marker.setIcon({
-                        url: getFullPin(postId),
-                        size: new naver.maps.Size(46, 46),
-                        scaledSize: new naver.maps.Size(46, 46),
-                    });
-
-                    clickedMarkers[postId] = marker;
-                    console.log("clickedMarkers1:", clickedMarkers);
-                }
-                
-            if(ok === 0){
-                setActiveMarker(item);
-            };
-        };
-            // 게시글 마커 표시
-            userPost.filter(item => activePin === 'ALL' || item.postType === activePin).forEach((item, index) => {
-                createMarker(item, index);
+                return { marker, item };
             });
 
+            naver.maps.Event.addListener(map, 'zoom_changed', () => {
+                setMapState((prevState) => ({
+                    ...prevState,
+                    zoom: map.getZoom(),
+                }));
+            });
 
+            naver.maps.Event.addListener(map, 'center_changed', () => {
+                setMapState((prevState) => ({
+                    ...prevState,
+                    center: map.getCenter(),
+                })); 
+            });
         }
-    }, [currentMyLocation, userPost, activePin, mapState, activeMarker, clickedMarkers]); // `activePin` 및 `mapState`를 의존성 목록에 추가
+    }, [currentMyLocation, userPost, activePin, mapState, clickedMarker]); // `activePin` 및 `mapState`를 의존성 목록에 추가
 
-    active(activeMarker);
     
-    // // activeMarker가 변경된 후 실행되는 useEffect
-    // useEffect(() => {
-    //     const { naver } = window;
-    //     console.log("activeMarker2:", activeMarker);
-    //      // postId에 따라 full 아이콘을 반환합니다.
-         
-
-    //     if (activeMarker) {
-    //         const marker = clickedMarkers[activeMarker];
-    //         console.log("Marker3:", marker);
-    //         if (marker) {
-    //             marker.setIcon({
-    //                 url: getFullPin(activeMarker),
-    //                 size: new naver.maps.Size(46, 46),
-    //                 scaledSize: new naver.maps.Size(46, 46),
-    //             });
-    //         }
-    //         // 모든 클릭된 마커의 아이콘을 원래 아이콘으로 변경합니다.
-    //         // 
-    //     // );
-    //     }
-    // }, [activeMarker, clickedMarkers, userPost]);
-    // const [cluster] = useState(() => {
-    //     const { naver } = window;
-
-    //     var htmlMarker1 = {
-    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-1.png);background-size:contain;"></div>',
-    //         size: new naver.maps.Size(40, 40),
-    //         anchor: new naver.maps.Point(20, 20)
-    //     },
-    //     htmlMarker2 = {
-    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-2.png);background-size:contain;"></div>',
-    //         size: new naver.maps.Size(40, 40),
-    //         anchor: new naver.maps.Point(20, 20)
-    //     },
-    //     htmlMarker3 = {
-    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-3.png);background-size:contain;"></div>',
-    //         size: new naver.maps.Size(40, 40),
-    //         anchor: new naver.maps.Point(20, 20)
-    //     },
-    //     htmlMarker4 = {
-    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-4.png);background-size:contain;"></div>',
-    //         size: new naver.maps.Size(40, 40),
-    //         anchor: new naver.maps.Point(20, 20)
-    //     },
-    //     htmlMarker5 = {
-    //         content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/example/images/cluster-marker-5.png);background-size:contain;"></div>',
-    //         size: new naver.maps.Size(40, 40),
-    //         anchor: new naver.maps.Point(20, 20)
-    //     };
-
-    //     const cluster = new MarkerClustering({
-    //          minClusterSize: 2,
-    //          maxZoom: 12,
-    //          map: mapRef.current,
-    //          markers: markers,
-    //          disableClickZoom: false,
-    //          gridSize: 120,
-    //             icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
-    //          indexGenerator: [10, 100, 200, 500, 1000],
-    //          stylingFunction: (clusterMarker, count) => {
-    //              $(clusterMarker.getElement()).find('div:first-child').text(count);
-    //          }
-    //      });
-    
-    //     return cluster;
-    // })
-
     return (
         <div>
             <div className="map-header-button">

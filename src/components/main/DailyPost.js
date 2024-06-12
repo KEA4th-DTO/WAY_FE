@@ -382,7 +382,7 @@ const DailyPost = ({ postId, writerNickname, writerProfileImageUrl, onDelete }) 
         </button>
         <button className="dailypost-frame5"  onClick={handleChatClick}>
           <span className="dailypost-text14">
-            쪽지하기
+            대화하기
           </span>
         </button>
       </div>

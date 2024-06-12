@@ -209,15 +209,16 @@ const EditorBox = () => {
     return (
         <div className="edit_wrap" style={{ position: "relative" }}>
             <div>
-            <h2>
+            <span className='upload-title'>
                     제목: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
                         placeholder="제목을 입력하세요." 
                         value={title} 
                         onChange={onChangeTitle} />
-                </h2>
-                <span >
+                </span>
+                <br /> <br />
+                <span className='upload-address'>
                     주소: 
                     <input style={{ marginLeft: "10px", border: "none", width: "400px" }} 
                         type="text" 
@@ -225,7 +226,7 @@ const EditorBox = () => {
                         value={address} 
                         readOnly />
                     <br />
-                    <button onClick={clickMap}>
+                    <button className='upload-map' onClick={clickMap}>
                         {showMap ? "완료" : "지도 보기"}
                     </button>
                     {showMap && (
@@ -240,6 +241,7 @@ const EditorBox = () => {
                 </div>
                 
             </div>
+            <br />
             <button className='save' onClick={onSave} disabled={isSubmitting}>
             {isSubmitting ? '저장 중' : '저장'}
             </button>
@@ -249,6 +251,7 @@ const EditorBox = () => {
                         <img src={imagePreview} alt="이미지 미리보기" style={{ marginTop: "10px", maxWidth: "100%", height: "auto" }} />
                     )} 
             </span>
+            <br />
             <Editor
                 initialValue="hello !"
                 previewStyle="vertical"

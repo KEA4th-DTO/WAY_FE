@@ -1,5 +1,52 @@
 // _upload.scss
+.upload-title{
+    font-size: 20px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 500;
+}
+.upload-address{
+    font-size: 17px;
+    font-style: Medium;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 500;
+}
+.upload-map{
+    color: #fff;
+    background-color: rgb(129, 205, 201);
+    // overflow: auto;
+    padding: 5px;
+    flex-direction: column;
+    border: none;
+    border-radius: 10px;
+}
+.upload-time-button{
+    color: #fff;
+    background-color: rgb(205, 129, 129);
+    // overflow: auto;
+    padding: 5px;
+    flex-direction: column;
+    border: none;
+    border-radius: 10px;
+}
+.upload-map-div{
+    margin-left: -680px;
 
+}
+.upload-refresh-button{
+    border: none;
+    background-color: #fff;
+    // margin-left: -920px;
+    // position: absolute;
+}
+.upload-refresh-button2{
+    border: none;
+    background-color: #fff;
+    margin-left: -920px;
+    // position: absolute;
+}
 #button {
     border: none;
     color: white;

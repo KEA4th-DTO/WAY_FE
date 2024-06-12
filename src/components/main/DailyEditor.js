@@ -162,27 +162,28 @@ const DailyEditor = () => {
   return (
     <div className="edit_wrap" style={{ position: "relative" }}>
       <div>
-        <h2>
+        <span className="upload-title">
           제목:
           <input
             style={{ marginLeft: "10px", border: "none", width: "400px" }}
             type="text"
-            placeholder="제목을 입력하세요."
+            placeholder="제목을 입력하세요"
             value={title}
             onChange={onChangeTitle}
           />
-        </h2>
-        <span>
+        </span>
+        <br /> <br />
+        <span className="upload-address">
           주소:
           <input
             style={{ marginLeft: "10px", border: "none", width: "400px" }}
             type="text"
-            placeholder="지도로 주소를 설정해주세요."
+            placeholder="지도로 주소를 설정해주세요"
             value={address}
             readOnly
           />
           <br />
-          <button onClick={clickMap}>{showMap ? "완료" : "지도 보기"}</button>
+          <button className='upload-map' onClick={clickMap}>{showMap ? "완료" : "지도 보기"}</button>
           {showMap && (
             <div>
               <UploadMap setPostPosition={handlePostPositionChange} />
@@ -220,7 +221,7 @@ const DailyEditor = () => {
             ))}
           </select>
           분
-          <button style={{ marginLeft: "10px" }} onClick={calculateExpiredAt}>
+          <button style={{ marginLeft: "10px" }} className="upload-time-button" onClick={calculateExpiredAt}>
             적용
           </button>
           <div style={{ marginTop: "5px" }}>

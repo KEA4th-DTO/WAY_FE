@@ -42,7 +42,7 @@ const ChatFromMe = ({ data }) => {
          {data.body}
         </span>
     
-      <div className="mychat-time" style={{right: rectangleWidth + 'px'}}>
+      <div className="mychat-time" style={{right: rectangleWidth - 70 +'px'}}>
         <span>{formatDate_time2(data.createdAt)}</span>
       </div>
     </div>

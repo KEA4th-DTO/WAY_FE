@@ -161,8 +161,8 @@ const MapInformation = ({ active, dailybound, historybound, setLoading, research
                 map,
                 icon: {
                     url: currentPin,
-                    size: new naver.maps.Size(28, 28),
-                    scaledSize: new naver.maps.Size(28, 28),
+                    size: new naver.maps.Size(25, 25),
+                    scaledSize: new naver.maps.Size(25, 25),
                 },
                 zIndex: 999,
             });
@@ -194,8 +194,8 @@ const MapInformation = ({ active, dailybound, historybound, setLoading, research
                     // console.log('같은거 클릭해서 원래대로');
                     marker.setIcon({
                         url: getNormalPin(item),
-                        size: new naver.maps.Size(43, 43),
-                        scaledSize: new naver.maps.Size(43, 43),
+                        size: new naver.maps.Size(40, 40),
+                        scaledSize: new naver.maps.Size(40, 40),
                     });
                     active(null);
                     setClickedMarker(null);
@@ -205,16 +205,16 @@ const MapInformation = ({ active, dailybound, historybound, setLoading, research
                     // console.log('다른거 클릭해서 원래거 원래대로');
                     clickedMarker.marker.setIcon({
                         url: getNormalPin(clickedMarker.item),
-                        size: new naver.maps.Size(43, 43),
-                        scaledSize: new naver.maps.Size(43, 43),
+                        size: new naver.maps.Size(40, 40),
+                        scaledSize: new naver.maps.Size(40, 40),
                     });
                 }
                 // console.log('다른거 클릭햇거나 처음 클릭');
 
                 marker.setIcon({
                     url: getFullPin(item),
-                    size: new naver.maps.Size(50, 50),
-                    scaledSize: new naver.maps.Size(50, 50),
+                    size: new naver.maps.Size(46, 46),
+                    scaledSize: new naver.maps.Size(46, 46),
                 });
                 active({ item });
                 setClickedMarker({ marker, item });
@@ -234,8 +234,8 @@ const MapInformation = ({ active, dailybound, historybound, setLoading, research
                     map,
                     icon: {
                         url: iconUrl,
-                        size: new naver.maps.Size(43, 43),
-                        scaledSize: new naver.maps.Size(43, 43),
+                        size: new naver.maps.Size(40, 40),
+                        scaledSize: new naver.maps.Size(40, 40),
                     },
                     zIndex: index,
                 });

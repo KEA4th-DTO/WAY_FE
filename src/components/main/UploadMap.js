@@ -96,7 +96,8 @@ const UploadMap = ({ setPostPosition }) => {
     return (
 
         <div>
-            <button onClick={onRefreshClick}>
+            <br />
+            <button className="upload-refresh-button2"  onClick={onRefreshClick}>
                 <img src={refresh} alt="refresh" style={{ width: '20px', height: '20px', display: 'inline-block', border: 'none'}} />
             </button>
             
