@@ -133,7 +133,7 @@ useEffect(() => {
 
   
   return (
-      <div style={{border:"3px solid red"}}  className="chatcontent-frame">
+      <div  className="chatcontent-frame">
         {/* 상단창 */}
          <div className="top-window">
           <img
@@ -155,11 +155,11 @@ useEffect(() => {
             alt="사람 아이콘"
             className="members-icon"
           />
-         <span className="top-member-num" >{nickname}</span>
+         <span className="top-nickname" >{nickname}</span>
         </div>
 
         {/* 채팅창 */}
-        <div id="list" className='chat-container' style={{ border: "3px solid yellow", overflow: "auto", marginTop: "10%" }}>
+        <div id="list" className='chat-container' style={{ overflow: "auto", marginTop: "10%" }}>
           {comments.map((item) => (
             <div key={item.id}>
               {item.isOwned ? <ChatFromMe data={item}/> : <ChatFromOther data={item} />}
@@ -176,15 +176,9 @@ useEffect(() => {
             className='send-text'
             placeholder="메시지를 입력하세요."
          />
-        <div className="send-frame1">
-          <div className="send-group">
-            <span className="send-text02">
-            <button onClick={SaveComment} disabled={isSubmitting}> {isSubmitting ? '전송 중' : '전송'}</button>
-            </span>
-          </div>
-        </div>
-    
-      
+          <button className="send-button" onClick={SaveComment} disabled={isSubmitting}>
+          <span> {isSubmitting ? '전송 중' : '전송'}</span>
+          </button>
     </div>
   )
 }

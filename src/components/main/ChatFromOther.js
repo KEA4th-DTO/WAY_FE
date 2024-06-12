@@ -1,20 +1,43 @@
-const ChatFromMe = ({ content }) => {
+import React, { useEffect, useRef, useState } from 'react';
+import "../../assets/scss/layout/_chatcontent.scss";
+import { formatDate_time2 } from '../../utils/changeFormat';
+
+const ChatFromMe = ({ data }) => {
+  const textRef = useRef(null);
+  const [textWidth, setTextWidth] = useState(0);
+
+  useEffect(() => {
+    if (textRef.current && textWidth === 0) {
+      const width = textRef.current.offsetWidth;
+      setTextWidth(width);
+    }
+  }, [textWidth]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = textRef.current.offsetWidth;
+      setTextWidth(width);
+    };
+    handleResize(); // 초기 로드 시 호출하여 초기 textWidth 설정
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [data.body]);
+
+  if (!data) {
+    console.log("content is null");
+    return null;
+  }
+
     return (
-     <div className="frame-frame4">
-          <div
-            className="frame-rectangle461"
-          />
-          <div className="frame-frame5">
-            <span className="frame-text10">
-              <span>{content.nickname}Crayon</span>
-            </span>
-            <span className="frame-text12">
-              <span>{content.content}그러면 제가 지금 위례로 출발 할게요!</span>
-            </span>
+     <div className="otherchat-container">
+          <div className="otherchat-rectangle" style={{ width: textWidth + 10 + 'px'}} />
+            <span className="otherchat-nickname" ref={textRef}>{data.writerNickname}</span>
+     
+            <span className="otherchat-body">{data.body}</span>
+            <div className="otherchat-time" style={{left: textWidth - 60 + 'px'}}>
+          <span>{formatDate_time2(data.createdAt)}</span>
           </div>
-          <span className="frame-text14">
-            <span>{content.time}18:40</span>
-          </span>
+
         </div>
     );
   }   
